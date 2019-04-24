@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
 
-namespace Phone.Data.Entities
+namespace Phone.Data.Entities.User
 {
     public class ApplicationUser : IdentityUser
     {

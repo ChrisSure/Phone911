@@ -10,7 +10,7 @@ using Phone.Data;
 namespace _911Phone.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190423135315_InitialCreate")]
+    [Migration("20190424120719_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -131,7 +131,7 @@ namespace _911Phone.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Phone.Data.Entities.ApplicationUser", b =>
+            modelBuilder.Entity("Phone.Data.Entities.User.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
@@ -184,6 +184,54 @@ namespace _911Phone.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("Phone.Data.Entities.User.Profile", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<byte?>("Age");
+
+                    b.Property<DateTime>("CreatedAt");
+
+                    b.Property<string>("Description");
+
+                    b.Property<string>("Experience");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(100);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100);
+
+                    b.Property<string>("Phone")
+                        .HasMaxLength(30);
+
+                    b.Property<string>("Position")
+                        .HasMaxLength(50);
+
+                    b.Property<int?>("Salary");
+
+                    b.Property<bool?>("Sex");
+
+                    b.Property<string>("SurName")
+                        .HasMaxLength(100);
+
+                    b.Property<DateTime>("UpdatedAt");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasMaxLength(450);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Profiles");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
@@ -194,7 +242,7 @@ namespace _911Phone.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Phone.Data.Entities.ApplicationUser")
+                    b.HasOne("Phone.Data.Entities.User.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -202,7 +250,7 @@ namespace _911Phone.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Phone.Data.Entities.ApplicationUser")
+                    b.HasOne("Phone.Data.Entities.User.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -215,7 +263,7 @@ namespace _911Phone.Migrations
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Phone.Data.Entities.ApplicationUser")
+                    b.HasOne("Phone.Data.Entities.User.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -223,7 +271,15 @@ namespace _911Phone.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Phone.Data.Entities.ApplicationUser")
+                    b.HasOne("Phone.Data.Entities.User.ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Phone.Data.Entities.User.Profile", b =>
+                {
+                    b.HasOne("Phone.Data.Entities.User.ApplicationUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);

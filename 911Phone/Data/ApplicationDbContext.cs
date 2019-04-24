@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Phone.Data.Entities;
+using Phone.Data.Entities.User;
 
 namespace Phone.Data
 {
@@ -11,5 +11,7 @@ namespace Phone.Data
         {
             Database.EnsureCreated();
         }
+
+        public virtual DbSet<Profile> Profiles { get; set; }
     }
 }
