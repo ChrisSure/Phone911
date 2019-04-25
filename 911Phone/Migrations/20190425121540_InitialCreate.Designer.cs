@@ -10,7 +10,7 @@ using Phone.Data;
 namespace _911Phone.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190424120719_InitialCreate")]
+    [Migration("20190425121540_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

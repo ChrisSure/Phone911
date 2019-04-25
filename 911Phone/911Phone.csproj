@@ -31,7 +31,6 @@
     <Folder Include="Data\StoredProcedures\" />
     <Folder Include="Middlewares\" />
     <Folder Include="Exceptions\" />
-    <Folder Include="Helpers\" />
     <Folder Include="Services\" />
     <Folder Include="Repositories\" />
   </ItemGroup>

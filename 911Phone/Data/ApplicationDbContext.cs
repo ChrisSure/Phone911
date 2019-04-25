@@ -9,7 +9,6 @@ namespace Phone.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
-            Database.EnsureCreated();
         }
 
         public virtual DbSet<Profile> Profiles { get; set; }

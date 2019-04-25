@@ -36,12 +36,15 @@ namespace Phone
 
             //Connect to DB
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")) //dotnet ef database update
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")) //dotnet ef database update  | dotnet ef migrations add InitialCreate
             );
 
             //Add Identity
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            // Create DB initializer service
+            services.AddScoped<DBInitializer>();
 
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
@@ -56,7 +59,7 @@ namespace Phone
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, DBInitializer initializer)
         {
             if (env.IsDevelopment())
             {
@@ -103,6 +106,9 @@ namespace Phone
                     spa.UseAngularCliServer(npmScript: "start");
                 }
             });
+
+            // DB Initializator run
+            initializer.RunAsync().Wait();
         }
     }
 }
