@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using Phone.Data.DTOs.User;
 using Phone.Data.Entities.User;
 using Phone.Exceptions;
-using Phone.Helpers.User;
 using Phone.Services.User.Interfaces;
 using System.Threading.Tasks;
 
@@ -70,7 +69,7 @@ namespace Phone.Controllers.User
 
         [HttpGet]
         [Route("api/auth/res")]
-        [Authorize(Policy = "RequireResRole")]
+        [Authorize(Policy = "SellerShop")]
         public IActionResult RegisterAsync()
         {
             return Ok("Success");

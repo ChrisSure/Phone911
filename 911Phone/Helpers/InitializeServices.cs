@@ -1,8 +1,10 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Phone.Repositories.User;
+using Phone.Repositories.User.Interfaces;
 using Phone.Services.User;
 using Phone.Services.User.Interfaces;
 
-namespace Phone.Helpers.User
+namespace Phone.Helpers
 {
     public static class InitializeServices
     {
@@ -10,6 +12,7 @@ namespace Phone.Helpers.User
         {
             services.AddScoped<IJwtService, JwtService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IUserRepository, UserRepository>();
         }
     }
 }

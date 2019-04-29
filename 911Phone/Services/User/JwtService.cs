@@ -36,11 +36,7 @@ namespace Phone.Services.User
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim("uid", userInfo.Id)
             };
-
-            foreach (var role in roles)
-            {
-                claims.Add(new Claim(ClaimTypes.Role, role));
-            }
+            claims.Add(new Claim(ClaimTypes.Role, roles[0]));
 
             return claims.ToArray();
         }

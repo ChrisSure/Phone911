@@ -29,7 +29,6 @@
   <ItemGroup>
     <Folder Include="Data\StoredProcedures\" />
     <Folder Include="Middlewares\" />
-    <Folder Include="Repositories\" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

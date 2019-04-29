@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Phone.Data.Entities.User;
+﻿using Phone.Data.Entities.User;
+using Phone.Repositories.User.Interfaces;
 using Phone.Services.User.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -8,16 +8,16 @@ namespace Phone.Services.User
 {
     public class UserService : IUserService
     {
-        private UserManager<ApplicationUser> userManager;
+        private IUserRepository userRepository;
 
-        public UserService(UserManager<ApplicationUser> user)
+        public UserService(IUserRepository userRepository)
         {
-            userManager = user;
+            this.userRepository = userRepository;
         }
 
         public async Task<IList<string>> GetUserRolesAsync(ApplicationUser user)
         {
-            return await userManager.GetRolesAsync(user);
+            return await userRepository.GetUserRolesAsync(user);
         }
 
     }

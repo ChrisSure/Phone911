@@ -10,11 +10,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Phone.Data;
 using Phone.Data.Entities.User;
+using Phone.Helpers;
 using Phone.Helpers.User;
 using Swashbuckle.AspNetCore.Swagger;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+
 
 namespace Phone
 {
@@ -57,8 +59,10 @@ namespace Phone
 
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("RequireResRole",
-                    policy => policy.RequireRole(RoleTypes.Seller, RoleTypes.Customer));
+                options.AddPolicy("SellerShop",
+                    policy => policy.RequireRole(RoleTypes.Seller, RoleTypes.SuperSeller));
+                options.AddPolicy("AdminPanel",
+                    policy => policy.RequireRole(RoleTypes.Admin, RoleTypes.SuperAdmin));
             });
 
             // Setting Token
