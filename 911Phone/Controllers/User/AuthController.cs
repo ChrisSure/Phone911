@@ -3,24 +3,28 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Phone.Data.DTOs.User;
 using Phone.Data.Entities.User;
+using Phone.Exceptions;
+using Phone.Helpers.User;
+using Phone.Services.User.Interfaces;
 using System.Threading.Tasks;
 
 namespace Phone.Controllers.User
 {
 
-    [Route("api/auth")]
-    [ApiController]
     public class AuthController : ControllerBase
     {
         private UserManager<ApplicationUser> userManager;
+        private IJwtService jwtService;
 
-        public AuthController(UserManager<ApplicationUser> user)
+        public AuthController(UserManager<ApplicationUser> user, IJwtService jwt)
         {
             userManager = user;
+            jwtService = jwt;
         }
 
+        [HttpPost]
+        [Route("api/auth/login")]
         [AllowAnonymous]
-        [HttpPost("login")]
         public async Task<IActionResult> LoginAsync([FromBody]AuthLoginDto dto)
         {
             if (!ModelState.IsValid)
@@ -28,15 +32,48 @@ namespace Phone.Controllers.User
                 return BadRequest(ModelState);
             }
 
-            ApplicationUser user = await userManager.FindByEmailAsync(dto.Email);
-
-            if (await userManager.CheckPasswordAsync(user, dto.Password))
+            ApplicationUser user = null;
+            bool userNotFound = false;
+            try
             {
-                return Ok("Success");
+                user = await userManager.FindByEmailAsync(dto.Email);
+            }
+            catch (CurrentEntryNotFoundException)
+            {
+                userNotFound = true;
             }
 
-            return BadRequest("Error");
+            if (userNotFound || !await userManager.CheckPasswordAsync(user, dto.Password))
+            {
+                ModelState.AddModelError("loginFailure", "Invalid email or password");
+                return BadRequest(ModelState);
+            }
+
+            if (user.IsBlocked ?? false)
+            {
+                ModelState.AddModelError("loginFailure", "Account has been blocked");
+                return BadRequest(ModelState);
+            }
+
+            var userClaims = await jwtService.GetClaimsAsync(user);
+            var accessToken = jwtService.GenerateJwtAccessToken(userClaims);
+
+            var tokens = new AuthTokensDto
+            {
+                AccessToken = accessToken,
+                ExpireOn = jwtService.ExpirationTime
+            };
+
+            return Ok(tokens);
         }
 
+
+        [HttpGet]
+        [Route("api/auth/res")]
+        [Authorize(Policy = "RequireResRole")]
+        public IActionResult RegisterAsync()
+        {
+            return Ok("Success");
+        }
     }
 }

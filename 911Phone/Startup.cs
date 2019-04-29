@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -6,11 +7,14 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using Phone.Data;
 using Phone.Data.Entities.User;
+using Phone.Helpers.User;
 using Swashbuckle.AspNetCore.Swagger;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace Phone
 {
@@ -26,6 +30,8 @@ namespace Phone
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.InitializeService();
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             // In production, the Angular files will be served from this directory
@@ -40,8 +46,38 @@ namespace Phone
             );
 
             //Add Identity
-            services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddIdentityCore<ApplicationUser>(options =>
+            {                
+                options.User.AllowedUserNameCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzÀÁÂÃÄÅ¨ÆÇÈÉÊËÌÍÎÏĞÑÒÓÔÕÖ×ØÙÜŞß¥ª²¯àáâãäå¸æçèéêëìíîïğñòóôõö÷øùüşÿ´º³¿'0123456789 -_";//A-Za-zÀ-ÙÜŞß¥ª²¯à-ùüşÿ´º³¿'0-9 -_
+                options.User.RequireUniqueEmail = true;
+
+            }).AddRoles<IdentityRole>()
+              .AddEntityFrameworkStores<ApplicationDbContext>()
+              .AddDefaultTokenProviders();
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("RequireResRole",
+                    policy => policy.RequireRole(RoleTypes.Seller, RoleTypes.Customer));
+            });
+
+            // Setting Token
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters()
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = Configuration["Jwt:Issuer"],
+                        ValidAudience = Configuration["Jwt:Audience"],
+                        IssuerSigningKey = new SymmetricSecurityKey(
+                            Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
+                    };
+                });
+
 
             // Create DB initializer service
             services.AddScoped<DBInitializer>();
