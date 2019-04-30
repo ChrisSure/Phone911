@@ -14,11 +14,13 @@ namespace Phone.Controllers.User
     {
         private UserManager<ApplicationUser> userManager;
         private IJwtService jwtService;
+        private IUserService userService;
 
-        public AuthController(UserManager<ApplicationUser> user, IJwtService jwt)
+        public AuthController(UserManager<ApplicationUser> user, IJwtService jwt, IUserService service)
         {
             userManager = user;
             jwtService = jwt;
+            userService = service;
         }
 
         [HttpPost]
@@ -31,24 +33,12 @@ namespace Phone.Controllers.User
                 return BadRequest(ModelState);
             }
 
-            ApplicationUser user = null;
-            bool userNotFound = false;
-            try
-            {
-                user = await userManager.FindByEmailAsync(dto.Email);
-            }
-            catch (CurrentEntryNotFoundException)
-            {
-                userNotFound = true;
-            }
-
-            if (userNotFound || !await userManager.CheckPasswordAsync(user, dto.Password))
+            ApplicationUser user = (ApplicationUser)await userService.FindUserByEmailAsync(dto.Email);
+            if (user == null || !await userManager.CheckPasswordAsync(user, dto.Password))
             {
                 ModelState.AddModelError("loginFailure", "Invalid email or password");
                 return BadRequest(ModelState);
-            }
-
-            if (user.IsBlocked ?? false)
+            } else if (user.IsBlocked ?? false)
             {
                 ModelState.AddModelError("loginFailure", "Account has been blocked");
                 return BadRequest(ModelState);
@@ -56,14 +46,7 @@ namespace Phone.Controllers.User
 
             var userClaims = await jwtService.GetClaimsAsync(user);
             var accessToken = jwtService.GenerateJwtAccessToken(userClaims);
-
-            var tokens = new AuthTokensDto
-            {
-                AccessToken = accessToken,
-                ExpireOn = jwtService.ExpirationTime
-            };
-
-            return Ok(tokens);
+            return Ok(await GetBuildToken(accessToken));
         }
 
 
@@ -74,5 +57,16 @@ namespace Phone.Controllers.User
         {
             return Ok("Success");
         }
+
+
+        private async Task<AuthTokensDto> GetBuildToken(string accessToken)
+        {
+            return new AuthTokensDto
+            {
+                AccessToken = accessToken,
+                ExpireOn = jwtService.ExpirationTime
+            };
+        }
+
     }
 }

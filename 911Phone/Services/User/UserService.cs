@@ -20,5 +20,10 @@ namespace Phone.Services.User
             return await userRepository.GetUserRolesAsync(user);
         }
 
+        public async Task<object> FindUserByEmailAsync(string email)
+        {
+            return await userRepository.FindUserByEmailAsync(email);
+        }
+
     }
 }
