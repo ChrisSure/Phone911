@@ -11,5 +11,7 @@ namespace Phone.Services.User.Interfaces
         DateTime ExpirationTime { get; }
         string GenerateJwtAccessToken(IEnumerable<Claim> claims);
         Task<Claim[]> GetClaimsAsync(ApplicationUser userInfo);
+        string GenerateJwtRefreshToken();
+        Task LoginByRefreshTokenAsync(string userId, string refreshToken);
     }
 }

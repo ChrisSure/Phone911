@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Phone.Data.DTOs.User;
 using Phone.Data.Entities.User;
-using Phone.Exceptions;
 using Phone.Services.User.Interfaces;
 using System.Threading.Tasks;
 
@@ -46,7 +45,9 @@ namespace Phone.Controllers.User
 
             var userClaims = await jwtService.GetClaimsAsync(user);
             var accessToken = jwtService.GenerateJwtAccessToken(userClaims);
-            return Ok(await GetBuildToken(accessToken));
+            var refreshToken = jwtService.GenerateJwtRefreshToken();
+            await jwtService.LoginByRefreshTokenAsync(user.Id, refreshToken);
+            return Ok(await GetBuildToken(accessToken, refreshToken));
         }
 
 
@@ -59,11 +60,12 @@ namespace Phone.Controllers.User
         }
 
 
-        private async Task<AuthTokensDto> GetBuildToken(string accessToken)
+        private async Task<AuthTokensDto> GetBuildToken(string accessToken, string refreshToken)
         {
             return new AuthTokensDto
             {
                 AccessToken = accessToken,
+                RefreshToken = refreshToken,
                 ExpireOn = jwtService.ExpirationTime
             };
         }

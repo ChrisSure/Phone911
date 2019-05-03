@@ -12,5 +12,6 @@ namespace Phone.Data
         }
 
         public virtual DbSet<Profile> Profiles { get; set; }
+        public virtual DbSet<UserRefreshToken> UserRefreshTokens { get; set; }
     }
 }

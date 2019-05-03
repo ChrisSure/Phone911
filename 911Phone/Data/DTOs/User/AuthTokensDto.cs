@@ -8,6 +8,9 @@ namespace Phone.Data.DTOs.User
         [Required]
         public string AccessToken { get; set; }
 
+        [Required]
+        public string RefreshToken { get; set; }
+
         public DateTime ExpireOn { get; set; }
 
         public object Clone()
