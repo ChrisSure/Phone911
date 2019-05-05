@@ -12,6 +12,7 @@ using Phone.Data;
 using Phone.Data.Entities.User;
 using Phone.Helpers;
 using Phone.Helpers.User;
+using Phone.Middlewares;
 using Swashbuckle.AspNetCore.Swagger;
 using System.Collections.Generic;
 using System.Linq;
@@ -126,6 +127,9 @@ namespace Phone
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "911PhoneApp API V1");
                 c.RoutePrefix = ""; //swagger to angular
             });
+
+            // Middleware Error Catching
+            app.UseMiddleware<ErrorHandlingMiddleware>(!env.IsProduction());
 
             app.UseMvc(routes =>
             {

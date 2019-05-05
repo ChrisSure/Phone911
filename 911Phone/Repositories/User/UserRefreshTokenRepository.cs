@@ -55,7 +55,12 @@ namespace Phone.Repositories.User
         /// <returns>UserRefreshToken</returns>
         public async Task<UserRefreshToken> GetAsync(int key)
         {
-            return await db.UserRefreshTokens.FindAsync(key);
+            var token = await db.UserRefreshTokens.FindAsync(key);
+            if (token == null)
+            {
+                throw new CurrentEntryNotFoundException();
+            }
+            return token;
         }
 
         /// <summary>

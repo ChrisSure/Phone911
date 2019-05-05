@@ -27,7 +27,6 @@ namespace Phone.Controllers.User
         /// <summary>
         /// <response code="200">Success</response>
         /// <response code="500">Internal server error</response>
-        [HttpGet]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         [ProducesResponseType(500)]
