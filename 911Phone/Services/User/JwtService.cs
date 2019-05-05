@@ -30,6 +30,11 @@ namespace Phone.Services.User
 
         public DateTime ExpirationTime => DateTime.Now.AddMinutes(120);
 
+        /// <summary>
+        /// Method set user claims
+        /// <summary>
+        /// <param name="userInfo"><see cref="ApplicationUser"/></param>
+        /// <returns>Claim[]</returns>
         public async Task<Claim[]> GetClaimsAsync(ApplicationUser userInfo)
         {
             var roles = await userService.GetUserRolesAsync(userInfo);
@@ -45,7 +50,11 @@ namespace Phone.Services.User
             return claims.ToArray();
         }
 
-
+        /// <summary>
+        /// Method for generation access token for user
+        /// <summary>
+        /// <param name="claims">IEnumerable<Claim></param>
+        /// <returns>string</returns>
         public string GenerateJwtAccessToken(IEnumerable<Claim> claims)
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]));
@@ -61,6 +70,10 @@ namespace Phone.Services.User
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
+        /// <summary>
+        /// Method for generation refresh token for user
+        /// <summary>
+        /// <returns>string</returns>
         public string GenerateJwtRefreshToken()
         {
             var randomNumber = new byte[32];
@@ -71,6 +84,12 @@ namespace Phone.Services.User
             }
         }
 
+        /// <summary>
+        /// Method for login user's refresh token
+        /// <summary>
+        /// <param name="userId">string</param>
+        /// <param name="refreshToken">string</param>
+        /// <returns>void</returns>
         public async Task LoginByRefreshTokenAsync(string userId, string refreshToken)
         {
             var userRefreshToken = await refreshRepository.GetByUserIdAsync(userId);

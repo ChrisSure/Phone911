@@ -12,5 +12,7 @@ namespace Phone.Repositories.User.Interfaces
 
         Task<object> FindUserByEmailAsync(string email);
 
+        Task<bool> CheckPasswordAsync(ApplicationUser user, string password);
+
     }
 }

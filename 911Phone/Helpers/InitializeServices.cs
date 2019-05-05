@@ -6,6 +6,9 @@ using Phone.Services.User.Interfaces;
 
 namespace Phone.Helpers
 {
+    /// <summary>
+    /// Class for add injections for other interfaces
+    /// <summary>
     public static class InitializeServices
     {
         public static void InitializeService(this IServiceCollection services)

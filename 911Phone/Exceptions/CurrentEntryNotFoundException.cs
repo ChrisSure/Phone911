@@ -3,6 +3,9 @@ using System.Runtime.Serialization;
 
 namespace Phone.Exceptions
 {
+    /// <summary>
+    /// Class-Exception, catching when not found something
+    /// <summary>
     [Serializable]
     public class CurrentEntryNotFoundException : Exception
     {

@@ -1,27 +1,36 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Phone.Data.DTOs.User;
 using Phone.Data.Entities.User;
 using Phone.Services.User.Interfaces;
 using System.Threading.Tasks;
 
+
 namespace Phone.Controllers.User
 {
-
+    /// <remarks>
+    /// This class-controller added for authorization user.
+    /// </remarks>
     public class AuthController : ControllerBase
     {
-        private UserManager<ApplicationUser> userManager;
         private IJwtService jwtService;
         private IUserService userService;
 
-        public AuthController(UserManager<ApplicationUser> user, IJwtService jwt, IUserService service)
+        public AuthController(IJwtService jwt, IUserService service)
         {
-            userManager = user;
             jwtService = jwt;
             userService = service;
         }
 
+        /// <summary>
+        /// Authorization, authentification user
+        /// <summary>
+        /// <response code="200">Success</response>
+        /// <response code="500">Internal server error</response>
+        [HttpGet]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(500)]
         [HttpPost]
         [Route("api/auth/login")]
         [AllowAnonymous]
@@ -33,7 +42,7 @@ namespace Phone.Controllers.User
             }
 
             ApplicationUser user = (ApplicationUser)await userService.FindUserByEmailAsync(dto.Email);
-            if (user == null || !await userManager.CheckPasswordAsync(user, dto.Password))
+            if (user == null || !await userService.CheckPasswordAsync(user, dto.Password))
             {
                 ModelState.AddModelError("loginFailure", "Invalid email or password");
                 return BadRequest(ModelState);
@@ -50,16 +59,9 @@ namespace Phone.Controllers.User
             return Ok(await GetBuildToken(accessToken, refreshToken));
         }
 
-
-        [HttpGet]
-        [Route("api/auth/res")]
-        [Authorize(Policy = "SellerShop")]
-        public IActionResult RegisterAsync()
-        {
-            return Ok("Success");
-        }
-
-
+        /// <summary>
+        /// Method for build jwt token
+        /// <summary>
         private async Task<AuthTokensDto> GetBuildToken(string accessToken, string refreshToken)
         {
             return new AuthTokensDto
@@ -68,6 +70,14 @@ namespace Phone.Controllers.User
                 RefreshToken = refreshToken,
                 ExpireOn = jwtService.ExpirationTime
             };
+        }
+
+        [HttpGet]
+        [Route("api/auth/res")]
+        [Authorize(Policy = "SellerShop")]
+        public IActionResult RegisterAsync()
+        {
+            return Ok("Success");
         }
 
     }

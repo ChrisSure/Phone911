@@ -8,8 +8,8 @@ namespace Phone.Services.User.Interfaces
     {
 
         Task<IList<string>> GetUserRolesAsync(ApplicationUser user);
-
         Task<object> FindUserByEmailAsync(string email);
+        Task<bool> CheckPasswordAsync(ApplicationUser user, string password);
 
     }
 }

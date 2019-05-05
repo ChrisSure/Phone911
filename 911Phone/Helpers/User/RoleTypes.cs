@@ -1,5 +1,8 @@
 ﻿namespace Phone.Helpers.User
 {
+    /// <summary>
+    /// Class returns constans Roles
+    /// <summary>
     public class RoleTypes
     {
         public const string Customer = "Customer";
