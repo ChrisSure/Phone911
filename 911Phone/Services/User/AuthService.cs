@@ -1,58 +1,50 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Phone.Data.Entities.User;
-using Phone.Exceptions;
+﻿using Phone.Data.Entities.User;
 using Phone.Repositories.User.Interfaces;
+using Phone.Services.User.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 
-namespace Phone.Repositories.User
+namespace Phone.Services.User
 {
-    public class UserRepository : IUserRepository
+    public class AuthService : IUserAuthService
     {
+        private IUserAuthRepository userRepository;
 
-        private UserManager<ApplicationUser> userManager;
-
-        public UserRepository(UserManager<ApplicationUser> user)
+        public AuthService(IUserAuthRepository userRepository)
         {
-            this.userManager = user;
+            this.userRepository = userRepository;
         }
 
         /// <summary>
-        /// Method get user roles
+        /// Method delegate to repository get user roles
         /// <summary>
         /// <param name="user">ApplicationUser</param>
         /// <returns>IList<string></returns>
         public async Task<IList<string>> GetUserRolesAsync(ApplicationUser user)
         {
-            return await userManager.GetRolesAsync(user);
+            return await userRepository.GetUserRolesAsync(user);
         }
 
         /// <summary>
-        /// Method find user by email
+        /// Method delegate to repository find user by email
         /// <summary>
         /// <param name="email">string</param>
         /// <returns>ApplicationUser || null</returns>
         public async Task<ApplicationUser> FindUserByEmailAsync(string email)
         {
-            var user = await userManager.FindByEmailAsync(email);
-            if (user == null)
-            {
-                throw new CurrentEntryNotFoundException();
-            }
-            return user;
+            return await userRepository.FindUserByEmailAsync(email);
         }
 
         /// <summary>
-        /// Method check for user password
+        /// Method delegate to repository check for user password
         /// <summary>
         /// <param name="user">ApplicationUser</param>
         /// <param name="password">string</param>
         /// <returns>boolean</returns>
         public async Task<bool> CheckPasswordAsync(ApplicationUser user, string password)
         {
-            return await userManager.CheckPasswordAsync(user, password);
+            return await userRepository.CheckPasswordAsync(user, password);
         }
-
     }
 }

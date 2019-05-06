@@ -14,8 +14,10 @@ namespace Phone.Helpers
         public static void InitializeService(this IServiceCollection services)
         {
             services.AddScoped<IJwtService, JwtService>();
-            services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserAuthService, AuthService>();
+            services.AddScoped<IUserAdminService, AdminService>();
+            services.AddScoped<IUserAuthRepository, AuthRepository>();
+            services.AddScoped<IUserAdminRepository, AdminRepository>();
             services.AddScoped<IUserRefreshTokenRepository, UserRefreshTokenRepository>();
         }
     }
