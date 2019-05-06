@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Phone.Data.Entities.User;
+using Phone.Exceptions;
 using Phone.Repositories.User.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -32,9 +33,14 @@ namespace Phone.Repositories.User
         /// <summary>
         /// <param name="email">string</param>
         /// <returns>ApplicationUser || null</returns>
-        public async Task<object> FindUserByEmailAsync(string email)
+        public async Task<ApplicationUser> FindUserByEmailAsync(string email)
         {
-            return await userManager.FindByEmailAsync(email);
+            var user = await userManager.FindByEmailAsync(email);
+            if (user == null)
+            {
+                throw new CurrentEntryNotFoundException();
+            }
+            return user;
         }
 
         /// <summary>

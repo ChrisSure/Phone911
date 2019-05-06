@@ -31,7 +31,7 @@ namespace Phone.Services.User
         /// <summary>
         /// <param name="email">string</param>
         /// <returns>ApplicationUser || null</returns>
-        public async Task<object> FindUserByEmailAsync(string email)
+        public async Task<ApplicationUser> FindUserByEmailAsync(string email)
         {
             return await userRepository.FindUserByEmailAsync(email);
         }

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Phone.Data.DTOs.User;
 using Phone.Data.Entities.User;
+using Phone.Exceptions;
 using Phone.Services.User.Interfaces;
 using System.Threading.Tasks;
 
@@ -40,8 +41,18 @@ namespace Phone.Controllers.User
                 return BadRequest(ModelState);
             }
 
-            ApplicationUser user = (ApplicationUser)await userService.FindUserByEmailAsync(dto.Email);
-            if (user == null || !await userService.CheckPasswordAsync(user, dto.Password))
+            ApplicationUser user = null;
+            bool userNotFound = false;
+            try
+            {
+                user = await userService.FindUserByEmailAsync(dto.Email);
+            }
+            catch (CurrentEntryNotFoundException)
+            {
+                userNotFound = true;
+            }
+
+            if (userNotFound || !await userService.CheckPasswordAsync(user, dto.Password))
             {
                 ModelState.AddModelError("loginFailure", "Invalid email or password");
                 return BadRequest(ModelState);
