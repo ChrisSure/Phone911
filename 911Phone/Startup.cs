@@ -1,12 +1,23 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
+using Phone.Data;
+using Phone.Data.Entities.User;
+using Phone.Helpers;
+using Phone.Helpers.User;
+using Phone.Middlewares;
 using Swashbuckle.AspNetCore.Swagger;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+
 
 namespace Phone
 {
@@ -22,6 +33,8 @@ namespace Phone
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.InitializeService();
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             // In production, the Angular files will be served from this directory
@@ -30,6 +43,49 @@ namespace Phone
                 configuration.RootPath = "ClientApp/dist";
             });
 
+            //Connect to DB
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")) //dotnet ef database update  | dotnet ef migrations add InitialCreate
+            );
+
+            //Add Identity
+            services.AddIdentityCore<ApplicationUser>(options =>
+            {                
+                options.User.AllowedUserNameCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzÀÁÂÃÄÅ¨ÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÜÞß¥ª²¯àáâãäå¸æçèéêëìíîïðñòóôõö÷øùüþÿ´º³¿'0123456789 -_";//A-Za-zÀ-ÙÜÞß¥ª²¯à-ùüþÿ´º³¿'0-9 -_
+                options.User.RequireUniqueEmail = true;
+
+            }).AddRoles<IdentityRole>()
+              .AddEntityFrameworkStores<ApplicationDbContext>()
+              .AddDefaultTokenProviders();
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("SellerShop",
+                    policy => policy.RequireRole(RoleTypes.Seller, RoleTypes.SuperSeller));
+                options.AddPolicy("AdminPanel",
+                    policy => policy.RequireRole(RoleTypes.Admin, RoleTypes.SuperAdmin));
+            });
+
+            // Setting Token
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters()
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = Configuration["Jwt:Issuer"],
+                        ValidAudience = Configuration["Jwt:Audience"],
+                        IssuerSigningKey = new SymmetricSecurityKey(
+                            Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
+                    };
+                });
+
+
+            // Create DB initializer service
+            services.AddScoped<DBInitializer>();
 
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
@@ -44,7 +100,7 @@ namespace Phone
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, DBInitializer initializer)
         {
             if (env.IsDevelopment())
             {
@@ -56,6 +112,7 @@ namespace Phone
                 app.UseHsts();
             }
 
+            app.UseAuthentication();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
@@ -70,6 +127,9 @@ namespace Phone
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "911PhoneApp API V1");
                 c.RoutePrefix = ""; //swagger to angular
             });
+
+            // Middleware Error Catching
+            app.UseMiddleware<ErrorHandlingMiddleware>(!env.IsProduction());
 
             app.UseMvc(routes =>
             {
@@ -90,6 +150,9 @@ namespace Phone
                     spa.UseAngularCliServer(npmScript: "start");
                 }
             });
+
+            // DB Initializator run
+            initializer.RunAsync().Wait();
         }
     }
 }
