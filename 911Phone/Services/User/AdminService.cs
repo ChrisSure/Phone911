@@ -23,5 +23,14 @@ namespace Phone.Services.User
         {
             return await userRepository.ListAdminsAsync();
         }
+
+        /// <summary>
+        /// Method return single user with role admin
+        /// <summary>
+        /// <returns>IList<ApplicationUser></returns>
+        public async Task<ApplicationUser> GetAdminAsync(string userId)
+        {
+            return await userRepository.GetAdminAsync(userId);
+        }
     }
 }

@@ -7,5 +7,6 @@ namespace Phone.Repositories.User.Interfaces
     public interface IUserAdminRepository : IUserRepository
     {
         Task<IList<ApplicationUser>> ListAdminsAsync();
+        Task<ApplicationUser> GetAdminAsync(string userId);
     }
 }

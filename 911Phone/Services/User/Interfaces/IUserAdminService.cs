@@ -7,5 +7,6 @@ namespace Phone.Services.User.Interfaces
     public interface IUserAdminService : IUserService
     {
         Task<IList<ApplicationUser>> ListAdminsAsync();
+        Task<ApplicationUser> GetAdminAsync(string userId);
     }
 }

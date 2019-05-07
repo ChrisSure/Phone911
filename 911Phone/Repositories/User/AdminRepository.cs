@@ -4,6 +4,8 @@ using Phone.Helpers.User;
 using Phone.Repositories.User.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace Phone.Repositories.User
 {
@@ -22,7 +24,19 @@ namespace Phone.Repositories.User
         /// <returns>IList<ApplicationUser></returns>
         public async Task<IList<ApplicationUser>> ListAdminsAsync()
         {
-            return await userManager.GetUsersInRoleAsync(RoleTypes.SuperAdmin);
+            List<ApplicationUser> listAdmins = new List<ApplicationUser>();
+            listAdmins.AddRange(await userManager.GetUsersInRoleAsync(RoleTypes.SuperAdmin));
+            listAdmins.AddRange(await userManager.GetUsersInRoleAsync(RoleTypes.Admin));
+            return listAdmins;
+        }
+
+        /// <summary>
+        /// Method return single user with role admin
+        /// <summary>
+        /// <returns>IList<ApplicationUser></returns>
+        public async Task<ApplicationUser> GetAdminAsync(string userId)
+        {
+            return await userManager.Users.Where(u => u.Id == userId).Include(u => u.Profile).FirstOrDefaultAsync();
         }
     }
 }
