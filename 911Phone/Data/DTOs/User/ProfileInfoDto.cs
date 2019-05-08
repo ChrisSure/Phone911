@@ -2,17 +2,9 @@
 
 namespace Phone.Data.DTOs.User
 {
-    public class UserProfileDto
+    public class ProfileInfoDto
     {
-        [Required]
-        public string UserName { get; set; }
-
-        [Required]
-        [EmailAddress]
-        public string Email { get; set; }
-
-        public bool? IsBlocked { get; set; }
-
+        
         [Required]
         [MaxLength(100)]
         public string Name { get; set; }

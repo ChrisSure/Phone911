@@ -9,9 +9,5 @@ namespace Phone.Data.Entities.User
         /// </summary>
         public virtual bool? IsBlocked { get; set; }
 
-        /// <summary>
-        /// Info Profile user.
-        /// </summary>
-        public Profile Profile { get; set; }
     }
 }

@@ -16,8 +16,10 @@ namespace Phone.Helpers
             services.AddScoped<IJwtService, JwtService>();
             services.AddScoped<IUserAuthService, AuthService>();
             services.AddScoped<IUserAdminService, AdminService>();
+            services.AddScoped<IProfileService, ProfileService>();
             services.AddScoped<IUserAuthRepository, AuthRepository>();
             services.AddScoped<IUserAdminRepository, AdminRepository>();
+            services.AddScoped<IProfileRepository, ProfileRepository>();
             services.AddScoped<IUserRefreshTokenRepository, UserRefreshTokenRepository>();
         }
     }

@@ -8,5 +8,7 @@ namespace Phone.Repositories.User.Interfaces
     {
         Task<IList<ApplicationUser>> ListAdminsAsync();
         Task<ApplicationUser> GetAdminAsync(string userId);
+        Task<string> GetRoleByUserId(ApplicationUser userId);
+        Task CreateUserAsync(ApplicationUser user);
     }
 }

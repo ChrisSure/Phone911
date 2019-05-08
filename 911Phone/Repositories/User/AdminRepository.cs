@@ -36,7 +36,26 @@ namespace Phone.Repositories.User
         /// <returns>IList<ApplicationUser></returns>
         public async Task<ApplicationUser> GetAdminAsync(string userId)
         {
-            return await userManager.Users.Where(u => u.Id == userId).Include(u => u.Profile).FirstOrDefaultAsync();
+            return await userManager.FindByIdAsync(userId);
+        }
+
+        /// <summary>
+        /// Method return single user with role admin
+        /// <summary>
+        /// <returns>IList<ApplicationUser></returns>
+        public async Task<string> GetRoleByUserId(ApplicationUser user)
+        {
+            return (await userManager.GetRolesAsync(user)).FirstOrDefault();
+        }
+
+        /// <summary>
+        /// Method create user and returned id
+        /// <summary>
+        /// <param name="user">ApplicationUser</param>
+        /// <returns>void</returns>
+        public async Task CreateUserAsync(ApplicationUser user)
+        {
+            await userManager.CreateAsync(user);
         }
     }
 }

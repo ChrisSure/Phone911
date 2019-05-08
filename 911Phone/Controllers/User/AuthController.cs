@@ -34,7 +34,7 @@ namespace Phone.Controllers.User
         [HttpPost]
         [Route("api/auth/login")]
         [AllowAnonymous]
-        public async Task<IActionResult> LoginAsync([FromBody]AuthLoginDto dto)
+        public async Task<IActionResult> LoginAsync([FromBody]UserAuthDto dto)
         {
             if (!ModelState.IsValid)
             {

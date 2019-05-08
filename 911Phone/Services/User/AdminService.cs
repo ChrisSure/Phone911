@@ -27,10 +27,31 @@ namespace Phone.Services.User
         /// <summary>
         /// Method return single user with role admin
         /// <summary>
-        /// <returns>IList<ApplicationUser></returns>
+        /// <param name="userId">string</param>
+        /// <returns>ApplicationUser</returns>
         public async Task<ApplicationUser> GetAdminAsync(string userId)
         {
-            return await userRepository.GetAdminAsync(userId);
+            return await userRepository.GetAdminAsync(userId); 
+        }
+
+        /// <summary>
+        /// Method return role  by user
+        /// <summary>
+        /// <param name="user">ApplicationUser</param>
+        /// <returns>string</returns>
+        public async Task<string> GetRoleByUserId(ApplicationUser user)
+        {
+            return await userRepository.GetRoleByUserId(user);
+        }
+
+        /// <summary>
+        /// Method create user and returned id
+        /// <summary>
+        /// <param name="user">ApplicationUser</param>
+        /// <returns>IList<ApplicationUser></returns>
+        public async Task CreateUserAsync(ApplicationUser user)
+        {
+            await userRepository.CreateUserAsync(user);
         }
     }
 }
