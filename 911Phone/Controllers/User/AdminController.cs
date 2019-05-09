@@ -11,11 +11,11 @@ using System.Collections.Generic;
 
 namespace Phone.Controllers.User
 {
-    //[Authorize(Roles = RoleTypes.SuperAdmin)]
     /// <remarks>
     /// This class-controller added for authorization user.
     /// </remarks>
-    public class AdminController : ControllerBase
+    //[Authorize(Roles = RoleTypes.SuperAdmin)]
+    public class AdminController : MainController
     {
         private IUserAdminService userService;
         private IProfileService profileService;
@@ -27,8 +27,10 @@ namespace Phone.Controllers.User
             this.profileService = profileService;
             dtoMapper = new Mapper(new MapperConfiguration(mapper =>
                 {
-                    mapper.CreateMap<ApplicationUser, UserCreateDto>().ReverseMap().ForMember(dest => dest.PasswordHash, opt => opt.MapFrom(src => src.Password));
+                    mapper.CreateMap<ApplicationUser, UserCreateDto>().ReverseMap()
+                        .ForMember(user => user.PasswordHash, opt => opt.MapFrom(src => src.Password));
                     mapper.CreateMap<Data.Entities.User.Profile, ProfileInfoDto>();
+                    mapper.CreateMap<Data.Entities.User.Profile, ProfileCreatedDto>().ReverseMap();
                     mapper.CreateMap<ApplicationUser, UserViewDto>();
                 }
             ));
@@ -53,7 +55,7 @@ namespace Phone.Controllers.User
         [ProducesResponseType(500)]
         public async Task<IActionResult> Single([FromRoute] string userId)
         {
-            var admin = await userService.GetAdminAsync(userId);
+            var admin = await userService.GetUserByIdAsync(userId);
             var profile = dtoMapper.Map<ProfileInfoDto>(await profileService.GetProfileByUserId(userId));
             var role = await userService.GetRoleByUserId(admin);
             return Ok(new { UserInfo = dtoMapper.Map<UserViewDto>(admin), ProfileInfo = profile, RoleInfo = role });
@@ -71,7 +73,7 @@ namespace Phone.Controllers.User
                 return BadRequest(ModelState);
 
             var itemModel = dtoMapper.Map<UserCreateDto, ApplicationUser>(userDto);
-            await userService.CreateUserAsync(itemModel);
+            await userService.CreateUserAsync(itemModel, userDto.Role);
 
             return Created(
                 this.BaseApiUrl + "/" + itemModel.Id,
@@ -79,15 +81,25 @@ namespace Phone.Controllers.User
             );
         }
 
-
-
-        public virtual string BaseApiUrl
+        [HttpPost]
+        [Route("api/profile")]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> CreateProfile([FromBody] ProfileCreatedDto profileDto)
         {
-            get
-            {
-                var request = ControllerContext.HttpContext.Request;
-                return request.Scheme + "://" + request.Host + request.Path;
-            }
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var itemModel = dtoMapper.Map<ProfileCreatedDto, Data.Entities.User.Profile>(profileDto);
+            await profileService.CreateProfileAsync(itemModel);
+
+            return Created(
+                this.BaseApiUrl + "/" + itemModel.Id,
+                new { UserId = itemModel.Id }
+            );
         }
+
     }
 }

@@ -17,10 +17,21 @@ namespace Phone.Services.User
         /// <summary>
         /// Method return profile by userId
         /// <summary>
+        /// <param name="userId">string</param>
         /// <returns>IList<ApplicationUser></returns>
         public async Task<Profile> GetProfileByUserId(string userId)
         {
             return await profileRepository.GetProfileByUserId(userId);
+        }
+
+        /// <summary>
+        /// Method create profile
+        /// <summary>
+        /// <param name="profile">Profile</param>
+        /// <returns>void</returns>
+        public async Task CreateProfileAsync(Profile profile)
+        {
+            await profileRepository.CreateProfileAsync(profile);
         }
     }
 }

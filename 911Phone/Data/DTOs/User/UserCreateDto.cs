@@ -5,9 +5,10 @@ namespace Phone.Data.DTOs.User
     public class UserCreateDto : UserBaseDto
     {
         /// <summary>
-        /// UserName user.
+        /// User name.
         /// </summary>
-        public string UserName { get; set; }
+        [Required]
+        public virtual string UserName { get; set; }
 
         /// <summary>
         /// Password user.
@@ -21,5 +22,9 @@ namespace Phone.Data.DTOs.User
         [Compare("Password", ErrorMessage = "Passwords don't match")]
         public virtual string ConfirmPassword { get; set; }
 
+        /// <summary>
+        /// User Role
+        /// </summary>
+        public virtual string Role { get; set; }
     }
 }

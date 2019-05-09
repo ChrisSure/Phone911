@@ -29,9 +29,9 @@ namespace Phone.Services.User
         /// <summary>
         /// <param name="userId">string</param>
         /// <returns>ApplicationUser</returns>
-        public async Task<ApplicationUser> GetAdminAsync(string userId)
+        public async Task<ApplicationUser> GetUserByIdAsync(string userId)
         {
-            return await userRepository.GetAdminAsync(userId); 
+            return await userRepository.GetUserAsync(userId); 
         }
 
         /// <summary>
@@ -49,9 +49,11 @@ namespace Phone.Services.User
         /// <summary>
         /// <param name="user">ApplicationUser</param>
         /// <returns>IList<ApplicationUser></returns>
-        public async Task CreateUserAsync(ApplicationUser user)
+        public async Task CreateUserAsync(ApplicationUser user, string role)
         {
             await userRepository.CreateUserAsync(user);
+            var userObj = await userRepository.GetUserByEmailAsync(user.Email);
+            await userRepository.AddUsersRoleAsync(userObj, role);
         }
     }
 }
