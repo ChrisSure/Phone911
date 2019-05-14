@@ -18,6 +18,21 @@ namespace Phone.Repositories.User
         }
 
         /// <summary>
+        /// Method return profile by id
+        /// <summary>
+        /// <param name="profileId">int</param>
+        /// <returns>Profile</returns>
+        public async Task<Profile> GetProfileById(int profileId)
+        {
+            var profile = await dbContext.Profiles.AsNoTracking().Where(p => p.Id == profileId).FirstOrDefaultAsync();
+            if (profile == null)
+            {
+                throw new CurrentEntryNotFoundException();
+            }
+            return profile;
+        }
+
+        /// <summary>
         /// Method return profile by userId
         /// <summary>
         /// <returns>IList<ApplicationUser></returns>
@@ -43,8 +58,20 @@ namespace Phone.Repositories.User
         }
 
         /// <summary>
+        /// Method update profile
+        /// <summary>
+        /// <param name="profile">Profile</param>
+        /// <returns>void</returns>
+        public async Task UpdateProfileAsync(Profile profile)
+        {
+            await Task.Run(() => dbContext.Profiles.Update(profile));
+            await SaveAsync();
+        }
+
+        /// <summary>
         /// Method update-create profile or throw exception
         /// <summary>
+        /// <returns>void</returns>
         public virtual async Task SaveAsync()
         {
             try
@@ -56,5 +83,6 @@ namespace Phone.Repositories.User
                 throw new DbUpdateException(dbuException.Message, dbuException);
             }
         }
+
     }
 }

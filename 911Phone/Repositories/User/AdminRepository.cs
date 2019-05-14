@@ -8,7 +8,6 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using Phone.Data;
 using Phone.Exceptions;
-using System;
 using Phone.Exceptions.User;
 
 namespace Phone.Repositories.User
@@ -57,6 +56,29 @@ namespace Phone.Repositories.User
                 throw new CurrentEntryNotFoundException();
             }
             return user;
+        }
+
+        /// <summary>
+        /// Method checking user password
+        /// <summary>
+        /// <param name="user">ApplicationUser</param>
+        /// <param name="currentPassword">string</param>
+        /// <returns>bool</returns>
+        public async Task<bool> CheckPassword(ApplicationUser user, string currentPassword)
+        {
+            return await userManager.CheckPasswordAsync(user, currentPassword);
+        }
+
+        /// <summary>
+        /// Method change user password
+        /// <summary>
+        /// <param name="user">ApplicationUser</param>
+        /// <param name="currentPassword">string</param>
+        /// <param name="newpassword">string</param>
+        /// <returns>void</returns>
+        public async Task ChangePassword(ApplicationUser user, string currentpassword, string newpassword)
+        {
+            EnsureIdentitySuccess(await userManager.ChangePasswordAsync(user, currentpassword, newpassword));
         }
 
         /// <summary>

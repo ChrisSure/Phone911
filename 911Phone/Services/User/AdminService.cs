@@ -35,6 +35,29 @@ namespace Phone.Services.User
         }
 
         /// <summary>
+        /// Method checking user password
+        /// <summary>
+        /// <param name="user">ApplicationUser</param>
+        /// <param name="currentPassword">string</param>
+        /// <returns>bool</returns>
+        public async Task<bool> CheckPassword(ApplicationUser user, string currentPassword)
+        {
+            return await userRepository.CheckPassword(user, currentPassword);
+        }
+
+        /// <summary>
+        /// Method change user password
+        /// <summary>
+        /// <param name="user">ApplicationUser</param>
+        /// <param name="currentPassword">string</param>
+        /// <param name="newpassword">string</param>
+        /// <returns>void</returns>
+        public async Task ChangePassword(ApplicationUser user, string currentpassword, string newpassword)
+        {
+            await userRepository.ChangePassword(user, currentpassword, newpassword);
+        }
+
+        /// <summary>
         /// Method return role  by user
         /// <summary>
         /// <param name="user">ApplicationUser</param>

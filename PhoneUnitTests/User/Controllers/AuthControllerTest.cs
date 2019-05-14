@@ -15,17 +15,17 @@ namespace PhoneUnitTests.User.Controllers
 {
     public class AuthControllerTest
     {
-        private readonly Mock<IUserService> mockUserService;
+        private readonly Mock<IUserAuthService> mockUserService;
         private readonly Mock<IJwtService> mockJwtService;
         private readonly Mock<ApplicationUser> mockUser;
-        private readonly Mock<AuthLoginDto> mockAuthLoginDto;
+        private readonly Mock<UserAuthDto> mockAuthLoginDto;
 
         public AuthControllerTest()
         {
-            mockUserService = new Mock<IUserService>();
+            mockUserService = new Mock<IUserAuthService>();
             mockJwtService = new Mock<IJwtService>();
             mockUser = new Mock<ApplicationUser>();
-            mockAuthLoginDto = new Mock<AuthLoginDto>();
+            mockAuthLoginDto = new Mock<UserAuthDto>();
         }
 
         /// <summary>

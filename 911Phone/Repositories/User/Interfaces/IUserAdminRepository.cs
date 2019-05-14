@@ -12,5 +12,7 @@ namespace Phone.Repositories.User.Interfaces
         Task<string> GetRoleByUserId(ApplicationUser userId);
         Task CreateUserAsync(ApplicationUser user);
         Task AddUsersRoleAsync(ApplicationUser user, string role);
+        Task<bool> CheckPassword(ApplicationUser user, string currentPassword);
+        Task ChangePassword(ApplicationUser user, string currentpassword, string newpassword);
     }
 }

@@ -8,6 +8,8 @@ using Phone.Data.DTOs.User;
 using System;
 using Phone.Data.Entities.User;
 using System.Collections.Generic;
+using ProfileNamespace = Phone.Data.Entities.User;
+
 
 namespace Phone.Controllers.User
 {
@@ -29,8 +31,8 @@ namespace Phone.Controllers.User
                 {
                     mapper.CreateMap<ApplicationUser, UserCreateDto>().ReverseMap()
                         .ForMember(user => user.PasswordHash, opt => opt.MapFrom(src => src.Password));
-                    mapper.CreateMap<Data.Entities.User.Profile, ProfileInfoDto>();
-                    mapper.CreateMap<Data.Entities.User.Profile, ProfileCreatedDto>().ReverseMap();
+                    mapper.CreateMap<ProfileNamespace.Profile, ProfileInfoDto>();
+                    mapper.CreateMap<ProfileNamespace.Profile, ProfileCreatedDto>().ReverseMap();
                     mapper.CreateMap<ApplicationUser, UserViewDto>();
                 }
             ));
@@ -81,6 +83,23 @@ namespace Phone.Controllers.User
             );
         }
 
+        [HttpPut]
+        [Route("api/admin/{userId}/change-password")]
+        public async Task<IActionResult> ChangePassword([FromBody]UserPasswordChangeDto passwordDto, [FromRoute]string userId)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var user = await userService.GetUserByIdAsync(userId);
+            if (!await userService.CheckPassword(user, passwordDto.CurrentPassword))
+            {
+                return BadRequest("You have entered wrong your password!");
+            } else {
+                await userService.ChangePassword(user, passwordDto.CurrentPassword, passwordDto.NewPassword);
+                return new OkObjectResult("Password changed");
+            }
+        }
+
         [HttpPost]
         [Route("api/profile")]
         [ProducesResponseType(201)]
@@ -92,13 +111,30 @@ namespace Phone.Controllers.User
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var itemModel = dtoMapper.Map<ProfileCreatedDto, Data.Entities.User.Profile>(profileDto);
+            var itemModel = dtoMapper.Map<ProfileCreatedDto, ProfileNamespace.Profile>(profileDto);
             await profileService.CreateProfileAsync(itemModel);
 
             return Created(
                 this.BaseApiUrl + "/" + itemModel.Id,
                 new { UserId = itemModel.Id }
             );
+        }
+
+        [HttpPut]
+        [Route("api/profile/{profileId}")]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> UpdateProfile([FromBody] ProfileCreatedDto profileDto, [FromRoute] int profileId)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var itemModel = dtoMapper.Map<ProfileCreatedDto, ProfileNamespace.Profile>(profileDto);
+
+            await profileService.UpdateProfileAsync(itemModel, profileId);
+            return new OkObjectResult("User Profile updated");
         }
 
     }
