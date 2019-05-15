@@ -58,6 +58,19 @@ namespace Phone.Services.User
         }
 
         /// <summary>
+        /// Method change user email
+        /// <summary>
+        /// <param name="email">string</param>
+        /// <param name="userId">string</param>
+        /// <returns>void</returns>
+        public async Task ChangeEmail(string email, string userId)
+        {
+            var user = await GetUserByIdAsync(userId);
+            user.Email = email;
+            await userRepository.ChangeEmail(user);
+        }
+
+        /// <summary>
         /// Method return role  by user
         /// <summary>
         /// <param name="user">ApplicationUser</param>

@@ -12,5 +12,6 @@ namespace Phone.Services.User.Interfaces
         Task CreateUserAsync(ApplicationUser user, string role);
         Task<bool> CheckPassword(ApplicationUser user, string currentPassword);
         Task ChangePassword(ApplicationUser user, string currentpassword, string newpassword);
+        Task ChangeEmail(string email, string userId);
     }
 }

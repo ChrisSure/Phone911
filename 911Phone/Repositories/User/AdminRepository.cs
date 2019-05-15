@@ -9,18 +9,21 @@ using System.Linq;
 using Phone.Data;
 using Phone.Exceptions;
 using Phone.Exceptions.User;
+using System.Data;
+using System.Data.SqlClient;
+using Phone.Helpers;
 
 namespace Phone.Repositories.User
 {
     public class AdminRepository : IUserAdminRepository
     {
         private UserManager<ApplicationUser> userManager;
-        private ApplicationDbContext context;
+        private ApplicationDbContext dbContext;
 
-        public AdminRepository(UserManager<ApplicationUser> user, ApplicationDbContext context)
+        public AdminRepository(UserManager<ApplicationUser> user, ApplicationDbContext dbContext)
         {
             this.userManager = user;
-            this.context = context;
+            this.dbContext = dbContext;
         }
 
         /// <summary>
@@ -41,7 +44,12 @@ namespace Phone.Repositories.User
         /// <returns>IList<ApplicationUser></returns>
         public async Task<ApplicationUser> GetUserAsync(string userId)
         {
-            return await userManager.FindByIdAsync(userId);
+            var user = await userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                throw new CurrentEntryNotFoundException();
+            }
+            return user;
         }
 
         /// <summary>
@@ -50,7 +58,7 @@ namespace Phone.Repositories.User
         /// <returns>IList<ApplicationUser></returns>
         public async Task<ApplicationUser> GetUserByEmailAsync(string email)
         {
-            var user = await context.Users.Where(u => u.Email == email).FirstOrDefaultAsync();
+            var user = await dbContext.Users.Where(u => u.Email == email).FirstOrDefaultAsync();
             if (user == null)
             {
                 throw new CurrentEntryNotFoundException();
@@ -79,6 +87,17 @@ namespace Phone.Repositories.User
         public async Task ChangePassword(ApplicationUser user, string currentpassword, string newpassword)
         {
             EnsureIdentitySuccess(await userManager.ChangePasswordAsync(user, currentpassword, newpassword));
+        }
+
+        /// <summary>
+        /// Method change user email
+        /// <summary>
+        /// <param name="user">ApplicationUser</param>
+        /// <returns>void</returns>
+        public async Task ChangeEmail(ApplicationUser user)
+        {
+            await userManager.UpdateAsync(user);
+            await SaveAsync();
         }
 
         /// <summary>
@@ -126,6 +145,27 @@ namespace Phone.Repositories.User
             }
 
             throw new UserException("Identity issue(s): " + string.Join(", ", exceptions));
+        }
+
+        /// <summary>
+        /// Method update-create profile or throw exception
+        /// <summary>
+        /// <returns>void</returns>
+        public virtual async Task SaveAsync()
+        {
+            try
+            {
+                await dbContext.SaveChangesAsync();
+            }
+            catch (DbUpdateException dbuException)
+            {
+                if (dbuException.InnerException.InnerException is SqlException sqlException)
+                {
+                    Helpers.SqlExceptionTranslator.ReThrow(sqlException, "");
+                }
+                throw new DbUpdateException(dbuException.Message, dbuException);
+            }
+
         }
         #endregion
     }

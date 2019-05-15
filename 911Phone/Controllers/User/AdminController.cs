@@ -100,6 +100,16 @@ namespace Phone.Controllers.User
             }
         }
 
+        [HttpPut]
+        [Route("api/admin/{userId}/change-email")]
+        public async Task<IActionResult> ChangeEmail([FromBody]UserBaseDto emailDto, [FromRoute]string userId)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            await userService.ChangeEmail(emailDto.Email, userId);
+            return new OkObjectResult("Email changed");
+        }
+
         [HttpPost]
         [Route("api/profile")]
         [ProducesResponseType(201)]
