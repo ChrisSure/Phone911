@@ -159,13 +159,15 @@ namespace Phone.Repositories.User
             }
             catch (DbUpdateException dbuException)
             {
-                if (dbuException.InnerException.InnerException is SqlException sqlException)
+                if (dbuException.InnerException != null)
                 {
+                    var sqlException = dbuException.InnerException as SqlException;
                     Helpers.SqlExceptionTranslator.ReThrow(sqlException, "");
+                } else
+                {
+                    throw new DbUpdateException(dbuException.Message, dbuException);
                 }
-                throw new DbUpdateException(dbuException.Message, dbuException);
             }
-
         }
         #endregion
     }
