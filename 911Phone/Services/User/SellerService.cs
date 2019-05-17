@@ -6,22 +6,22 @@ using System.Threading.Tasks;
 
 namespace Phone.Services.User
 {
-    public class AdminService : IAdminService
+    public class SellerService : ISellerService
     {
-        private IAdminRepository adminRepository;
+        private ISellerRepository sellerRepository;
 
-        public AdminService(IAdminRepository adminRepository)
+        public SellerService(ISellerRepository sellerRepository)
         {
-            this.adminRepository = adminRepository;
+            this.sellerRepository = sellerRepository;
         }
 
         /// <summary>
         /// Method return list user with role admin
         /// <summary>
         /// <returns>IList<ApplicationUser></returns>
-        public async Task<IList<ApplicationUser>> ListAdminsAsync()
+        public async Task<IList<ApplicationUser>> ListSellersAsync()
         {
-            return await adminRepository.ListAdminsAsync();
+            return await sellerRepository.ListSellersAsync();
         }
     }
 }

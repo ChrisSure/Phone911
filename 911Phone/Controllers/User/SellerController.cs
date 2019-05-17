@@ -8,30 +8,30 @@ using System.Threading.Tasks;
 
 namespace Phone.Controllers.User
 {
-    public class AdminController : MainController
+    public class SellerController : MainController
     {
-        private IAdminService adminService;
+        private ISellerService sellerService;
         private readonly IMapper dtoMapper;
 
-        public AdminController(IAdminService adminService)
+        public SellerController(ISellerService sellerService)
         {
-            this.adminService = adminService;
+            this.sellerService = sellerService;
             dtoMapper = new Mapper(new MapperConfiguration(mapper =>
-                {
-                    mapper.CreateMap<ApplicationUser, UserViewDto>();
-                }
+            {
+                mapper.CreateMap<ApplicationUser, UserViewDto>();
+            }
             ));
         }
 
         [HttpGet]
-        [Route("api/admins")]
+        [Route("api/sellers")]
         [ProducesResponseType(200)]
         [ProducesResponseType(401)]
         [ProducesResponseType(500)]
-        public async Task<IActionResult> ListAdmins()
+        public async Task<IActionResult> ListSellers()
         {
-            IList<UserViewDto> admins = dtoMapper.Map<IList<ApplicationUser>, IList<UserViewDto>>(await adminService.ListAdminsAsync());
-            return Ok(admins);
+            IList<UserViewDto> sellers = dtoMapper.Map<IList<ApplicationUser>, IList<UserViewDto>>(await sellerService.ListSellersAsync());
+            return Ok(sellers);
         }
     }
 }

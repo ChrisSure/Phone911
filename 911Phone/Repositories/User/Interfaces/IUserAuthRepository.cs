@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Phone.Repositories.User.Interfaces
 {
-    public interface IUserAuthRepository : IUserRepository
+    public interface IUserAuthRepository
     {
         Task<IList<string>> GetUserRolesAsync(ApplicationUser user);
         Task<ApplicationUser> FindUserByEmailAsync(string email);
