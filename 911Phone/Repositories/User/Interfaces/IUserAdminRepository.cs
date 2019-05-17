@@ -15,5 +15,6 @@ namespace Phone.Repositories.User.Interfaces
         Task<bool> CheckPassword(ApplicationUser user, string currentPassword);
         Task ChangePassword(ApplicationUser user, string currentpassword, string newpassword);
         Task ChangeEmail(ApplicationUser user);
+        Task ChangeRole(ApplicationUser user, string role, string previousRole);
     }
 }

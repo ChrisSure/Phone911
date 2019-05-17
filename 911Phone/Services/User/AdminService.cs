@@ -71,6 +71,19 @@ namespace Phone.Services.User
         }
 
         /// <summary>
+        /// Method change user role
+        /// <summary>
+        /// <param name="role">string</param>
+        /// <param name="userId">string</param>
+        /// <returns>void</returns>
+        public async Task ChangeRole(string role, string userId)
+        {
+            var user = await GetUserByIdAsync(userId);
+            var previousRole = await GetRoleByUserId(user);
+            await userRepository.ChangeRole(user, role, previousRole);
+        }
+
+        /// <summary>
         /// Method return role  by user
         /// <summary>
         /// <param name="user">ApplicationUser</param>

@@ -110,6 +110,16 @@ namespace Phone.Controllers.User
             return new OkObjectResult("Email changed");
         }
 
+        [HttpPut]
+        [Route("api/admin/{userId}/change-role")]
+        public async Task<IActionResult> ChangeRole([FromBody]UserRoleDto emailDto, [FromRoute]string userId)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            await userService.ChangeRole(emailDto.Role, userId);
+            return new OkObjectResult("Role changed");
+        }
+
         [HttpPost]
         [Route("api/profile")]
         [ProducesResponseType(201)]

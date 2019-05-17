@@ -101,6 +101,19 @@ namespace Phone.Repositories.User
         }
 
         /// <summary>
+        /// Method change user role
+        /// <summary>
+        /// <param name="user">ApplicationUser</param>
+        /// <param name="role">string</param>
+        /// <param name="previousRole">string</param>
+        /// <returns>void</returns>
+        public async Task ChangeRole(ApplicationUser user, string role, string previousRole)
+        {
+            EnsureIdentitySuccess(await userManager.RemoveFromRoleAsync(user, previousRole));
+            EnsureIdentitySuccess(await userManager.AddToRoleAsync(user, role));
+        }
+
+        /// <summary>
         /// Method return single user with role admin
         /// <summary>
         /// <returns>IList<ApplicationUser></returns>
