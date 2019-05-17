@@ -13,5 +13,14 @@ namespace Phone.Data
 
         public virtual DbSet<Profile> Profiles { get; set; }
         public virtual DbSet<UserRefreshToken> UserRefreshTokens { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<ApplicationUser>()
+                .HasIndex(b => b.Email)
+                .IsUnique();
+        }
     }
 }

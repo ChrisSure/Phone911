@@ -7,10 +7,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Phone.Data;
 
-namespace _911Phone.Migrations
+namespace Phone.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190425121540_InitialCreate")]
+    [Migration("20190507103938_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -227,9 +227,32 @@ namespace _911Phone.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
                     b.ToTable("Profiles");
+                });
+
+            modelBuilder.Entity("Phone.Data.Entities.User.UserRefreshToken", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("ExpireOn");
+
+                    b.Property<string>("RefreshToken")
+                        .IsRequired()
+                        .HasMaxLength(44);
+
+                    b.Property<string>("UserId")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserRefreshTokens");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -278,6 +301,14 @@ namespace _911Phone.Migrations
                 });
 
             modelBuilder.Entity("Phone.Data.Entities.User.Profile", b =>
+                {
+                    b.HasOne("Phone.Data.Entities.User.ApplicationUser", "User")
+                        .WithOne("Profile")
+                        .HasForeignKey("Phone.Data.Entities.User.Profile", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Phone.Data.Entities.User.UserRefreshToken", b =>
                 {
                     b.HasOne("Phone.Data.Entities.User.ApplicationUser", "User")
                         .WithMany()

@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
+using System.Data;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -59,6 +60,10 @@ namespace Phone.Middlewares
 
                 case UnauthorizedAccessException _:
                     code = HttpStatusCode.Unauthorized;
+                    break;
+
+                case DataException _:
+                    code = HttpStatusCode.InternalServerError;
                     break;
 
                 default:

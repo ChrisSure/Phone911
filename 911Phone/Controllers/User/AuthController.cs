@@ -15,9 +15,9 @@ namespace Phone.Controllers.User
     public class AuthController : ControllerBase
     {
         private IJwtService jwtService;
-        private IUserService userService;
+        private IUserAuthService userService;
 
-        public AuthController(IJwtService jwt, IUserService service)
+        public AuthController(IJwtService jwt, IUserAuthService service)
         {
             jwtService = jwt;
             userService = service;
@@ -34,7 +34,7 @@ namespace Phone.Controllers.User
         [HttpPost]
         [Route("api/auth/login")]
         [AllowAnonymous]
-        public async Task<IActionResult> LoginAsync([FromBody]AuthLoginDto dto)
+        public async Task<IActionResult> LoginAsync([FromBody]UserAuthDto dto)
         {
             if (!ModelState.IsValid)
             {

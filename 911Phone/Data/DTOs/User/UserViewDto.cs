@@ -1,13 +1,10 @@
-﻿using Microsoft.AspNetCore.Identity;
-
-namespace Phone.Data.Entities.User
+﻿namespace Phone.Data.DTOs.User
 {
-    public class ApplicationUser : IdentityUser
+    public class UserViewDto : UserBaseDto
     {
         /// <summary>
         /// Blocking user.
         /// </summary>
         public virtual bool? IsBlocked { get; set; }
-
     }
 }

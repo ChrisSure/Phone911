@@ -15,7 +15,7 @@ namespace PhoneUnitTests.User.Services
     public class JwtServiceTest
     {
         private readonly Mock<IUserRefreshTokenRepository> mockRefreshRepository;
-        private readonly Mock<IUserService> mockUserService;
+        private readonly Mock<IUserAuthService> mockUserService;
         private readonly Mock<IConfiguration> mockConfiguration;
         private readonly Mock<ClaimsPrincipal> mockClaimsPrincipal;
         private readonly Mock<UserRefreshToken> mockUserRefreshToken;
@@ -24,7 +24,7 @@ namespace PhoneUnitTests.User.Services
         public JwtServiceTest()
         {
             mockRefreshRepository = new Mock<IUserRefreshTokenRepository>();
-            mockUserService = new Mock<IUserService>();
+            mockUserService = new Mock<IUserAuthService>();
             mockConfiguration = new Mock<IConfiguration>();
             mockClaimsPrincipal = new Mock<ClaimsPrincipal>();
             mockUserRefreshToken = new Mock<UserRefreshToken>();

@@ -18,10 +18,10 @@ namespace Phone.Services.User
     public class JwtService : IJwtService
     {
         private readonly IUserRefreshTokenRepository refreshRepository;
-        private IUserService userService;
+        private IUserAuthService userService;
         private readonly IConfiguration configuration;
 
-        public JwtService(IUserRefreshTokenRepository refreshRepository, IUserService userService, IConfiguration configuration)
+        public JwtService(IUserRefreshTokenRepository refreshRepository, IUserAuthService userService, IConfiguration configuration)
         {
             this.refreshRepository = refreshRepository;
             this.userService = userService;

@@ -1,9 +1,7 @@
 ﻿using Phone.Data.Entities.User;
 using Phone.Repositories.User.Interfaces;
 using Phone.Services.User.Interfaces;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-
 
 namespace Phone.Services.User
 {
@@ -17,35 +15,84 @@ namespace Phone.Services.User
         }
 
         /// <summary>
-        /// Method delegate to repository get user roles
+        /// Method return single user with role admin
         /// <summary>
-        /// <param name="user">ApplicationUser</param>
-        /// <returns>IList<string></returns>
-        public async Task<IList<string>> GetUserRolesAsync(ApplicationUser user)
+        /// <param name="userId">string</param>
+        /// <returns>ApplicationUser</returns>
+        public async Task<ApplicationUser> GetUserByIdAsync(string userId)
         {
-            return await userRepository.GetUserRolesAsync(user);
+            return await userRepository.GetUserAsync(userId); 
         }
 
         /// <summary>
-        /// Method delegate to repository find user by email
+        /// Method checking user password
+        /// <summary>
+        /// <param name="user">ApplicationUser</param>
+        /// <param name="currentPassword">string</param>
+        /// <returns>bool</returns>
+        public async Task<bool> CheckPassword(ApplicationUser user, string currentPassword)
+        {
+            return await userRepository.CheckPassword(user, currentPassword);
+        }
+
+        /// <summary>
+        /// Method change user password
+        /// <summary>
+        /// <param name="user">ApplicationUser</param>
+        /// <param name="currentPassword">string</param>
+        /// <param name="newpassword">string</param>
+        /// <returns>void</returns>
+        public async Task ChangePassword(ApplicationUser user, string currentpassword, string newpassword)
+        {
+            await userRepository.ChangePassword(user, currentpassword, newpassword);
+        }
+
+        /// <summary>
+        /// Method change user email
         /// <summary>
         /// <param name="email">string</param>
-        /// <returns>ApplicationUser || null</returns>
-        public async Task<ApplicationUser> FindUserByEmailAsync(string email)
+        /// <param name="userId">string</param>
+        /// <returns>void</returns>
+        public async Task ChangeEmail(string email, string userId)
         {
-            return await userRepository.FindUserByEmailAsync(email);
+            var user = await GetUserByIdAsync(userId);
+            user.Email = email;
+            await userRepository.ChangeEmail(user);
         }
 
         /// <summary>
-        /// Method delegate to repository check for user password
+        /// Method change user role
+        /// <summary>
+        /// <param name="role">string</param>
+        /// <param name="userId">string</param>
+        /// <returns>void</returns>
+        public async Task ChangeRole(string role, string userId)
+        {
+            var user = await GetUserByIdAsync(userId);
+            var previousRole = await GetRoleByUserId(user);
+            await userRepository.ChangeRole(user, role, previousRole);
+        }
+
+        /// <summary>
+        /// Method return role  by user
         /// <summary>
         /// <param name="user">ApplicationUser</param>
-        /// <param name="password">string</param>
-        /// <returns>boolean</returns>
-        public async Task<bool> CheckPasswordAsync(ApplicationUser user, string password)
+        /// <returns>string</returns>
+        public async Task<string> GetRoleByUserId(ApplicationUser user)
         {
-            return await userRepository.CheckPasswordAsync(user, password);
+            return await userRepository.GetRoleByUserId(user);
         }
 
+        /// <summary>
+        /// Method create user and returned id
+        /// <summary>
+        /// <param name="user">ApplicationUser</param>
+        /// <returns>IList<ApplicationUser></returns>
+        public async Task CreateUserAsync(ApplicationUser user, string role)
+        {
+            await userRepository.CreateUserAsync(user);
+            var userObj = await userRepository.GetUserByEmailAsync(user.Email);
+            await userRepository.AddUsersRoleAsync(userObj, role);
+        }
     }
 }
