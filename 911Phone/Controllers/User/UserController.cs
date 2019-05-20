@@ -48,7 +48,7 @@ namespace Phone.Controllers.User
             var admin = await userService.GetUserByIdAsync(userId);
             var profile = dtoMapper.Map<ProfileInfoDto>(await profileService.GetProfileByUserId(userId));
             var role = await userService.GetRoleByUserId(admin);
-            return Ok(new { UserInfo = dtoMapper.Map<UserViewDto>(admin), ProfileInfo = profile, RoleInfo = role });
+            return Ok(new UserSingleDto { UserInfo = dtoMapper.Map<UserViewDto>(admin), ProfileInfo = profile, RoleInfo = role });
         }
 
         [HttpPost]
