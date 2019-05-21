@@ -12,5 +12,6 @@ namespace Phone.Services.User.Interfaces
         Task ChangePassword(ApplicationUser user, string currentpassword, string newpassword);
         Task ChangeEmail(string email, string userId);
         Task ChangeRole(string role, string userId);
+        Task DeleteUser(string userId);
     }
 }

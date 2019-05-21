@@ -39,7 +39,7 @@ namespace Phone.Controllers.User
         }
 
         [HttpGet]
-        [Route("api/admin/{userId}")]
+        [Route("api/user/{userId}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         [ProducesResponseType(500)]
@@ -52,7 +52,7 @@ namespace Phone.Controllers.User
         }
 
         [HttpPost]
-        [Route("api/admin")]
+        [Route("api/user")]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
@@ -71,8 +71,15 @@ namespace Phone.Controllers.User
             );
         }
 
+        [HttpDelete("api/user/{userId}")]
+        public async Task<IActionResult> Delete([FromRoute] string userId)
+        {
+            await userService.DeleteUser(userId);
+            return Ok("User deleted.");
+        }
+
         [HttpPut]
-        [Route("api/admin/{userId}/change-password")]
+        [Route("api/user/{userId}/change-password")]
         public async Task<IActionResult> ChangePassword([FromBody]UserPasswordChangeDto passwordDto, [FromRoute]string userId)
         {
             if (!ModelState.IsValid)
@@ -82,30 +89,29 @@ namespace Phone.Controllers.User
             if (!await userService.CheckPassword(user, passwordDto.CurrentPassword))
             {
                 return BadRequest("You have entered wrong your password!");
-            } else {
-                await userService.ChangePassword(user, passwordDto.CurrentPassword, passwordDto.NewPassword);
-                return new OkObjectResult("Password changed");
             }
+            await userService.ChangePassword(user, passwordDto.CurrentPassword, passwordDto.NewPassword);
+            return Ok("Password changed");
         }
 
         [HttpPut]
-        [Route("api/admin/{userId}/change-email")]
+        [Route("api/user/{userId}/change-email")]
         public async Task<IActionResult> ChangeEmail([FromBody]UserBaseDto emailDto, [FromRoute]string userId)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
             await userService.ChangeEmail(emailDto.Email, userId);
-            return new OkObjectResult("Email changed");
+            return Ok("Email changed");
         }
 
         [HttpPut]
-        [Route("api/admin/{userId}/change-role")]
+        [Route("api/user/{userId}/change-role")]
         public async Task<IActionResult> ChangeRole([FromBody]UserRoleDto emailDto, [FromRoute]string userId)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
             await userService.ChangeRole(emailDto.Role, userId);
-            return new OkObjectResult("Role changed");
+            return Ok("Role changed");
         }
 
         [HttpPost]
@@ -142,7 +148,7 @@ namespace Phone.Controllers.User
             var itemModel = dtoMapper.Map<ProfileCreatedDto, ProfileNamespace.Profile>(profileDto);
 
             await profileService.UpdateProfileAsync(itemModel, profileId);
-            return new OkObjectResult("User Profile updated");
+            return Ok("User Profile updated");
         }
 
     }

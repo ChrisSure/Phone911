@@ -55,6 +55,28 @@ namespace Phone.Repositories.User
         }
 
         /// <summary>
+        /// Method remove user role
+        /// <summary>
+        /// <param name="user">ApplicationUser</param>
+        /// <param name="role">string</param>
+        /// <returns>void</returns>
+        public async Task RemoveRoleUser(ApplicationUser user, string role)
+        {
+            EnsureIdentitySuccess(await userManager.RemoveFromRoleAsync(user, role));
+        }
+
+        /// <summary>
+        /// Method remove user
+        /// <summary>
+        /// <param name="user">ApplicationUser</param>
+        /// <returns>void</returns>
+        public async Task DeleteUser(ApplicationUser user)
+        {
+            EnsureIdentitySuccess(await userManager.DeleteAsync(user));
+        }
+
+
+        /// <summary>
         /// Method checking user password
         /// <summary>
         /// <param name="user">ApplicationUser</param>
@@ -105,7 +127,7 @@ namespace Phone.Repositories.User
         /// Method return single user with role admin
         /// <summary>
         /// <returns>IList<ApplicationUser></returns>
-        public async Task<string> GetRoleByUserId(ApplicationUser user)
+        public async Task<string> GetRoleByUser(ApplicationUser user)
         {
             return (await userManager.GetRolesAsync(user)).FirstOrDefault();
         }

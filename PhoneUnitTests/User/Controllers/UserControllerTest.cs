@@ -106,6 +106,211 @@ namespace PhoneUnitTests.User.Controllers
         #endregion UserController.Create
 
 
+        #region UserController.Delete
+        /// <summary>
+        /// Test for checking delete user
+        /// <summary>
+        [Fact]
+        public async void DeleteOkUserAsync()
+        {
+            // Arrange
+            UserController controller = new UserController(mockUserService.Object, mockProfileService.Object);
+
+            // Act
+            var result = await controller.Delete(It.IsAny<string>());
+
+            // Assert
+            Assert.IsType<OkObjectResult>(result);
+            mockUserService.Verify(
+                mock => mock.DeleteUser(It.IsAny<string>()));
+        }
+
+        /// <summary>
+        /// Test for checking error delete user
+        /// <summary>
+        [Fact]
+        public async void IsBadRequestObjectResultDeleteUserAsync()
+        {
+            // Arrange
+            mockUserService.Setup(service => service.DeleteUser(It.IsAny<string>())).Throws(new CurrentEntryNotFoundException("Specified User not found"));
+            UserController controller = new UserController(mockUserService.Object, mockProfileService.Object);
+
+            var ex = await Assert.ThrowsAsync<CurrentEntryNotFoundException>(() => controller.Delete(It.IsAny<string>()));
+            Assert.Equal("Specified User not found", ex.Message);
+        }
+        #endregion UserController.Delete
+
+
+        #region UserController.Update
+        ///// <summary>
+        ///// Test for checking update user password 
+        ///// <summary>
+        //[Fact]
+        //public async void UpdatePasswordUserAsync()
+        //{
+        //    // Arrange
+        //    Mock<ApplicationUser> mockUser = new Mock<ApplicationUser>();
+        //    Mock<UserPasswordChangeDto> mockUserPasswordDto = new Mock<UserPasswordChangeDto>();
+        //    mockUserService.Setup(service => service.CheckPassword(mockUser.Object, It.IsAny<string>())).ReturnsAsync(true);
+        //    UserController controller = new UserController(mockUserService.Object, mockProfileService.Object);
+
+        //    // Act
+        //    var result = await controller.ChangePassword(mockUserPasswordDto.Object, It.IsAny<string>());
+
+        //    // Assert
+        //    Assert.IsType<OkObjectResult>(result);
+        //    mockUserService.Verify(
+        //        mock => mock.ChangePassword(mockUser.Object, It.IsAny<string>(), It.IsAny<string>()), Times.Never());
+        //}
+
+        /// <summary>
+        /// Test for checking error update user password 
+        /// <summary>
+        [Fact]
+        public async void UpdateBadRequestPasswordUserAsync()
+        {
+            // Arrange
+            Mock<ApplicationUser> mockUser = new Mock<ApplicationUser>();
+            Mock<UserPasswordChangeDto> mockUserPasswordDto = new Mock<UserPasswordChangeDto>();
+            mockUserService.Setup(service => service.CheckPassword(mockUser.Object, It.IsAny<string>())).ReturnsAsync(false);
+            UserController controller = new UserController(mockUserService.Object, mockProfileService.Object);
+
+            // Act
+            var result = await controller.ChangePassword(mockUserPasswordDto.Object, It.IsAny<string>());
+
+            // Assert
+            Assert.IsType<BadRequestObjectResult>(result);
+            mockUserService.Verify(
+                mock => mock.ChangePassword(mockUser.Object, It.IsAny<string>(), It.IsAny<string>()), Times.Never());
+        }
+
+        /// <summary>
+        /// Test for checking update user email 
+        /// <summary>
+        [Fact]
+        public async void UpdateEmailUserAsync()
+        {
+            // Arrange
+            Mock<UserBaseDto> mockUserBaseDto = new Mock<UserBaseDto>();
+            UserController controller = new UserController(mockUserService.Object, mockProfileService.Object);
+
+            // Act
+            var result = await controller.ChangeEmail(mockUserBaseDto.Object, It.IsAny<string>());
+
+            // Assert
+            Assert.IsType<OkObjectResult>(result);
+        }
+
+        /// <summary>
+        /// Test for checking error update user email 
+        /// <summary>
+        [Fact]
+        public async void UpdateEmailFailedUserAsync()
+        {
+            // Arrange
+            Mock<UserBaseDto> mockUserBaseDto = new Mock<UserBaseDto>();
+            mockUserService.Setup(service => service.ChangeEmail(It.IsAny<string>(), It.IsAny<string>())).Throws(new CurrentEntryNotFoundException("Specified User not found"));
+            UserController controller = new UserController(mockUserService.Object, mockProfileService.Object);
+
+            var ex = await Assert.ThrowsAsync<CurrentEntryNotFoundException>(() => controller.ChangeEmail(mockUserBaseDto.Object, It.IsAny<string>()));
+            Assert.Equal("Specified User not found", ex.Message);
+        }
+
+        /// <summary>
+        /// Test for checking update user role 
+        /// <summary>
+        [Fact]
+        public async void UpdateRoleUserAsync()
+        {
+            // Arrange
+            Mock<UserRoleDto> mockUserRoleDto = new Mock<UserRoleDto>();
+            UserController controller = new UserController(mockUserService.Object, mockProfileService.Object);
+
+            // Act
+            var result = await controller.ChangeRole(mockUserRoleDto.Object, It.IsAny<string>());
+
+            // Assert
+            Assert.IsType<OkObjectResult>(result);
+        }
+
+        /// <summary>
+        /// Test for checking error update user role 
+        /// <summary>
+        [Fact]
+        public async void UpdateRoleFailedUserAsync()
+        {
+            // Arrange
+            Mock<UserRoleDto> mockUserRoleDto = new Mock<UserRoleDto>();
+            mockUserService.Setup(service => service.ChangeRole(It.IsAny<string>(), It.IsAny<string>())).Throws(new CurrentEntryNotFoundException("Specified User not found"));
+            UserController controller = new UserController(mockUserService.Object, mockProfileService.Object);
+
+            var ex = await Assert.ThrowsAsync<CurrentEntryNotFoundException>(() => controller.ChangeRole(mockUserRoleDto.Object, It.IsAny<string>()));
+            Assert.Equal("Specified User not found", ex.Message);
+        }
+
+        #endregion UserController.Update
+
+
+        #region UserController.Profile
+        /// <summary>
+        /// Test for checking create profile user
+        /// <summary>
+        [Fact]
+        public async Task CreateUserProfileTestAsync()
+        {
+            // Arrange
+            Mock<Profile> mockProfile = new Mock<Profile>();
+            Mock<ProfileCreatedDto> mockProfileCreatedDto = new Mock<ProfileCreatedDto>();
+            Mock<UserController> mockControler = new Mock<UserController>(mockUserService.Object, mockProfileService.Object) { CallBase = true };
+            mockControler.SetupGet(mock => mock.BaseApiUrl).Returns(It.IsAny<string>());
+
+            // Act
+            var result = await mockControler.Object.CreateProfile(mockProfileCreatedDto.Object);
+            var okResult = Assert.IsType<CreatedResult>(result);
+
+            // Assert
+            Assert.IsType<CreatedResult>(result);
+            mockProfileService.Verify(
+                mock => mock.CreateProfileAsync(mockProfile.Object), Times.Never());
+        }
+
+        /// <summary>
+        /// Test for checking update profile user password 
+        /// <summary>
+        [Fact]
+        public async void UpdateProfileUserAsync()
+        {
+            // Arrange
+            Mock<Profile> mockProfile = new Mock<Profile>();
+            Mock<ProfileCreatedDto> mockProfileCreatedDto = new Mock<ProfileCreatedDto>();
+            UserController controller = new UserController(mockUserService.Object, mockProfileService.Object);
+
+            // Act
+            var result = await controller.UpdateProfile(mockProfileCreatedDto.Object, It.IsAny<int>());
+
+            // Assert
+            Assert.IsType<OkObjectResult>(result);
+            mockProfileService.Verify(
+                mock => mock.UpdateProfileAsync(mockProfile.Object, It.IsAny<int>()), Times.Never());
+        }
+
+        ///// <summary>
+        ///// Test for checking error update profile user email 
+        ///// <summary>
+        //[Fact]
+        //public async void UpdateErrorProfileUserAsync()
+        //{
+        //    // Arrange
+        //    Mock<Profile> mockProfile = new Mock<Profile>();
+        //    Mock<ProfileCreatedDto> mockProfileCreatedDto = new Mock<ProfileCreatedDto>();
+        //    mockProfileService.Setup(service => service.UpdateProfileAsync(mockProfile.Object, It.IsAny<int>())).Throws(new CurrentEntryNotFoundException("Specified Profile not found"));
+        //    UserController controller = new UserController(mockUserService.Object, mockProfileService.Object);
+
+        //    var ex = await Assert.ThrowsAsync<CurrentEntryNotFoundException>(() => controller.UpdateProfile(mockProfileCreatedDto.Object, It.IsAny<int>()));
+        //    Assert.Equal("Specified Profile not found", ex.Message);
+        //}
+        #endregion UserController.Profile
+
 
     }
 }
