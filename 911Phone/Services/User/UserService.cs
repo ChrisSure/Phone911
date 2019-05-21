@@ -25,6 +25,19 @@ namespace Phone.Services.User
         }
 
         /// <summary>
+        /// Method remove user
+        /// <summary>
+        /// <param name="userId">string</param>
+        /// <returns>void</returns>
+        public async Task DeleteUser(string userId)
+        {
+            ApplicationUser user = await userRepository.GetUserAsync(userId);
+            string role = await userRepository.GetRoleByUser(user);
+            await userRepository.RemoveRoleUser(user, role);
+            await userRepository.DeleteUser(user);
+        }
+
+        /// <summary>
         /// Method checking user password
         /// <summary>
         /// <param name="user">ApplicationUser</param>
@@ -80,7 +93,7 @@ namespace Phone.Services.User
         /// <returns>string</returns>
         public async Task<string> GetRoleByUserId(ApplicationUser user)
         {
-            return await userRepository.GetRoleByUserId(user);
+            return await userRepository.GetRoleByUser(user);
         }
 
         /// <summary>
