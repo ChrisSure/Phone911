@@ -29,7 +29,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Data\StoredProcedures\" />
+    <None Remove="Data\StoredProcedures\Category\Create.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Data\StoredProcedures\Category\Create.sql" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

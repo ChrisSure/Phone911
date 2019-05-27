@@ -36,10 +36,11 @@ namespace Phone.Helpers
                         case 5:
                         case 10:
                         case 11:
-                        case 13:
-                        case 14:
+                            throw new ArgumentOutOfRangeException(exceptionDescription);
                         case 12:
                             throw new Exceptions.CurrentEntryNotFoundException(exceptionDescription);
+                        case 13:
+                        case 14:
                         default:
                             throw new InvalidProgramException("Uknown SQL Exception catched " + message, ex);
                     }

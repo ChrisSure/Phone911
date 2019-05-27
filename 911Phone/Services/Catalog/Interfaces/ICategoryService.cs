@@ -8,5 +8,6 @@ namespace Phone.Services.Catalog.Interfaces
     {
         Task<Category> SingleCategory(int categoryId);
         Task<IList<Category>> ListCategories();
+        Task CreateCategory(string title, int? parentId);
     }
 }

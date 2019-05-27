@@ -23,7 +23,7 @@ namespace Phone.Services.Catalog
         /// <returns>IList<Category></Category></returns>
         public async Task<IList<Category>> ListCategories()
         {
-            return await categoryRepository.ListCategories();
+            return await categoryRepository.ListCategoriesAsync();
         }
 
         /// <summary>
@@ -34,6 +34,17 @@ namespace Phone.Services.Catalog
         public async Task<Category> SingleCategory(int categoryId)
         {
             return await categoryRepository.SingleCategoryAsync(categoryId);
+        }
+
+        /// <summary>
+        /// Method delegate to repository create category
+        /// <summary>
+        /// <param name="title">string</param>
+        /// <param name="parentId">int</param>
+        /// <returns>void</returns>
+        public async Task CreateCategory(string title, int? parentId)
+        {
+            await categoryRepository.CreateCategoryAsync(title, parentId);
         }
     }
 }

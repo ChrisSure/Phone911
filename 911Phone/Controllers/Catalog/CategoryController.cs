@@ -46,5 +46,22 @@ namespace Phone.Controllers.Catalog
             var category = dtoMapper.Map<Category, CategoryViewDto>(await categoryService.SingleCategory(categoryId));
             return Ok(category);
         }
+
+        [HttpPost]
+        [Route("api/categories")]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> Create([FromBody] CategoryCreateDto categoryCreateDto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            await categoryService.CreateCategory(categoryCreateDto.Title, categoryCreateDto.ParentId);
+            return Ok("Category has created");
+        }
+
+
     }
 }

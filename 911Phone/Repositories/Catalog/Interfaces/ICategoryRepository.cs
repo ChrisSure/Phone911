@@ -7,6 +7,7 @@ namespace Phone.Repositories.Catalog.Interfaces
     public interface ICategoryRepository
     {
         Task<Category> SingleCategoryAsync(int categoryId);
-        Task<IList<Category>> ListCategories();
+        Task<IList<Category>> ListCategoriesAsync();
+        Task CreateCategoryAsync(string title, int? parentId);
     }
 }

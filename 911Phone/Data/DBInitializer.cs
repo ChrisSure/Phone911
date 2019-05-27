@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Phone.Data.Entities.Catalog;
 using Phone.Data.Entities.User;
+using Phone.Helpers;
 using Phone.Helpers.User;
 using System;
 using System.Threading.Tasks;
@@ -25,6 +26,7 @@ namespace Phone.Data
         {
             if (context.Database.EnsureCreated())
             {
+                await StoreProcFuncRepository.LoadAllToDb(context);
                 await SetRolesAsync();
                 await SeedUserAsync();
                 await SeedCategoryAsync();

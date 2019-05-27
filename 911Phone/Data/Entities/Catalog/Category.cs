@@ -49,5 +49,6 @@ namespace Phone.Data.Entities.Catalog
         /// </summary>
         [Required]
         public DateTime UpdatedAt { get; set; }
+
     }
 }

@@ -23,7 +23,7 @@ namespace Phone.Repositories.Catalog
         /// Method return list categories
         /// <summary>
         /// <returns>IList<Category></Category></returns>
-        public async Task<IList<Category>> ListCategories()
+        public async Task<IList<Category>> ListCategoriesAsync()
         {
             return await dbContext.Categories.OrderBy(c => c.Left).ToListAsync();
         }
@@ -41,6 +41,18 @@ namespace Phone.Repositories.Catalog
                 throw new CurrentEntryNotFoundException();
             }
             return category;
+        }
+
+        /// <summary>
+        /// Method create category
+        /// <summary>
+        /// <param name="title">string</param>
+        /// <param name="parentId">int</param>
+        /// <returns>void</returns>
+        public async Task CreateCategoryAsync(string title, int? parentId)
+        {
+            await dbContext.Database.ExecuteSqlCommandAsync(
+                    $"EXEC [Categories.Create] {title}, {parentId}");
         }
     }
 }
