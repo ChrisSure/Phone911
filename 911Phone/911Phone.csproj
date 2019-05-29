@@ -30,10 +30,12 @@
 
   <ItemGroup>
     <None Remove="Data\StoredProcedures\Category\Create.sql" />
+    <None Remove="Data\StoredProcedures\Category\Delete.sql" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Data\StoredProcedures\Category\Create.sql" />
+    <EmbeddedResource Include="Data\StoredProcedures\Category\Delete.sql" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

@@ -1,4 +1,5 @@
-﻿using Phone.Exceptions.User;
+﻿using Phone.Exceptions.Catalog;
+using Phone.Exceptions.User;
 using System;
 using System.Data.SqlClient;
 
@@ -27,20 +28,11 @@ namespace Phone.Helpers
                     switch (ex.State)
                     {
                         case 1:
-                        case 3:
-                        case 7:
-                        case 8:
-                        
-                        case 2:
-                        case 4:
-                        case 5:
-                        case 10:
-                        case 11:
-                            throw new ArgumentOutOfRangeException(exceptionDescription);
-                        case 12:
                             throw new Exceptions.CurrentEntryNotFoundException(exceptionDescription);
-                        case 13:
-                        case 14:
+                        case 2:
+                            throw new ArgumentOutOfRangeException(ex.Message);
+                        case 3:
+                            throw new IssetChildException(exceptionDescription);
                         default:
                             throw new InvalidProgramException("Uknown SQL Exception catched " + message, ex);
                     }

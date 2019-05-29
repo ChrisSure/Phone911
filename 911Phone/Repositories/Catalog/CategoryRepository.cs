@@ -4,6 +4,7 @@ using Phone.Data.Entities.Catalog;
 using Phone.Exceptions;
 using Phone.Repositories.Catalog.Interfaces;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -51,8 +52,32 @@ namespace Phone.Repositories.Catalog
         /// <returns>void</returns>
         public async Task CreateCategoryAsync(string title, int? parentId)
         {
-            await dbContext.Database.ExecuteSqlCommandAsync(
+            try
+            {
+                await dbContext.Database.ExecuteSqlCommandAsync(
                     $"EXEC [Categories.Create] {title}, {parentId}");
+            } catch (SqlException ex)
+            {
+                Helpers.SqlExceptionTranslator.ReThrow(ex, "Create Category");
+            }
+        }
+
+        /// <summary>
+        /// Method delete category
+        /// <summary>
+        /// <param name="categoryId">int</param>
+        /// <returns>void</returns>
+        public async Task DeleteCategoryAsync(int categoryId)
+        {
+            try
+            {
+                await dbContext.Database.ExecuteSqlCommandAsync(
+                    $"EXEC [Categories.Delete] {categoryId}");
+            }
+            catch (SqlException ex)
+            {
+                Helpers.SqlExceptionTranslator.ReThrow(ex, "Delete Category");
+            }
         }
     }
 }

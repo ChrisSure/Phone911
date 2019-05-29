@@ -62,6 +62,17 @@ namespace Phone.Controllers.Catalog
             return Ok("Category has created");
         }
 
+        [HttpDelete]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(500)]
+        [Route("api/categories/{categoryId}")]
+        public async Task<IActionResult> Delete(int categoryId)
+        {
+            await categoryService.DeleteCategory(categoryId);
+            return Ok("Category deleted.");
+        }
 
     }
 }
