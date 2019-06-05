@@ -33,6 +33,10 @@ namespace Phone.Helpers
                             throw new ArgumentOutOfRangeException(ex.Message);
                         case 3:
                             throw new IssetChildException(exceptionDescription);
+                        case 4:
+                            throw new CircularCategoryException(exceptionDescription);
+                        case 5:
+                            throw new LevelCategoryException(exceptionDescription);
                         default:
                             throw new InvalidProgramException("Uknown SQL Exception catched " + message, ex);
                     }

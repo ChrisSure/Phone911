@@ -63,6 +63,26 @@ namespace Phone.Repositories.Catalog
         }
 
         /// <summary>
+        /// Method update category
+        /// <summary>
+        /// <param name="categoryId">int</param>
+        /// <param name="title">string</param>
+        /// <param name="parentId">int</param>
+        /// <returns>void</returns>
+        public async Task UpdateCategoryAsync(int categoryId, string title, int? parentId)
+        {
+            try
+            {
+                await dbContext.Database.ExecuteSqlCommandAsync(
+                    $"EXEC [Categories.Update] {categoryId}, {title}, {parentId}");
+            }
+            catch (SqlException ex)
+            {
+                Helpers.SqlExceptionTranslator.ReThrow(ex, "Update Category");
+            }
+        }
+
+        /// <summary>
         /// Method delete category
         /// <summary>
         /// <param name="categoryId">int</param>

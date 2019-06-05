@@ -48,6 +48,18 @@ namespace Phone.Services.Catalog
         }
 
         /// <summary>
+        /// Method delegate to repository update category
+        /// <summary>
+        /// <param name="categoryId">int</param>
+        /// <param name="title">string</param>
+        /// <param name="parentId">int</param>
+        /// <returns>void</returns>
+        public async Task UpdateCategory(int categoryId, string title, int? parentId)
+        {
+            await categoryRepository.UpdateCategoryAsync(categoryId, title, parentId);
+        }
+
+        /// <summary>
         /// Method delegate to repository delete category
         /// <summary>
         /// <param name="categoryId">int</param>

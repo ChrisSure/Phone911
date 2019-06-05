@@ -9,6 +9,7 @@ namespace Phone.Repositories.Catalog.Interfaces
         Task<Category> SingleCategoryAsync(int categoryId);
         Task<IList<Category>> ListCategoriesAsync();
         Task CreateCategoryAsync(string title, int? parentId);
+        Task UpdateCategoryAsync(int categoryId, string title, int? parentId);
         Task DeleteCategoryAsync(int categoryId);
     }
 }

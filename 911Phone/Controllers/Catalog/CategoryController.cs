@@ -62,6 +62,21 @@ namespace Phone.Controllers.Catalog
             return Ok("Category has created");
         }
 
+        [HttpPut]
+        [Route("api/categories/{categoryId}")]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> Update([FromBody] CategoryCreateDto categoryCreateDto, [FromRoute]int categoryId)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            await categoryService.UpdateCategory(categoryId, categoryCreateDto.Title, categoryCreateDto.ParentId);
+            return Ok("Category has updated");
+        }
+
         [HttpDelete]
         [ProducesResponseType(200)]
         [ProducesResponseType(401)]
