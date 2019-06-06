@@ -22,7 +22,7 @@ AS
 		DECLARE @MyLevel AS SMALLINT = (SELECT [dbo].[Categories].[Level] FROM [dbo].[Categories] WHERE [dbo].[Categories].[Id] = @CategoryId);
 		DECLARE @MyLeft AS SMALLINT = (SELECT [dbo].[Categories].[Left] FROM [dbo].[Categories] WHERE [dbo].[Categories].[Id] = @CategoryId);
 		DECLARE @MyRight AS SMALLINT = (SELECT [dbo].[Categories].[Right] FROM [dbo].[Categories] WHERE [dbo].[Categories].[Id] = @CategoryId);
-		DECLARE @MyDiff AS TINYINT = (@MyRight - @MyLeft) + 1;
+		DECLARE @MyDiff AS SMALLINT = (@MyRight - @MyLeft) + 1;
 
 		DECLARE @Row AS INT = (SELECT COUNT([dbo].[Categories].[Id]) FROM [dbo].[Categories] 
 			WHERE [dbo].[Categories].[Left] > @MyLeft AND [dbo].[Categories].[Right] < @MyRight);

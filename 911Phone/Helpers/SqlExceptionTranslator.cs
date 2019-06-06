@@ -37,6 +37,8 @@ namespace Phone.Helpers
                             throw new CircularCategoryException(exceptionDescription);
                         case 5:
                             throw new LevelCategoryException(exceptionDescription);
+                        case 6:
+                            throw new SortCategoryException(exceptionDescription);
                         default:
                             throw new InvalidProgramException("Uknown SQL Exception catched " + message, ex);
                     }
