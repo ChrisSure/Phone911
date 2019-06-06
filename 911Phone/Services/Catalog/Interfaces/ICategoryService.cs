@@ -11,5 +11,7 @@ namespace Phone.Services.Catalog.Interfaces
         Task CreateCategory(string title, int? parentId);
         Task UpdateCategory(int categoryId, string title, int? parentId);
         Task DeleteCategory(int categoryId);
+        Task UpCategory(int categoryId);
+        Task DownCategory(int categoryId);
     }
 }

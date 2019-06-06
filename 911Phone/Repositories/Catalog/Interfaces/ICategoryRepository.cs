@@ -11,5 +11,7 @@ namespace Phone.Repositories.Catalog.Interfaces
         Task CreateCategoryAsync(string title, int? parentId);
         Task UpdateCategoryAsync(int categoryId, string title, int? parentId);
         Task DeleteCategoryAsync(int categoryId);
+        Task UpCategoryAsync(int categoryId);
+        Task DownCategoryAsync(int categoryId);
     }
 }

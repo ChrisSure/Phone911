@@ -68,5 +68,25 @@ namespace Phone.Services.Catalog
         {
             await categoryRepository.DeleteCategoryAsync(categoryId);
         }
+
+        /// <summary>
+        /// Method delegate to repository up category
+        /// <summary>
+        /// <param name="categoryId">int</param>
+        /// <returns>void</returns>
+        public async Task UpCategory(int categoryId)
+        {
+            await categoryRepository.UpCategoryAsync(categoryId);
+        }
+
+        /// <summary>
+        /// Method delegate to repository down category
+        /// <summary>
+        /// <param name="categoryId">int</param>
+        /// <returns>void</returns>
+        public async Task DownCategory(int categoryId)
+        {
+            await categoryRepository.DownCategoryAsync(categoryId);
+        }
     }
 }

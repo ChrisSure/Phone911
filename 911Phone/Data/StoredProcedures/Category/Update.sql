@@ -9,6 +9,9 @@ CREATE PROCEDURE [dbo].[Categories.Update]
 	@ParentId INT
 AS
 	BEGIN
+		IF((SELECT [dbo].[Categories].[Id] FROM [dbo].[Categories] WHERE [dbo].[Categories].[Id] = @CategoryId) IS NULL)
+			Throw 50001, 'Current Category does not exist', 1;
+
 		IF ((SELECT [dbo].[Categories].[Level] FROM [dbo].[Categories] WHERE [dbo].[Categories].[Id] = @ParentId) = 3)
 			Throw 50001, 'Level Categories will exceed 3 level.', 5;
 
@@ -16,7 +19,7 @@ AS
 			BEGIN
 				DECLARE @ParentCheckId AS INT = (SELECT [dbo].[Categories].[Id] FROM [dbo].[Categories] WHERE [dbo].[Categories].[Id] = @ParentId);
 				IF(@ParentCheckId IS NULL)
-					Throw 50001, 'Current Category does not exist', 1;
+					Throw 50001, 'Current Parent Category does not exist', 1;
 			END
 
 		DECLARE @MyLevel AS SMALLINT = (SELECT [dbo].[Categories].[Level] FROM [dbo].[Categories] WHERE [dbo].[Categories].[Id] = @CategoryId);

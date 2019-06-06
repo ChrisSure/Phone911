@@ -99,5 +99,41 @@ namespace Phone.Repositories.Catalog
                 Helpers.SqlExceptionTranslator.ReThrow(ex, "Delete Category");
             }
         }
+
+        /// <summary>
+        /// Method up category
+        /// <summary>
+        /// <param name="categoryId">int</param>
+        /// <returns>void</returns>
+        public async Task UpCategoryAsync(int categoryId)
+        {
+            try
+            {
+                await dbContext.Database.ExecuteSqlCommandAsync(
+                    $"EXEC [Categories.SortUp] {categoryId}");
+            }
+            catch (SqlException ex)
+            {
+                Helpers.SqlExceptionTranslator.ReThrow(ex, "Sort Up Category");
+            }
+        }
+
+        /// <summary>
+        /// Method down category
+        /// <summary>
+        /// <param name="categoryId">int</param>
+        /// <returns>void</returns>
+        public async Task DownCategoryAsync(int categoryId)
+        {
+            try
+            {
+                await dbContext.Database.ExecuteSqlCommandAsync(
+                    $"EXEC [Categories.SortDown] {categoryId}");
+            }
+            catch (SqlException ex)
+            {
+                Helpers.SqlExceptionTranslator.ReThrow(ex, "Sort Down Category");
+            }
+        }
     }
 }

@@ -7,6 +7,9 @@ CREATE PROCEDURE [dbo].[Categories.SortDown]
 	@CategoryId INT
 AS
 	BEGIN
+		IF((SELECT [dbo].[Categories].[Id] FROM [dbo].[Categories] WHERE [dbo].[Categories].[Id] = @CategoryId) IS NULL)
+			Throw 50001, 'Current Category does not exist', 1;
+
 		DECLARE @MyLevel AS SMALLINT = (SELECT [dbo].[Categories].[Level] FROM [dbo].[Categories] WHERE [dbo].[Categories].[Id] = @CategoryId);
 		DECLARE @MyLeft AS SMALLINT = (SELECT [dbo].[Categories].[Left] FROM [dbo].[Categories] WHERE [dbo].[Categories].[Id] = @CategoryId);
 		DECLARE @MyRight AS SMALLINT = (SELECT [dbo].[Categories].[Right] FROM [dbo].[Categories] WHERE [dbo].[Categories].[Id] = @CategoryId);
@@ -23,8 +26,6 @@ AS
 										AND [dbo].[Categories].[Level] = (@MyLevel - 1));
 			END
 		
-
-
 		DECLARE @PreviousLeft AS INT = (SELECT MIN([dbo].[Categories].[Left]) FROM [dbo].[Categories] WHERE [dbo].[Categories].[Left] > @MyLeft 
 													AND [dbo].[Categories].[Right] > @MyRight AND [dbo].[Categories].[Level] = @MyLevel AND [dbo].[Categories].[Right] <= @ParentRight);
 		DECLARE @PreviousRight AS INT = (SELECT MIN([dbo].[Categories].[Right]) FROM [dbo].[Categories] WHERE [dbo].[Categories].[Left] > @MyLeft 

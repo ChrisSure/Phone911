@@ -10,7 +10,6 @@ namespace Phone.Controllers.Catalog
 {
     public class CategoryController : MainController
     {
-
         private ICategoryService categoryService;
         private readonly IMapper dtoMapper;
 
@@ -87,6 +86,30 @@ namespace Phone.Controllers.Catalog
         {
             await categoryService.DeleteCategory(categoryId);
             return Ok("Category deleted.");
+        }
+
+        [HttpGet]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(500)]
+        [Route("api/categories/{categoryId}/up")]
+        public async Task<IActionResult> Up(int categoryId)
+        {
+            await categoryService.UpCategory(categoryId);
+            return Ok("Category move to up.");
+        }
+
+        [HttpGet]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(500)]
+        [Route("api/categories/{categoryId}/down")]
+        public async Task<IActionResult> Down(int categoryId)
+        {
+            await categoryService.DownCategory(categoryId);
+            return Ok("Category move to down.");
         }
 
     }
