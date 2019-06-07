@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Phone.Data.Entities.Catalog;
 using Phone.Data.Entities.User;
+using Phone.Helpers;
 using Phone.Helpers.User;
 using System;
 using System.Threading.Tasks;
@@ -24,8 +26,10 @@ namespace Phone.Data
         {
             if (context.Database.EnsureCreated())
             {
+                await StoreProcFuncRepository.LoadAllToDb(context);
                 await SetRolesAsync();
                 await SeedUserAsync();
+                await SeedCategoryAsync();
             }
         }
 
@@ -121,6 +125,41 @@ namespace Phone.Data
             context.SaveChanges();
         }
         #endregion Users seed
+
+        #region Category seed
+        private async Task SeedCategoryAsync()
+        {
+            await Task.Run(() =>
+            {
+                var category1 = new Category() { Title = "Smartfones", Left = 1, Right = 16, Level = 1, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
+                context.Categories.Add(category1);
+                    var pidcategory1 = new Category() { Title = "Apple", Left = 2, Right = 9, Level = 2, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
+                    context.Categories.Add(pidcategory1);
+                        var ppidcategory1 = new Category() { Title = "Iphone 5", Left = 3, Right = 4, Level = 3, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
+                        context.Categories.Add(ppidcategory1);
+                        var ppidcategory2 = new Category() { Title = "Iphone 7s", Left = 5, Right = 6, Level = 3, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
+                        context.Categories.Add(ppidcategory2);
+                        var ppidcategory3 = new Category() { Title = "Iphone X", Left = 7, Right = 8, Level = 3, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
+                        context.Categories.Add(ppidcategory3);
+                    var pidcategory2 = new Category() { Title = "Samsung", Left = 10, Right = 13, Level = 2, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
+                    context.Categories.Add(pidcategory2);
+                        var ppidcategory4 = new Category() { Title = "Samsung A30", Left = 11, Right = 12, Level = 3, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
+                        context.Categories.Add(ppidcategory4);
+                    var pidcategory3 = new Category() { Title = "Xiaomi", Left = 14, Right = 15, Level = 2, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
+                    context.Categories.Add(pidcategory3);
+                var category2 = new Category() { Title = "Tablet", Left = 17, Right = 22, Level = 1, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
+                context.Categories.Add(category2);
+                    var pidcategory4 = new Category() { Title = "Apple", Left = 18, Right = 19, Level = 2, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
+                    context.Categories.Add(pidcategory4);
+                    var pidcategory5 = new Category() { Title = "Huawei", Left = 20, Right = 21, Level = 2, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
+                    context.Categories.Add(pidcategory5);
+                var category3 = new Category() { Title = "Laptop", Left = 23, Right = 24, Level = 1, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
+                context.Categories.Add(category3);
+
+                context.SaveChanges();
+            });
+        }
+        #endregion Category seed
 
     }
 }
