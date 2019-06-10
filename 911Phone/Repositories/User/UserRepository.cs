@@ -35,7 +35,7 @@ namespace Phone.Repositories.User
             var user = await userManager.FindByIdAsync(userId);
             if (user == null)
             {
-                throw new CurrentEntryNotFoundException();
+                throw new CurrentEntryNotFoundException("Current User doesn't isset.");
             }
             return user;
         }
@@ -49,7 +49,7 @@ namespace Phone.Repositories.User
             var user = await dbContext.Users.Where(u => u.Email == email).FirstOrDefaultAsync();
             if (user == null)
             {
-                throw new CurrentEntryNotFoundException();
+                throw new CurrentEntryNotFoundException("Current User doesn't isset.");
             }
             return user;
         }

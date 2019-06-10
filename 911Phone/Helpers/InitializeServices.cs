@@ -26,6 +26,7 @@ namespace Phone.Helpers
             services.AddScoped<ICustomerService, CustomerService>();
             services.AddScoped<IProfileService, ProfileService>();
             services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<IProductService, ProductService>();
 
 
             services.AddScoped<IUserAuthRepository, AuthRepository>();
@@ -36,6 +37,7 @@ namespace Phone.Helpers
             services.AddScoped<IProfileRepository, ProfileRepository>();
             services.AddScoped<IUserRefreshTokenRepository, UserRefreshTokenRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<IProductRepository, ProductRepository>();
 
 
 

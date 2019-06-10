@@ -1,10 +1,9 @@
-﻿using Phone.Data.DTOs.Catalog;
-using Phone.Data.Entities.Catalog;
+﻿using Phone.Data.Entities.Catalog;
 using Phone.Repositories.Catalog.Interfaces;
 using Phone.Services.Catalog.Interfaces;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+
 
 namespace Phone.Services.Catalog
 {

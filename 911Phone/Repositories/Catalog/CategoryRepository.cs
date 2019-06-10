@@ -39,7 +39,7 @@ namespace Phone.Repositories.Catalog
             var category = await dbContext.Categories.FindAsync(categoryId);
             if (category == null)
             {
-                throw new CurrentEntryNotFoundException();
+                throw new CurrentEntryNotFoundException("Current Category doesn't isset.");
             }
             return category;
         }

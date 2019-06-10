@@ -50,5 +50,10 @@ namespace Phone.Data.Entities.Catalog
         [Required]
         public DateTime UpdatedAt { get; set; }
 
+        /// <summary>
+        /// List of products by category id.
+        /// </summary>
+        public IList<Product> Resources { get; set; } = new List<Product>();
+
     }
 }

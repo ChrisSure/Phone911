@@ -15,6 +15,7 @@ namespace Phone.Data
         public virtual DbSet<Profile> Profiles { get; set; }
         public virtual DbSet<UserRefreshToken> UserRefreshTokens { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
+        public virtual DbSet<Product> Products { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -24,6 +25,9 @@ namespace Phone.Data
             modelBuilder.Entity<ApplicationUser>()
                 .HasIndex(b => b.Email)
                 .IsUnique();
+
+            modelBuilder.Entity<Product>()
+                .HasIndex(b => b.Title);
         }
     }
 }
