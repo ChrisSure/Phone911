@@ -28,8 +28,7 @@ namespace Phone.Data
             {
                 await StoreProcFuncRepository.LoadAllToDb(context);
                 await SetRolesAsync();
-                await SeedUserAsync();
-                await SeedCategoryProductAsync();
+                await SeedDataAsync();
             }
         }
 
@@ -50,9 +49,10 @@ namespace Phone.Data
         }
         #endregion Set roles
 
-        #region Users seed
-        private async Task SeedUserAsync()
+        #region SeedData seed
+        private async Task SeedDataAsync()
         {
+
             // Create Customer
             var userCustomer = new ApplicationUser() { UserName = "Customer", Email = "cust@mail.com" };
             await userManager.CreateAsync(userCustomer, "Customer_911");
@@ -122,58 +122,62 @@ namespace Phone.Data
                 context.Profiles.Add(profile);
             }
 
+
+            //Categories
+            var category1 = new Category() { Title = "Smartfones", Left = 1, Right = 8, Level = 1, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
+            context.Categories.Add(category1);
+            var pidcategory1 = new Category() { Title = "Apple", Left = 2, Right = 3, Level = 2, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
+            context.Categories.Add(pidcategory1);
+            var pidcategory2 = new Category() { Title = "Samsung", Left = 4, Right = 5, Level = 2, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
+            context.Categories.Add(pidcategory2);
+            var pidcategory3 = new Category() { Title = "Xiaomi", Left = 6, Right = 7, Level = 2, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
+            context.Categories.Add(pidcategory3);
+            var category2 = new Category() { Title = "Tablet", Left = 9, Right = 14, Level = 1, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
+            context.Categories.Add(category2);
+            var pidcategory4 = new Category() { Title = "Apple", Left = 10, Right = 11, Level = 2, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
+            context.Categories.Add(pidcategory4);
+            var pidcategory5 = new Category() { Title = "Lenovo", Left = 12, Right = 13, Level = 2, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
+            context.Categories.Add(pidcategory5);
+            var category3 = new Category() { Title = "Laptop", Left = 15, Right = 16, Level = 1, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
+            context.Categories.Add(category3);
+
+            //Products
+            var product1 = new Product() { Title = "Iphone 4", Price = 4000, Text = "Good smartfone", IsAproval = true, CategoryId = pidcategory1.Id, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
+            context.Products.Add(product1);
+            var product2 = new Product() { Title = "Iphone 6s", Price = 9000, IsAproval = false, CategoryId = pidcategory1.Id, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
+            context.Products.Add(product2);
+            var product3 = new Product() { Title = "Iphone X", Price = 20000, IsAproval = true, CategoryId = pidcategory1.Id, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
+            context.Products.Add(product3);
+            var product4 = new Product() { Title = "Samsung S8", Price = 12000, IsAproval = true, CategoryId = pidcategory2.Id, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
+            context.Products.Add(product4);
+            var product5 = new Product() { Title = "Samsung S10", Price = 18000, IsAproval = true, Text = "Flagman samsung company", CategoryId = pidcategory2.Id, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
+            context.Products.Add(product5);
+            var product6 = new Product() { Title = "Ipad 3", Price = 5000, IsAproval = true, Text = "Old tablet", CategoryId = pidcategory4.Id, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
+            context.Products.Add(product6);
+            var product7 = new Product() { Title = "Ipad air 2", Price = 12000, IsAproval = true, Text = "New tablet", CategoryId = pidcategory4.Id, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
+            context.Products.Add(product7);
+            var product8 = new Product() { Title = "Lenovo t 100", Price = 3000, IsAproval = true, CategoryId = pidcategory5.Id, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
+            context.Products.Add(product8);
+            var product9 = new Product() { Title = "HP sql 980", Price = 13000, IsAproval = true, CategoryId = category3.Id, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
+            context.Products.Add(product9);
+
+            //Orders
+            var order1 = new Order() { TotalSum = 13000, TotalCount = 2, CustomerId = null, SellerId = userSeller.Id, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
+            context.Orders.Add(order1);
+            var order2 = new Order() { TotalSum = 12000, TotalCount = 1, CustomerId = userCustomer.Id, SellerId = userSeller.Id, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
+            context.Orders.Add(order2);
+
+            //Items
+            var item1 = new ProductOrder() { OrderId = order1.Id, ProductId = product1.Id };
+            order1.ProductOrder.Add(item1);
+            var item2 = new ProductOrder() { OrderId = order1.Id, ProductId = product2.Id };
+            order1.ProductOrder.Add(item2);
+            var item3 = new ProductOrder() { OrderId = order2.Id, ProductId = product7.Id };
+            order2.ProductOrder.Add(item3);
+
             context.SaveChanges();
         }
-        #endregion Users seed
-
-        #region Category seed
-        private async Task SeedCategoryProductAsync()
-        {
-            await Task.Run(() =>
-            {
-                //Categories
-                var category1 = new Category() { Title = "Smartfones", Left = 1, Right = 8, Level = 1, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
-                context.Categories.Add(category1);
-                    var pidcategory1 = new Category() { Title = "Apple", Left = 2, Right = 3, Level = 2, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
-                    context.Categories.Add(pidcategory1);
-                    var pidcategory2 = new Category() { Title = "Samsung", Left = 4, Right = 5, Level = 2, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
-                    context.Categories.Add(pidcategory2);
-                    var pidcategory3 = new Category() { Title = "Xiaomi", Left = 6, Right = 7, Level = 2, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
-                    context.Categories.Add(pidcategory3);
-                var category2 = new Category() { Title = "Tablet", Left = 9, Right = 14, Level = 1, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
-                context.Categories.Add(category2);
-                    var pidcategory4 = new Category() { Title = "Apple", Left = 10, Right = 11, Level = 2, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
-                    context.Categories.Add(pidcategory4);
-                    var pidcategory5 = new Category() { Title = "Lenovo", Left = 12, Right = 13, Level = 2, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
-                    context.Categories.Add(pidcategory5);
-                var category3 = new Category() { Title = "Laptop", Left = 15, Right = 16, Level = 1, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
-                context.Categories.Add(category3);
-
-                //Products
-                var product1 = new Product() { Title = "Iphone 4", Price = 4000, Text = "Good smartfone", IsAproval = true, CategoryId = pidcategory1.Id, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
-                context.Products.Add(product1);
-                var product2 = new Product() { Title = "Iphone 6s", Price = 9000, IsAproval = false, CategoryId = pidcategory1.Id, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
-                context.Products.Add(product2);
-                var product3 = new Product() { Title = "Iphone X", Price = 20000, IsAproval = true, CategoryId = pidcategory1.Id, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
-                context.Products.Add(product3);
-                var product4 = new Product() { Title = "Samsung S8", Price = 12000, IsAproval = true, CategoryId = pidcategory2.Id, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
-                context.Products.Add(product4);
-                var product5 = new Product() { Title = "Samsung S10", Price = 18000, IsAproval = true, Text = "Flagman samsung company", CategoryId = pidcategory2.Id, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
-                context.Products.Add(product5);
-                var product6 = new Product() { Title = "Ipad 3", Price = 5000, IsAproval = true, Text = "Old tablet", CategoryId = pidcategory4.Id, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
-                context.Products.Add(product6);
-                var product7 = new Product() { Title = "Ipad air 2", Price = 12000, IsAproval = true, Text = "New tablet", CategoryId = pidcategory4.Id, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
-                context.Products.Add(product7);
-                var product8 = new Product() { Title = "Lenovo t 100", Price = 3000, IsAproval = true, CategoryId = pidcategory5.Id, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
-                context.Products.Add(product8);
-                var product9 = new Product() { Title = "HP sql 980", Price = 13000, IsAproval = true, CategoryId = category3.Id, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
-                context.Products.Add(product9);
-
-
-                context.SaveChanges();
-            });
-        }
-        #endregion Category seed
+        #endregion SeedData seed
 
     }
 }

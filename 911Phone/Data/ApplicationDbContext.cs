@@ -16,6 +16,7 @@ namespace Phone.Data
         public virtual DbSet<UserRefreshToken> UserRefreshTokens { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Product> Products { get; set; }
+        public virtual DbSet<Order> Orders { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -28,6 +29,9 @@ namespace Phone.Data
 
             modelBuilder.Entity<Product>()
                 .HasIndex(b => b.Title);
+
+            modelBuilder.Entity<ProductOrder>()
+                .HasKey(t => new { t.OrderId, t.ProductId });
         }
     }
 }
