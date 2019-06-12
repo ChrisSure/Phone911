@@ -1,42 +1,41 @@
-﻿using System;
+﻿using Phone.Data.Entities.Catalog;
+using Phone.Data.Entities.User;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Phone.Data.Entities.Catalog
+namespace Phone.Data.DTOs.Catalog
 {
-    public class Category
+    public class OrderViewDto
     {
         /// <summary>
         /// Identificator.
         /// </summary>
-        [Key]
         [Required]
         public int Id { get; set; }
 
         /// <summary>
-        /// Title.
+        /// Total sum of order.
         /// </summary>
         [Required]
-        [MaxLength(100)]
-        public string Title { get; set; }
+        public int TotalSum { get; set; }
 
         /// <summary>
-        /// Left value.
+        /// Total count item of order.
         /// </summary>
         [Required]
-        public short Left { get; set; }
+        public int TotalCount { get; set; }
+
 
         /// <summary>
-        /// Right value.
-        /// </summary>
-        [Required]
-        public short Right { get; set; }
+        /// Relation with table users many to one.
+        /// </summary
+        public virtual ApplicationUser Customer { get; set; }
 
         /// <summary>
-        /// Level value.
+        /// Relation with table users many to one.
         /// </summary>
-        [Required]
-        public byte Level { get; set; }
+        public virtual ApplicationUser Seller { get; set; }
 
         /// <summary>
         /// Time of creation.
@@ -51,9 +50,9 @@ namespace Phone.Data.Entities.Catalog
         public DateTime UpdatedAt { get; set; }
 
         /// <summary>
-        /// List of products by category id.
+        /// List of products.
         /// </summary>
-        public IList<Product> Resources { get; set; } = new List<Product>();
+        public List<ProductOrder> ProductOrder { get; set; }
 
     }
 }

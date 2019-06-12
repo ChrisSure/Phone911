@@ -1,0 +1,87 @@
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using Phone.Data.DTOs.Catalog;
+using Phone.Data.Entities.Catalog;
+using Phone.Services.Catalog.Interfaces;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+namespace Phone.Controllers.Catalog
+{
+    public class OrderController : MainController
+    {
+        private IOrderService orderService;
+        private readonly IMapper dtoMapper;
+
+        public OrderController(IOrderService orderService)
+        {
+            this.orderService = orderService;
+            dtoMapper = new Mapper(new MapperConfiguration(mapper =>
+            {
+                mapper.CreateMap<Order, OrderListDto>();
+                mapper.CreateMap<Order, OrderViewDto>().ReverseMap();
+            }
+            ));
+        }
+
+        [HttpGet]
+        [Route("api/orders/{orderId}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> Single([FromRoute] int orderId)
+        {
+            var order = dtoMapper.Map<Order, OrderViewDto>(await orderService.SingleOrder(orderId));
+            return Ok(order);
+        }
+
+        [HttpGet]
+        [Route("api/orders")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> List()
+        {
+            var orders = dtoMapper.Map<IList<Order>, IList<OrderListDto>>(await orderService.ListOrders());
+            return Ok(orders);
+        }
+
+        [HttpGet]
+        [Route("api/orders-seller/{sellerId}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> ListBySellerId([FromRoute] string sellerId)
+        {
+            var orders = dtoMapper.Map<IList<Order>, IList<OrderListDto>>(await orderService.ListOrdersBySellerId(sellerId));
+            return Ok(orders);
+        }
+
+        [HttpGet]
+        [Route("api/orders-customer/{customerId}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> ListByCustomerId([FromRoute] string customerId)
+        {
+            var orders = dtoMapper.Map<IList<Order>, IList<OrderListDto>>(await orderService.ListOrdersByCustomerId(customerId));
+            return Ok(orders);
+        }
+
+        [HttpPost]
+        [Route("api/orders")]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> Create([FromBody] CreateOrderDto createOrderDto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            await orderService.CreateOrder(createOrderDto);
+            return Ok("Order has created");
+        }
+
+    }
+}

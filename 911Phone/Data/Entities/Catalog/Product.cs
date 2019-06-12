@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 
 namespace Phone.Data.Entities.Catalog
 {
-    public class Category
+    public class Product
     {
         /// <summary>
         /// Identificator.
@@ -14,29 +16,44 @@ namespace Phone.Data.Entities.Catalog
         public int Id { get; set; }
 
         /// <summary>
-        /// Title.
+        /// Id Category, by who depends on this product.
+        /// </summary>
+        [Required]
+        public int CategoryId { get; set; }
+
+        /// <summary>
+        /// Relation with table category many to one.
+        /// </summary>
+        [ForeignKey("CategoryId")]
+        public virtual Category Category { get; set; }
+
+        /// <summary>
+        /// Name for product.
         /// </summary>
         [Required]
         [MaxLength(100)]
         public string Title { get; set; }
 
         /// <summary>
-        /// Left value.
+        /// Description of product.
         /// </summary>
-        [Required]
-        public short Left { get; set; }
+        public string Text { get; set; }
 
         /// <summary>
-        /// Right value.
+        /// Price of product.
         /// </summary>
-        [Required]
-        public short Right { get; set; }
+        public int Price { get; set; }
 
         /// <summary>
-        /// Level value.
+        /// Price of product.
         /// </summary>
-        [Required]
-        public byte Level { get; set; }
+        [MaxLength(255)]
+        public string Image { get; set; }
+
+        /// <summary>
+        /// Is aproval current product.
+        /// </summary>
+        public bool? IsAproval { get; set; }
 
         /// <summary>
         /// Time of creation.
@@ -49,11 +66,6 @@ namespace Phone.Data.Entities.Catalog
         /// </summary>
         [Required]
         public DateTime UpdatedAt { get; set; }
-
-        /// <summary>
-        /// List of products by category id.
-        /// </summary>
-        public IList<Product> Resources { get; set; } = new List<Product>();
 
     }
 }

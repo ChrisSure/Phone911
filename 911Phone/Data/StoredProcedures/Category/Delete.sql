@@ -13,9 +13,14 @@ AS
 		IF(@Left IS NULL OR @Right IS NULL)
 			Throw 50001, 'Current Category does not exist', 1;
 
-		DECLARE @Row AS INT = (SELECT COUNT([dbo].[Categories].[Id]) FROM [dbo].[Categories] 
-			WHERE [dbo].[Categories].[Left] > @Left AND [dbo].[Categories].[Right] < @Right);
+		DECLARE @Row AS INT = (SELECT COUNT([dbo].[Products].[Id]) FROM [dbo].[Products] 
+			WHERE [dbo].[Products].[CategoryId] = @CategoryId);
 		IF(@Row > 0)
+			Throw 50001, 'Current Category has children products', 7;
+
+		DECLARE @Row2 AS INT = (SELECT COUNT([dbo].[Categories].[Id]) FROM [dbo].[Categories] 
+			WHERE [dbo].[Categories].[Left] > @Left AND [dbo].[Categories].[Right] < @Right);
+		IF(@Row2 > 0)
 			Throw 50001, 'Current Category has children', 3;
 
 		BEGIN TRANSACTION;

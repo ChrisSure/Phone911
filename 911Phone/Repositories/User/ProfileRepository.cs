@@ -8,13 +8,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Phone.Repositories.User
 {
-    public class ProfileRepository : IProfileRepository
+    public class ProfileRepository : MainRepository, IProfileRepository
     {
-        private ApplicationDbContext dbContext;
 
-        public ProfileRepository(ApplicationDbContext dbContext)
+        public ProfileRepository(ApplicationDbContext dbContext) : base(dbContext)
         {
-            this.dbContext = dbContext;
+            
         }
 
         /// <summary>
@@ -27,7 +26,7 @@ namespace Phone.Repositories.User
             var profile = await dbContext.Profiles.AsNoTracking().Where(p => p.Id == profileId).FirstOrDefaultAsync();
             if (profile == null)
             {
-                throw new CurrentEntryNotFoundException();
+                throw new CurrentEntryNotFoundException("Current Profile doesn't isset.");
             }
             return profile;
         }
@@ -41,7 +40,7 @@ namespace Phone.Repositories.User
             var profile = await Task.Run(() => dbContext.Profiles.Where(p => p.UserId == userId).FirstOrDefault());
             if (profile == null)
             {
-                throw new CurrentEntryNotFoundException();
+                throw new CurrentEntryNotFoundException("Current Profile doesn't isset.");
             }
             return profile;
         }
@@ -68,21 +67,7 @@ namespace Phone.Repositories.User
             await SaveAsync();
         }
 
-        /// <summary>
-        /// Method update-create profile or throw exception
-        /// <summary>
-        /// <returns>void</returns>
-        public virtual async Task SaveAsync()
-        {
-            try
-            {
-                await dbContext.SaveChangesAsync();
-            }
-            catch (DbUpdateException dbuException)
-            {
-                throw new DbUpdateException(dbuException.Message, dbuException);
-            }
-        }
+        
 
     }
 }

@@ -44,7 +44,7 @@ namespace Phone.Repositories.User
             }
             else
             {
-                throw new CurrentEntryNotFoundException();
+                throw new CurrentEntryNotFoundException("Current Token doesn't isset.");
             }
         }
 
@@ -58,7 +58,7 @@ namespace Phone.Repositories.User
             var token = await db.UserRefreshTokens.FindAsync(key);
             if (token == null)
             {
-                throw new CurrentEntryNotFoundException();
+                throw new CurrentEntryNotFoundException("Current Token doesn't isset.");
             }
             return token;
         }

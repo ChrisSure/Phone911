@@ -40,7 +40,7 @@ namespace Phone.Repositories.User
             var user = await userManager.FindByEmailAsync(email);
             if (user == null)
             {
-                throw new CurrentEntryNotFoundException();
+                throw new CurrentEntryNotFoundException("Current User doesn't isset.");
             }
             return user;
         }
