@@ -19,8 +19,20 @@ namespace Phone.Controllers.Catalog
             dtoMapper = new Mapper(new MapperConfiguration(mapper =>
             {
                 mapper.CreateMap<Order, OrderListDto>();
+                mapper.CreateMap<Order, OrderViewDto>().ReverseMap();
             }
             ));
+        }
+
+        [HttpGet]
+        [Route("api/orders/{orderId}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> Single([FromRoute] int orderId)
+        {
+            var order = dtoMapper.Map<Order, OrderViewDto>(await orderService.SingleOrder(orderId));
+            return Ok(order);
         }
 
         [HttpGet]
@@ -34,6 +46,27 @@ namespace Phone.Controllers.Catalog
             return Ok(orders);
         }
 
+        [HttpGet]
+        [Route("api/orders-seller/{sellerId}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> ListBySellerId([FromRoute] string sellerId)
+        {
+            var orders = dtoMapper.Map<IList<Order>, IList<OrderListDto>>(await orderService.ListOrdersBySellerId(sellerId));
+            return Ok(orders);
+        }
+
+        [HttpGet]
+        [Route("api/orders-customer/{customerId}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> ListByCustomerId([FromRoute] string customerId)
+        {
+            var orders = dtoMapper.Map<IList<Order>, IList<OrderListDto>>(await orderService.ListOrdersByCustomerId(customerId));
+            return Ok(orders);
+        }
 
         [HttpPost]
         [Route("api/orders")]

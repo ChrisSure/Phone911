@@ -7,7 +7,10 @@ namespace Phone.Services.Catalog.Interfaces
 {
     public interface IOrderService
     {
+        Task<Order> SingleOrder(int orderId);
         Task CreateOrder(CreateOrderDto createOrderDto);
         Task<IList<Order>> ListOrders();
+        Task<IList<Order>> ListOrdersBySellerId(string sellerId);
+        Task<IList<Order>> ListOrdersByCustomerId(string customerId);
     }
 }

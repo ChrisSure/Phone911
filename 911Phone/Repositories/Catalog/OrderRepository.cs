@@ -6,6 +6,8 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Phone.Exceptions;
 
 namespace Phone.Repositories.Catalog
 {
@@ -18,12 +20,57 @@ namespace Phone.Repositories.Catalog
         }
 
         /// <summary>
+        /// Method get order by id
+        /// <summary>
+        /// <param name="orderId">int</param>
+        /// <returns>IList<Order></returns>
+        public async Task<Order> SingleOrderAsync(int orderId)
+        {
+            var order = await Task.Run(() => dbContext.Orders.Where(o => o.Id == orderId).Select(o => new Order
+            {
+                Id = o.Id,
+                TotalSum = o.TotalSum,
+                TotalCount = o.TotalCount,
+                Customer = o.Customer,
+                Seller = o.Seller,
+                CreatedAt = o.CreatedAt,
+                UpdatedAt = o.UpdatedAt,
+                ProductOrder = o.ProductOrder
+            }).FirstOrDefault());
+            if (order == null)
+            {
+                throw new CurrentEntryNotFoundException("Current Order doesn't isset.");
+            }
+            return order;
+        }
+
+        /// <summary>
         /// Method get list of orders
         /// <summary>
         /// <returns>IList<Order></returns>
         public async Task<IList<Order>> ListOrdersAsync()
         {
             return await Task.Run(() => dbContext.Orders.ToList());
+        }
+
+        /// <summary>
+        /// Method get list of orders by seller id
+        /// <summary>
+        /// <param name="sellerId">string</param>
+        /// <returns>IList<Order></returns>
+        public async Task<IList<Order>> ListOrdersBySellerIdAsync(string sellerId)
+        {
+            return await Task.Run(() => dbContext.Orders.Where(o => o.SellerId == sellerId).ToList());
+        }
+
+        /// <summary>
+        /// Method get list of orders by customer id
+        /// <summary>
+        /// <param name="customerId">string</param>
+        /// <returns>IList<Order></returns>
+        public async Task<IList<Order>> ListOrdersByCustomerIdAsync(string customerId)
+        {
+            return await Task.Run(() => dbContext.Orders.Where(o => o.CustomerId == customerId).ToList());
         }
 
         /// <summary>

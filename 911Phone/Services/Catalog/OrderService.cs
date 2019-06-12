@@ -17,12 +17,42 @@ namespace Phone.Services.Catalog
         }
 
         /// <summary>
+        /// Method delegate to service get order by id
+        /// <summary>
+        /// <param name="orderId">int</param>
+        /// <returns>IList<Order></returns>
+        public async Task<Order> SingleOrder(int orderId)
+        {
+            return await orderRepository.SingleOrderAsync(orderId);
+        }
+
+        /// <summary>
         /// Method delegate to service get list of orders
         /// <summary>
         /// <returns>IList<Order></returns>
         public async Task<IList<Order>> ListOrders()
         {
             return await orderRepository.ListOrdersAsync();
+        }
+
+        /// <summary>
+        /// Method delegate to service get list of orders by seller id
+        /// <summary>
+        /// <param name="sellerId">string</param>
+        /// <returns>IList<Order></returns>
+        public async Task<IList<Order>> ListOrdersBySellerId(string sellerId)
+        {
+            return await orderRepository.ListOrdersBySellerIdAsync(sellerId);
+        }
+
+        /// <summary>
+        /// Method delegate to service get list of orders by customer id
+        /// <summary>
+        /// <param name="customerId">string</param>
+        /// <returns>IList<Order></returns>
+        public async Task<IList<Order>> ListOrdersByCustomerId(string customerId)
+        {
+            return await orderRepository.ListOrdersByCustomerIdAsync(customerId);
         }
 
         /// <summary>
