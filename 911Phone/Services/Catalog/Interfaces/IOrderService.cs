@@ -12,5 +12,6 @@ namespace Phone.Services.Catalog.Interfaces
         Task<IList<Order>> ListOrders();
         Task<IList<Order>> ListOrdersBySellerId(string sellerId);
         Task<IList<Order>> ListOrdersByCustomerId(string customerId);
+        Task<IList<Order>> ListOrdersByShopId(int shopId);
     }
 }

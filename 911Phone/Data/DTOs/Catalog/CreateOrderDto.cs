@@ -31,6 +31,12 @@ namespace Phone.Data.DTOs.Catalog
         [MaxLength(450)]
         public string SellerId { get; set; }
 
+        /// <summary>
+        /// Shop Id, where was ordered current order
+        /// </summary>
+        [Required]
+        public int ShopId { get; set; }
+
         public IList<ProductOrderDto> productOrder { get; set; }
 
 
