@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Phone.Data.Entities.Shop;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using ShopEntity = Phone.Data.Entities.Shop.Shop;
 
@@ -11,5 +12,7 @@ namespace Phone.Services.Shop.Interfaces
         Task<IList<ShopEntity>> ListShopsBySellerId(string sellerId);
         Task CreateShop(ShopEntity shop);
         Task UpdateShop(int shopId, ShopEntity shop);
+        Task AddCategoryToShop(ShopCategory shopcat);
+        Task AddSellerToShop(ShopSeller shopsell);
     }
 }

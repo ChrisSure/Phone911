@@ -1,4 +1,5 @@
-﻿using Phone.Repositories.Shop.Interfaces;
+﻿using Phone.Data.Entities.Shop;
+using Phone.Repositories.Shop.Interfaces;
 using Phone.Services.Shop.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -66,10 +67,30 @@ namespace Phone.Services.Shop
         /// <returns>void</returns>
         public async Task UpdateShop(int shopId, ShopEntity shop)
         {
-            await shopRepository.SingleShopAsync(shopId);
+            await shopRepository.SingleShopNoTrackAsync(shopId);
             shop.Id = shopId;
             shop.UpdatedAt = DateTime.Now;
             await shopRepository.UpdateShopAsync(shop);
+        }
+
+        /// <summary>
+        /// Method delegate to service add category to shop
+        /// <summary>
+        /// <param name="shopCategory">ShopCategory</param>
+        /// <returns>void</returns>
+        public async Task AddCategoryToShop(ShopCategory shopcat)
+        {
+            await shopRepository.AddCategoryToShopAsync(shopcat);
+        }
+
+        /// <summary>
+        /// Method delegate to service add seller to shop
+        /// <summary>
+        /// <param name="shopsell">ShopSeller</param>
+        /// <returns>void</returns>
+        public async Task AddSellerToShop(ShopSeller shopsell)
+        {
+            await shopRepository.AddSellerToShopAsync(shopsell);
         }
     }
 }

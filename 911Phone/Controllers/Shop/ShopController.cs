@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Phone.Data.DTOs.Shop;
+using Phone.Data.Entities.Shop;
 using Phone.Services.Shop.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -21,6 +22,8 @@ namespace Phone.Controllers.Shop
                 mapper.CreateMap<ShopEntity, ShopListDto>();
                 mapper.CreateMap<ShopEntity, ShopViewDto>().ReverseMap();
                 mapper.CreateMap<ShopEntity, ShopCreateDto>().ReverseMap();
+                mapper.CreateMap<ShopCategory, AddCategoryToShop>().ReverseMap();
+                mapper.CreateMap<ShopSeller, AddSellerToShop>().ReverseMap();
             }
             ));
         }
@@ -89,6 +92,39 @@ namespace Phone.Controllers.Shop
             await shopService.UpdateShop(shopId, itemModel);
             return Ok("Shop has updated");
         }
+
+        [HttpPost]
+        [Route("api/shops-add-category")]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> AddCategoryToShop([FromBody] AddCategoryToShop addcategoryToShopDto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var itemModel = dtoMapper.Map<AddCategoryToShop, ShopCategory>(addcategoryToShopDto);
+            await shopService.AddCategoryToShop(itemModel);
+            return Ok("Category has added to shop");
+        }
+
+        [HttpPost]
+        [Route("api/shops-add-seller")]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> AddSellerToShop([FromBody] AddSellerToShop addsellerToShopDto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var itemModel = dtoMapper.Map<AddSellerToShop, ShopSeller>(addsellerToShopDto);
+            await shopService.AddSellerToShop(itemModel);
+            return Ok("Seller has added to shop");
+        }
+
 
 
 
