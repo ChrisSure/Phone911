@@ -125,6 +125,22 @@ namespace Phone.Controllers.Shop
             return Ok("Seller has added to shop");
         }
 
+        [HttpPut]
+        [Route("api/shops-remove-seller")]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> RemoveSellerFromShop([FromBody] AddSellerToShop removeSellerFromShopDto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var itemModel = dtoMapper.Map<AddSellerToShop, ShopSeller>(removeSellerFromShopDto);
+            await shopService.RemoveSellerFromShop(itemModel);
+            return Ok("Seller has removed from shop");
+        }
+
 
 
 

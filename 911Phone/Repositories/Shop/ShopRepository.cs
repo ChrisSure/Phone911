@@ -142,5 +142,27 @@ namespace Phone.Repositories.Shop
             await Task.Run(() => shop.ShopSeller.Add(sse));
             await SaveAsync();
         }
+
+        /// <summary>
+        /// Method remove seller from shop
+        /// <summary>
+        /// <param name="shopSeller">ShopSeller</param>
+        /// <returns>void</returns>
+        public async Task RemoveSellerFromShopAsync(ShopSeller shopSeller)
+        {
+            var shop = await SingleShopAsync(shopSeller.ShopId);
+            var seller = await userRepository.GetUserAsync(shopSeller.SellerId);
+
+            var shopS = await dbContext.Shops.Where(s => s.ShopSeller.Any(u => u.ShopId == shop.Id)).Where(s => s.ShopSeller.Any(u => u.SellerId == seller.Id)).FirstOrDefaultAsync();
+            if (shopS != null)
+            {
+                dbContext.Entry(shop).Collection("ShopSeller").Load();
+                shop.ShopSeller.Remove(shop.ShopSeller.Where(s => s.SellerId == seller.Id).FirstOrDefault());
+                await SaveAsync();
+            } else
+            {
+                throw new CurrentEntryNotFoundException("Current seller doeasn't work in this shop.");
+            }
+        }
     }
 }

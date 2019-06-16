@@ -12,7 +12,8 @@ namespace Phone.Services.Shop.Interfaces
         Task<IList<ShopEntity>> ListShopsBySellerId(string sellerId);
         Task CreateShop(ShopEntity shop);
         Task UpdateShop(int shopId, ShopEntity shop);
-        Task AddCategoryToShop(ShopCategory shopcat);
-        Task AddSellerToShop(ShopSeller shopsell);
+        Task AddCategoryToShop(ShopCategory shopCategory);
+        Task AddSellerToShop(ShopSeller shopSeller);
+        Task RemoveSellerFromShop(ShopSeller shopSeller);
     }
 }

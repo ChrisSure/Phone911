@@ -78,19 +78,29 @@ namespace Phone.Services.Shop
         /// <summary>
         /// <param name="shopCategory">ShopCategory</param>
         /// <returns>void</returns>
-        public async Task AddCategoryToShop(ShopCategory shopcat)
+        public async Task AddCategoryToShop(ShopCategory shopCategory)
         {
-            await shopRepository.AddCategoryToShopAsync(shopcat);
+            await shopRepository.AddCategoryToShopAsync(shopCategory);
         }
 
         /// <summary>
         /// Method delegate to service add seller to shop
         /// <summary>
-        /// <param name="shopsell">ShopSeller</param>
+        /// <param name="shopSeller">ShopSeller</param>
         /// <returns>void</returns>
-        public async Task AddSellerToShop(ShopSeller shopsell)
+        public async Task AddSellerToShop(ShopSeller shopSeller)
         {
-            await shopRepository.AddSellerToShopAsync(shopsell);
+            await shopRepository.AddSellerToShopAsync(shopSeller);
+        }
+
+        /// <summary>
+        /// Method delegate to service remove seller from shop
+        /// <summary>
+        /// <param name="shopSeller">ShopSeller</param>
+        /// <returns>void</returns>
+        public async Task RemoveSellerFromShop(ShopSeller shopSeller)
+        {
+            await shopRepository.RemoveSellerFromShopAsync(shopSeller);
         }
     }
 }

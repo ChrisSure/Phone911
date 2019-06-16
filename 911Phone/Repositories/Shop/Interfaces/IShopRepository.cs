@@ -15,5 +15,6 @@ namespace Phone.Repositories.Shop.Interfaces
         Task UpdateShopAsync(ShopEntity shop);
         Task AddCategoryToShopAsync(ShopCategory shopCategory);
         Task AddSellerToShopAsync(ShopSeller shopSeller);
+        Task RemoveSellerFromShopAsync(ShopSeller shopSeller);
     }
 }

@@ -36,6 +36,17 @@ namespace Phone.Controllers.Catalog
         }
 
         [HttpGet]
+        [Route("api/categories-shop/{shopId}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> ListCategoriesByShopId([FromRoute] int shopId)
+        {
+            var categories = dtoMapper.Map<IList<Category>, IList<CategoryListDto>>(await categoryService.ListCategoriesByShopId(shopId));
+            return Ok(categories);
+        }
+
+        [HttpGet]
         [Route("api/categories/{categoryId}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]

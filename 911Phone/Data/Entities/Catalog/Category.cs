@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Phone.Data.Entities.Shop;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -54,6 +55,11 @@ namespace Phone.Data.Entities.Catalog
         /// List of products by category id.
         /// </summary>
         public IList<Product> Resources { get; set; } = new List<Product>();
+
+        /// <summary>
+        /// List of categories who depends on current shop.
+        /// </summary>
+        public List<ShopCategory> ShopCategory { get; set; } = new List<ShopCategory>();
 
     }
 }
