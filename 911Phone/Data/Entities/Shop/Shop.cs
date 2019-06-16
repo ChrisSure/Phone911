@@ -1,11 +1,10 @@
-﻿using Phone.Data.Entities.Shop;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Phone.Data.Entities.Catalog
+namespace Phone.Data.Entities.Shop
 {
-    public class Category
+    public class Shop
     {
         /// <summary>
         /// Identificator.
@@ -15,29 +14,16 @@ namespace Phone.Data.Entities.Catalog
         public int Id { get; set; }
 
         /// <summary>
-        /// Title.
+        /// Name for shop.
         /// </summary>
         [Required]
         [MaxLength(100)]
         public string Title { get; set; }
 
         /// <summary>
-        /// Left value.
+        /// Description of shop.
         /// </summary>
-        [Required]
-        public short Left { get; set; }
-
-        /// <summary>
-        /// Right value.
-        /// </summary>
-        [Required]
-        public short Right { get; set; }
-
-        /// <summary>
-        /// Level value.
-        /// </summary>
-        [Required]
-        public byte Level { get; set; }
+        public string Description { get; set; }
 
         /// <summary>
         /// Time of creation.
@@ -52,14 +38,19 @@ namespace Phone.Data.Entities.Catalog
         public DateTime UpdatedAt { get; set; }
 
         /// <summary>
-        /// List of products by category id.
-        /// </summary>
-        public IList<Product> Resources { get; set; } = new List<Product>();
-
-        /// <summary>
         /// List of categories who depends on current shop.
         /// </summary>
-        public List<ShopCategory> ShopCategory { get; set; } = new List<ShopCategory>();
+        public List<ShopCategory> ShopCategory { get; set; }
 
+        /// <summary>
+        /// List of sellers who are working in current shop.
+        /// </summary>
+        public List<ShopSeller> ShopSeller { get; set; }
+
+        public Shop()
+        {
+            ShopCategory = new List<ShopCategory>();
+            ShopSeller = new List<ShopSeller>();
+        }
     }
 }

@@ -12,5 +12,6 @@ namespace Phone.Repositories.Catalog.Interfaces
         Task<IList<Order>> ListOrdersAsync();
         Task<IList<Order>> ListOrdersBySellerIdAsync(string sellerId);
         Task<IList<Order>> ListOrdersByCustomerIdAsync(string customerId);
+        Task<IList<Order>> ListOrdersByShopIdAsync(int shopId);
     }
 }

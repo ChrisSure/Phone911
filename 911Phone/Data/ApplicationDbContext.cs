@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Phone.Data.Entities.Catalog;
+using Phone.Data.Entities.Shop;
 using Phone.Data.Entities.User;
 
 namespace Phone.Data
@@ -17,6 +18,7 @@ namespace Phone.Data
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
+        public virtual DbSet<Shop> Shops { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -32,6 +34,11 @@ namespace Phone.Data
 
             modelBuilder.Entity<ProductOrder>()
                 .HasKey(t => new { t.OrderId, t.ProductId });
+
+            modelBuilder.Entity<ShopCategory>()
+                .HasKey(t => new { t.ShopId, t.CategoryId });
+            modelBuilder.Entity<ShopSeller>()
+                .HasKey(t => new { t.ShopId, t.SellerId });
         }
     }
 }

@@ -6,7 +6,6 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 using Phone.Exceptions;
 
 namespace Phone.Repositories.Catalog
@@ -33,6 +32,7 @@ namespace Phone.Repositories.Catalog
                 TotalCount = o.TotalCount,
                 Customer = o.Customer,
                 Seller = o.Seller,
+                Shop = o.Shop,
                 CreatedAt = o.CreatedAt,
                 UpdatedAt = o.UpdatedAt,
                 ProductOrder = o.ProductOrder
@@ -74,6 +74,16 @@ namespace Phone.Repositories.Catalog
         }
 
         /// <summary>
+        /// Method get list of orders by shop id
+        /// <summary>
+        /// <param name="shopId">int</param>
+        /// <returns>IList<Order></returns>
+        public async Task<IList<Order>> ListOrdersByShopIdAsync(int shopId)
+        {
+            return await Task.Run(() => dbContext.Orders.Where(o => o.ShopId == shopId).ToList());
+        }
+
+        /// <summary>
         /// Method create order
         /// <summary>
         /// <param name="createOrderDto">CreateOrderDto</param>
@@ -90,6 +100,7 @@ namespace Phone.Repositories.Catalog
                         TotalCount = createOrderDto.TotalCount,
                         CustomerId = createOrderDto.CustomerId,
                         SellerId = createOrderDto.SellerId,
+                        ShopId = createOrderDto.ShopId,
                         CreatedAt = DateTime.Now,
                         UpdatedAt = DateTime.Now
                     };

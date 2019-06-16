@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Phone.Data.Entities.Catalog;
+using Phone.Data.Entities.Shop;
 using Phone.Data.Entities.User;
 using Phone.Helpers;
 using Phone.Helpers.User;
@@ -52,7 +53,6 @@ namespace Phone.Data
         #region SeedData seed
         private async Task SeedDataAsync()
         {
-
             // Create Customer
             var userCustomer = new ApplicationUser() { UserName = "Customer", Email = "cust@mail.com" };
             await userManager.CreateAsync(userCustomer, "Customer_911");
@@ -61,7 +61,6 @@ namespace Phone.Data
                 Profile profile = new Profile() { UserId = userCustomer.Id, Name = "Mark", LastName = "Libert", Phone = "0980876538", CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
                 context.Profiles.Add(profile);
             }
-
             // Create Customer2
             var userCustomer2 = new ApplicationUser() { UserName = "Customer2", Email = "cust2@mail.com" };
             await userManager.CreateAsync(userCustomer2, "Customer_911");
@@ -71,7 +70,6 @@ namespace Phone.Data
                 Profile profile = new Profile() { UserId = userCustomer2.Id, Name = "Liza", LastName = "Bentley", Phone = "0958973654", CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
                 context.Profiles.Add(profile);
             }
-
             // Create Seller
             var userSeller = new ApplicationUser() { UserName = "Seller", Email = "sell@mail.com" };
             await userManager.CreateAsync(userSeller, "Seller_911");
@@ -81,7 +79,6 @@ namespace Phone.Data
                 Profile profile = new Profile() { UserId = userSeller.Id, Name = "Robby", LastName = "Nets", Phone = "0988756123", Sex = true, Position = "Seller", Salary = 5000, Age = 22, Description = "Good worker", CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
                 context.Profiles.Add(profile);
             }
-
             // Create Seller2
             var userSeller2 = new ApplicationUser() { UserName = "Seller2", Email = "sell2@mail.com" };
             await userManager.CreateAsync(userSeller2, "Seller_911");
@@ -91,7 +88,6 @@ namespace Phone.Data
                 Profile profile = new Profile() { UserId = userSeller2.Id, Name = "Bryan", LastName = "Morris", Phone = "0639087667", Sex = true, Position = "Seller", Salary = 5000, Age = 22, Description = "Good worker", CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
                 context.Profiles.Add(profile);
             }
-
             // Create SuperSeller
             var userSuperSeller = new ApplicationUser() { UserName = "SuperSeller", Email = "supersell@mail.com" };
             await userManager.CreateAsync(userSuperSeller, "Seller_911");
@@ -101,7 +97,6 @@ namespace Phone.Data
                 Profile profile = new Profile() { UserId = userSuperSeller.Id, Name = "Teddy", LastName = "Bear", Phone = "0988756129", Sex = true, Position = "Head of shop", Salary = 9000, Age = 24, Description = "Good worker head", CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
                 context.Profiles.Add(profile);
             }
-
             // Create Admin
             var userAdmin = new ApplicationUser() { UserName = "Admin", Email = "admin@mail.com" };
             await userManager.CreateAsync(userAdmin, "Admin_911");
@@ -111,7 +106,6 @@ namespace Phone.Data
                 Profile profile = new Profile() { UserId = userAdmin.Id, Name = "Sonya", LastName = "Blade", Phone = "0989829009", Sex = false, Age = 24, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
                 context.Profiles.Add(profile);
             }
-
             // Create SuperAdmin
             var userSuper = new ApplicationUser() { UserName = "SuperAdmin", Email = "super@mail.com" };
             await userManager.CreateAsync(userSuper, "Super_911");
@@ -141,6 +135,7 @@ namespace Phone.Data
             var category3 = new Category() { Title = "Laptop", Left = 15, Right = 16, Level = 1, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
             context.Categories.Add(category3);
 
+
             //Products
             var product1 = new Product() { Title = "Iphone 4", Price = 4000, Text = "Good smartfone", IsAproval = true, CategoryId = pidcategory1.Id, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
             context.Products.Add(product1);
@@ -161,12 +156,43 @@ namespace Phone.Data
             var product9 = new Product() { Title = "HP sql 980", Price = 13000, IsAproval = true, CategoryId = category3.Id, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
             context.Products.Add(product9);
 
-            //Orders
-            var order1 = new Order() { TotalSum = 13000, TotalCount = 2, CustomerId = null, SellerId = userSeller.Id, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
-            context.Orders.Add(order1);
-            var order2 = new Order() { TotalSum = 12000, TotalCount = 1, CustomerId = userCustomer.Id, SellerId = userSeller.Id, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
-            context.Orders.Add(order2);
 
+            //Shops
+            var shop1 = new Shop() { Title = "Shop1", Description = "Central shop", CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
+            context.Shops.Add(shop1);
+            var shop2 = new Shop() { Title = "Shop2", Description = "East shop", CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
+            context.Shops.Add(shop2);
+            var shop3 = new Shop() { Title = "Shop3", Description = "West shop", CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
+            context.Shops.Add(shop3);
+            //ShopCategory
+            var sc1 = new ShopCategory() { ShopId = shop1.Id, CategoryId = category1.Id };
+            shop1.ShopCategory.Add(sc1);
+            var sc2 = new ShopCategory() { ShopId = shop1.Id, CategoryId = category2.Id };
+            shop1.ShopCategory.Add(sc2);
+            var sc3 = new ShopCategory() { ShopId = shop1.Id, CategoryId = category3.Id };
+            shop1.ShopCategory.Add(sc3);
+            var sc4 = new ShopCategory() { ShopId = shop2.Id, CategoryId = category3.Id };
+            shop2.ShopCategory.Add(sc4);
+            var sc5 = new ShopCategory() { ShopId = shop3.Id, CategoryId = category1.Id };
+            shop3.ShopCategory.Add(sc5);
+            var sc6 = new ShopCategory() { ShopId = shop3.Id, CategoryId = category2.Id };
+            shop3.ShopCategory.Add(sc6);
+            //ShopSeller
+            var ss1 = new ShopSeller() { ShopId = shop1.Id, SellerId = userSuperSeller.Id };
+            shop1.ShopSeller.Add(ss1);
+            var ss2 = new ShopSeller() { ShopId = shop1.Id, SellerId = userSeller.Id };
+            shop1.ShopSeller.Add(ss2);
+            var ss3 = new ShopSeller() { ShopId = shop2.Id, SellerId = userSeller2.Id };
+            shop2.ShopSeller.Add(ss3);
+            var ss4 = new ShopSeller() { ShopId = shop3.Id, SellerId = userSeller.Id };
+            shop3.ShopSeller.Add(ss4);
+
+
+            //Orders
+            var order1 = new Order() { TotalSum = 13000, TotalCount = 2, CustomerId = null, SellerId = userSeller.Id, ShopId = shop1.Id, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
+            context.Orders.Add(order1);
+            var order2 = new Order() { TotalSum = 12000, TotalCount = 1, CustomerId = userCustomer.Id, SellerId = userSeller.Id, ShopId = shop3.Id, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
+            context.Orders.Add(order2);
             //Items
             var item1 = new ProductOrder() { OrderId = order1.Id, ProductId = product1.Id };
             order1.ProductOrder.Add(item1);
@@ -174,6 +200,7 @@ namespace Phone.Data
             order1.ProductOrder.Add(item2);
             var item3 = new ProductOrder() { OrderId = order2.Id, ProductId = product7.Id };
             order2.ProductOrder.Add(item3);
+
 
             context.SaveChanges();
         }

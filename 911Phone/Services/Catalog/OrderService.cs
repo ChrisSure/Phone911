@@ -56,6 +56,16 @@ namespace Phone.Services.Catalog
         }
 
         /// <summary>
+        /// Method delegate to service get list of orders by shop id
+        /// <summary>
+        /// <param name="shopId">int</param>
+        /// <returns>IList<Order></returns>
+        public async Task<IList<Order>> ListOrdersByShopId(int shopId)
+        {
+            return await orderRepository.ListOrdersByShopIdAsync(shopId);
+        }
+
+        /// <summary>
         /// Method delegate to service create order
         /// <summary>
         /// <param name="createOrderDto">CreateOrderDto</param>

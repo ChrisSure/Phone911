@@ -3,6 +3,7 @@ using Phone.Data;
 using Phone.Data.Entities.Catalog;
 using Phone.Exceptions;
 using Phone.Repositories.Catalog.Interfaces;
+using Phone.Repositories.Shop.Interfaces;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
@@ -27,6 +28,16 @@ namespace Phone.Repositories.Catalog
         public async Task<IList<Category>> ListCategoriesAsync()
         {
             return await dbContext.Categories.OrderBy(c => c.Left).ToListAsync();
+        }
+
+        /// <summary>
+        /// Method return list categories by shop id
+        /// <summary>
+        /// <param name="shopId">int</param>
+        /// <returns>IList<Category></Category></returns>
+        public async Task<IList<Category>> ListCategoriesByShopIdAsync(int shopId)
+        {
+            return await dbContext.Categories.Where(c => c.ShopCategory.Any(sc => sc.ShopId == shopId)).ToListAsync();
         }
 
         /// <summary>

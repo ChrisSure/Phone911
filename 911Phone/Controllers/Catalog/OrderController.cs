@@ -68,6 +68,17 @@ namespace Phone.Controllers.Catalog
             return Ok(orders);
         }
 
+        [HttpGet]
+        [Route("api/orders-shop/{shopId}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> ListByShopId([FromRoute] int shopId)
+        {
+            var orders = dtoMapper.Map<IList<Order>, IList<OrderListDto>>(await orderService.ListOrdersByShopId(shopId));
+            return Ok(orders);
+        }
+
         [HttpPost]
         [Route("api/orders")]
         [ProducesResponseType(201)]

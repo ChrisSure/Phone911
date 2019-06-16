@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using ShopName = Phone.Data.Entities.Shop;
 
 namespace Phone.Data.Entities.Catalog
 {
@@ -49,6 +50,17 @@ namespace Phone.Data.Entities.Catalog
         /// </summary>
         [ForeignKey("SellerId")]
         public virtual ApplicationUser Seller { get; set; }
+
+        /// <summary>
+        /// Shop Id, where was ordered current order
+        /// </summary>
+        [Required]
+        public int ShopId { get; set; }
+        /// <summary>
+        /// Relation with table shop many to one.
+        /// </summary>
+        [ForeignKey("ShopId")]
+        public virtual ShopName.Shop Shop { get; set; }
 
         /// <summary>
         /// Time of creation.

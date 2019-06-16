@@ -1,10 +1,14 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Phone.Repositories.Catalog;
 using Phone.Repositories.Catalog.Interfaces;
+using Phone.Repositories.Shop;
+using Phone.Repositories.Shop.Interfaces;
 using Phone.Repositories.User;
 using Phone.Repositories.User.Interfaces;
 using Phone.Services.Catalog;
 using Phone.Services.Catalog.Interfaces;
+using Phone.Services.Shop;
+using Phone.Services.Shop.Interfaces;
 using Phone.Services.User;
 using Phone.Services.User.Interfaces;
 
@@ -28,6 +32,7 @@ namespace Phone.Helpers
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<IShopService, ShopService>();
 
 
             services.AddScoped<IUserAuthRepository, AuthRepository>();
@@ -40,6 +45,7 @@ namespace Phone.Helpers
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddScoped<IShopRepository, ShopRepository>();
 
         }
     }

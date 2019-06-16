@@ -17,7 +17,7 @@ namespace Phone.Services.Catalog
         }
 
         /// <summary>
-        /// Method return list categories
+        /// Method delegate to repository return list categories
         /// <summary>
         /// <returns>IList<Category></Category></returns>
         public async Task<IList<Category>> ListCategories()
@@ -26,7 +26,17 @@ namespace Phone.Services.Catalog
         }
 
         /// <summary>
-        /// Method return category by categoryId
+        /// Method delegate to repository return list categories by shop id
+        /// <summary>
+        /// <param name="shopId">int</param>
+        /// <returns>IList<Category></Category></returns>
+        public async Task<IList<Category>> ListCategoriesByShopId(int shopId)
+        {
+            return await categoryRepository.ListCategoriesByShopIdAsync(shopId);
+        }
+
+        /// <summary>
+        /// Method delegate to repository return category by categoryId
         /// <summary>
         /// <param name="categoryId">int</param>
         /// <returns>Category</returns>

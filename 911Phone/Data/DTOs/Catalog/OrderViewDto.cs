@@ -3,6 +3,8 @@ using Phone.Data.Entities.User;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using ShopName = Phone.Data.Entities.Shop;
+
 
 namespace Phone.Data.DTOs.Catalog
 {
@@ -36,6 +38,11 @@ namespace Phone.Data.DTOs.Catalog
         /// Relation with table users many to one.
         /// </summary>
         public virtual ApplicationUser Seller { get; set; }
+
+        /// <summary>
+        /// Relation with table shop many to one.
+        /// </summary>
+        public virtual ShopName.Shop Shop { get; set; }
 
         /// <summary>
         /// Time of creation.
