@@ -22,8 +22,8 @@ namespace Phone.Controllers.Shop
                 mapper.CreateMap<ShopEntity, ShopListDto>();
                 mapper.CreateMap<ShopEntity, ShopViewDto>().ReverseMap();
                 mapper.CreateMap<ShopEntity, ShopCreateDto>().ReverseMap();
-                mapper.CreateMap<ShopCategory, AddCategoryToShop>().ReverseMap();
-                mapper.CreateMap<ShopSeller, AddSellerToShop>().ReverseMap();
+                mapper.CreateMap<ShopCategory, AddCategoryToShopDto>().ReverseMap();
+                mapper.CreateMap<ShopSeller, AddSellerToShopDto>().ReverseMap();
             }
             ));
         }
@@ -99,12 +99,12 @@ namespace Phone.Controllers.Shop
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
         [ProducesResponseType(500)]
-        public async Task<IActionResult> AddCategoryToShop([FromBody] AddCategoryToShop addcategoryToShopDto)
+        public async Task<IActionResult> AddCategoryToShop([FromBody] AddCategoryToShopDto addcategoryToShopDto)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var itemModel = dtoMapper.Map<AddCategoryToShop, ShopCategory>(addcategoryToShopDto);
+            var itemModel = dtoMapper.Map<AddCategoryToShopDto, ShopCategory>(addcategoryToShopDto);
             await shopService.AddCategoryToShop(itemModel);
             return Ok("Category has added to shop");
         }
@@ -115,12 +115,12 @@ namespace Phone.Controllers.Shop
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
         [ProducesResponseType(500)]
-        public async Task<IActionResult> AddSellerToShop([FromBody] AddSellerToShop addsellerToShopDto)
+        public async Task<IActionResult> AddSellerToShop([FromBody] AddSellerToShopDto addsellerToShopDto)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var itemModel = dtoMapper.Map<AddSellerToShop, ShopSeller>(addsellerToShopDto);
+            var itemModel = dtoMapper.Map<AddSellerToShopDto, ShopSeller>(addsellerToShopDto);
             await shopService.AddSellerToShop(itemModel);
             return Ok("Seller has added to shop");
         }
@@ -131,12 +131,12 @@ namespace Phone.Controllers.Shop
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
         [ProducesResponseType(500)]
-        public async Task<IActionResult> RemoveSellerFromShop([FromBody] AddSellerToShop removeSellerFromShopDto)
+        public async Task<IActionResult> RemoveSellerFromShop([FromBody] AddSellerToShopDto removeSellerFromShopDto)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var itemModel = dtoMapper.Map<AddSellerToShop, ShopSeller>(removeSellerFromShopDto);
+            var itemModel = dtoMapper.Map<AddSellerToShopDto, ShopSeller>(removeSellerFromShopDto);
             await shopService.RemoveSellerFromShop(itemModel);
             return Ok("Seller has removed from shop");
         }

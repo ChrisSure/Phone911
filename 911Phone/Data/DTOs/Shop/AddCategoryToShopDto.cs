@@ -2,7 +2,7 @@
 
 namespace Phone.Data.DTOs.Shop
 {
-    public class AddSellerToShop
+    public class AddCategoryToShopDto
     {
         /// <summary>
         /// Shop Id
@@ -11,10 +11,9 @@ namespace Phone.Data.DTOs.Shop
         public int ShopId { get; set; }
 
         /// <summary>
-        /// Seller Id
+        /// Category Id
         /// </summary>
         [Required]
-        [MaxLength(450)]
-        public string SellerId { get; set; }
+        public int CategoryId { get; set; }
     }
 }

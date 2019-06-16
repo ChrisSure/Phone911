@@ -60,7 +60,7 @@ namespace PhoneUnitTests.Catalog.Controllers
 
         #region ProductController.List
         /// <summary>
-        /// Test for checking return list categories
+        /// Test for checking return list products
         /// <summary>
         [Fact]
         public async Task GetListProductsByCategoryIdTestAsync()
