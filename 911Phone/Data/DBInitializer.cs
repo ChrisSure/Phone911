@@ -76,7 +76,7 @@ namespace Phone.Data
             if (await userManager.FindByIdAsync(userSeller.Id) != null)
             {
                 await userManager.AddToRoleAsync(userSeller, RoleTypes.Seller);
-                Profile profile = new Profile() { UserId = userSeller.Id, Name = "Robby", LastName = "Nets", Phone = "0988756123", Sex = true, Position = "Seller", Salary = 5000, Age = 22, Description = "Good worker", CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
+                Profile profile = new Profile() { UserId = userSeller.Id, Name = "Robby", LastName = "Nets", Phone = "0988756123", Sex = true, Position = "Seller", Salary = 5000, Birthday = new DateTime(2000, 1, 18), Description = "Good worker", CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
                 context.Profiles.Add(profile);
             }
             // Create Seller2
@@ -85,7 +85,7 @@ namespace Phone.Data
             if (await userManager.FindByIdAsync(userSeller2.Id) != null)
             {
                 await userManager.AddToRoleAsync(userSeller2, RoleTypes.Seller);
-                Profile profile = new Profile() { UserId = userSeller2.Id, Name = "Bryan", LastName = "Morris", Phone = "0639087667", Sex = true, Position = "Seller", Salary = 5000, Age = 22, Description = "Good worker", CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
+                Profile profile = new Profile() { UserId = userSeller2.Id, Name = "Bryan", LastName = "Morris", Phone = "0639087667", Sex = true, Position = "Seller", Salary = 5000, Birthday = new DateTime(1998, 11, 18), Description = "Good worker", CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
                 context.Profiles.Add(profile);
             }
             // Create SuperSeller
@@ -94,7 +94,7 @@ namespace Phone.Data
             if (await userManager.FindByIdAsync(userSuperSeller.Id) != null)
             {
                 await userManager.AddToRoleAsync(userSuperSeller, RoleTypes.SuperSeller);
-                Profile profile = new Profile() { UserId = userSuperSeller.Id, Name = "Teddy", LastName = "Bear", Phone = "0988756129", Sex = true, Position = "Head of shop", Salary = 9000, Age = 24, Description = "Good worker head", CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
+                Profile profile = new Profile() { UserId = userSuperSeller.Id, Name = "Teddy", LastName = "Bear", Phone = "0988756129", Sex = true, Position = "Head of shop", Salary = 9000, Birthday = new DateTime(1994, 4, 12), Description = "Good worker head", CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
                 context.Profiles.Add(profile);
             }
             // Create Admin
@@ -103,7 +103,7 @@ namespace Phone.Data
             if (await userManager.FindByIdAsync(userAdmin.Id) != null)
             {
                 await userManager.AddToRoleAsync(userAdmin, RoleTypes.Admin);
-                Profile profile = new Profile() { UserId = userAdmin.Id, Name = "Sonya", LastName = "Blade", Phone = "0989829009", Sex = false, Age = 24, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
+                Profile profile = new Profile() { UserId = userAdmin.Id, Name = "Sonya", LastName = "Blade", Phone = "0989829009", Sex = false, Birthday = new DateTime(1987, 4, 11), CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
                 context.Profiles.Add(profile);
             }
             // Create SuperAdmin

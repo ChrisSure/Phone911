@@ -27,6 +27,14 @@ AS
 		DECLARE @MyRight AS SMALLINT = (SELECT [dbo].[Categories].[Right] FROM [dbo].[Categories] WHERE [dbo].[Categories].[Id] = @CategoryId);
 		DECLARE @MyDiff AS SMALLINT = (@MyRight - @MyLeft) + 1;
 
+		DECLARE @ParentCurrentId AS INT = (SELECT TOP 1 [dbo].[Categories].[Id] FROM [dbo].[Categories] WHERE [dbo].[Categories].[Left] < @MyLeft
+		AND [dbo].[Categories].[Right] > @MyRight AND [dbo].[Categories].[Level] = @MyLevel - 1);
+		IF (@ParentId = @ParentCurrentId OR @ParentId IS NULL)
+			BEGIN
+				UPDATE [dbo].[Categories] SET [dbo].[Categories].[Title] = @Title, [dbo].[Categories].[UpdatedAt] = getdate() WHERE [dbo].[Categories].[Id] = @CategoryId;
+				RETURN;
+			END
+
 		DECLARE @Row AS INT = (SELECT COUNT([dbo].[Categories].[Id]) FROM [dbo].[Categories] 
 			WHERE [dbo].[Categories].[Left] > @MyLeft AND [dbo].[Categories].[Right] < @MyRight);
 			IF(@Row > 0)

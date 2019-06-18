@@ -52,9 +52,10 @@ namespace Phone.Data.Entities.User
         public bool? Sex { get; set; }
 
         /// <summary>
-        /// How age has user.
+        /// Birthday user.
         /// </summary>
-        public byte? Age { get; set; }
+        [Column(TypeName="date")]
+        public DateTime? Birthday { get; set; }
 
         /// <summary>
         /// All about user (characteristik).
