@@ -31,6 +31,7 @@
   <ItemGroup>
     <None Remove="Data\StoredProcedures\Category\Create.sql" />
     <None Remove="Data\StoredProcedures\Category\Delete.sql" />
+    <None Remove="Data\StoredProcedures\Category\ListShop.sql" />
     <None Remove="Data\StoredProcedures\Category\SortDown.sql" />
     <None Remove="Data\StoredProcedures\Category\SortUp.sql" />
     <None Remove="Data\StoredProcedures\Category\Update.sql" />
@@ -39,6 +40,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Data\StoredProcedures\Category\Create.sql" />
     <EmbeddedResource Include="Data\StoredProcedures\Category\Delete.sql" />
+    <EmbeddedResource Include="Data\StoredProcedures\Category\ListShop.sql" />
     <EmbeddedResource Include="Data\StoredProcedures\Category\SortDown.sql" />
     <EmbeddedResource Include="Data\StoredProcedures\Category\SortUp.sql" />
     <EmbeddedResource Include="Data\StoredProcedures\Category\Update.sql" />
