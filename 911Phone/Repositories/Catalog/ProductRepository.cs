@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using System.Linq;
 using Phone.Exceptions;
 
-
 namespace Phone.Repositories.Catalog
 {
     public class ProductRepository : MainRepository, IProductRepository
@@ -23,7 +22,18 @@ namespace Phone.Repositories.Catalog
         /// <returns>IList<Product></returns>
         public async Task<IList<Product>> ListProductsByCategoryIdAllAsync(int categoryId)
         {
-            return await Task.Run(() => dbContext.Products.Where(p => p.CategoryId == categoryId).ToList());
+            return await Task.Run(() => dbContext.Products.Where(p => p.CategoryId == categoryId).Select(p => new Product
+            {
+                Title = p.Title,
+                Image = p.Image,
+                Price = p.Price,
+                Text = p.Text,
+                CreatedAt = p.CreatedAt,
+                UpdatedAt = p.UpdatedAt,
+                IsAproval = p.IsAproval,
+                Category = p.Category,
+                Storages = p.Storages
+            }).ToList());
         }
 
         /// <summary>
@@ -33,8 +43,17 @@ namespace Phone.Repositories.Catalog
         /// <returns>Product</returns>
         public async Task<Product> SingleProductAsync(int productId)
         {
-            var product = await Task.Run(() => dbContext.Products.Where(p => p.Id == productId).Select(p => new Product {
-                Title = p.Title, Image = p.Image, Price = p.Price, Text = p.Text, CreatedAt = p.CreatedAt, UpdatedAt = p.UpdatedAt, IsAproval = p.IsAproval, Category = p.Category
+            var product = await Task.Run(() => dbContext.Products.Where(p => p.Id == productId).Select(p => new Product
+            {
+                Title = p.Title,
+                Image = p.Image,
+                Price = p.Price,
+                Text = p.Text,
+                CreatedAt = p.CreatedAt,
+                UpdatedAt = p.UpdatedAt,
+                IsAproval = p.IsAproval,
+                Category = p.Category,
+                Storages = p.Storages
             }).FirstOrDefault());
             if (product == null)
             {

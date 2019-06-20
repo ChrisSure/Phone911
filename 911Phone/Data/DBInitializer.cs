@@ -202,6 +202,23 @@ namespace Phone.Data
             order2.ProductOrder.Add(item3);
 
 
+            //Storage
+            var storage1 = new Storage() { Count = 2, ShopId = shop1.Id, ProductId = product1.Id, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
+            context.Storages.Add(storage1);
+            var storage2 = new Storage() { Count = 1, ShopId = shop1.Id, ProductId = product2.Id, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
+            context.Storages.Add(storage2);
+            var storage3 = new Storage() { Count = 4, ShopId = shop1.Id, ProductId = product4.Id, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
+            context.Storages.Add(storage3);
+
+            var storage4 = new Storage() { Count = 3, ShopId = shop2.Id, ProductId = product1.Id, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
+            context.Storages.Add(storage4);
+            var storage5 = new Storage() { Count = 1, ShopId = shop2.Id, ProductId = product5.Id, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
+            context.Storages.Add(storage5);
+
+            var storage6 = new Storage() { Count = 1, ShopId = shop3.Id, ProductId = product1.Id, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
+            context.Storages.Add(storage6);
+
+
             context.SaveChanges();
         }
         #endregion SeedData seed

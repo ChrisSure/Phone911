@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Phone.Data.Entities.Shop;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Phone.Data.DTOs.Catalog
 {
@@ -21,5 +23,10 @@ namespace Phone.Data.DTOs.Catalog
         /// </summary>
         [MaxLength(255)]
         public string Image { get; set; }
+
+        /// <summary>
+        /// List of storage by product id.
+        /// </summary>
+        public IList<Storage> Storages { get; set; } = new List<Storage>();
     }
 }

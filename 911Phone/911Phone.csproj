@@ -11,6 +11,7 @@
     <!-- Set this to true if you enable server-side prerendering -->
     <BuildServerSideRenderer>false</BuildServerSideRenderer>
     <RootNamespace>Phone</RootNamespace>
+    <UserSecretsId>24c84f60-0fc8-4d90-a478-f4311905e4c3</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
