@@ -19,6 +19,7 @@ namespace Phone.Data
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<Shop> Shops { get; set; }
+        public virtual DbSet<Storage> Storages { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

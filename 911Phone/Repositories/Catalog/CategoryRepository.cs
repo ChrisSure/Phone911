@@ -37,7 +37,17 @@ namespace Phone.Repositories.Catalog
         /// <returns>IList<Category></Category></returns>
         public async Task<IList<Category>> ListCategoriesByShopIdAsync(int shopId)
         {
-            return await dbContext.Categories.Where(c => c.ShopCategory.Any(sc => sc.ShopId == shopId)).ToListAsync();
+            var categories = new List<Category>();
+            try
+            {
+                categories = await dbContext.Categories
+                      .FromSql($"EXEC [Categories.ListShop] {shopId}").ToListAsync();
+            }
+            catch (SqlException ex)
+            {
+                Helpers.SqlExceptionTranslator.ReThrow(ex, "List Category For Shop");
+            }
+            return categories;
         }
 
         /// <summary>

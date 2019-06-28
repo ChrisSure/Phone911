@@ -125,7 +125,7 @@ namespace Phone
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "911PhoneApp API V1");
-                c.RoutePrefix = ""; //swagger to angular
+                c.RoutePrefix = "swagger"; //swagger to angular
             });
 
             // Middleware Error Catching

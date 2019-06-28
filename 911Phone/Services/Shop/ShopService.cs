@@ -67,8 +67,9 @@ namespace Phone.Services.Shop
         /// <returns>void</returns>
         public async Task UpdateShop(int shopId, ShopEntity shop)
         {
-            await shopRepository.SingleShopNoTrackAsync(shopId);
+            var currentShop = await shopRepository.SingleShopNoTrackAsync(shopId);
             shop.Id = shopId;
+            shop.CreatedAt = currentShop.CreatedAt;
             shop.UpdatedAt = DateTime.Now;
             await shopRepository.UpdateShopAsync(shop);
         }

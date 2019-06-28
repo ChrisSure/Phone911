@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Phone.Data.Entities.Shop;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -67,5 +68,9 @@ namespace Phone.Data.Entities.Catalog
         [Required]
         public DateTime UpdatedAt { get; set; }
 
+        /// <summary>
+        /// List of storage by product id.
+        /// </summary>
+        public IList<Storage> Storages { get; set; } = new List<Storage>();
     }
 }

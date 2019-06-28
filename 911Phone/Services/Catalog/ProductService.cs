@@ -56,8 +56,9 @@ namespace Phone.Services.Catalog
         /// <returns>void</returns>
         public async Task UpdateProduct(int productId, Product product)
         {
-            await productRepository.SingleLiteProductAsync(productId);
+            var currentProduct = await productRepository.SingleLiteProductAsync(productId);
             product.Id = productId;
+            product.CreatedAt = currentProduct.CreatedAt;
             product.UpdatedAt = DateTime.Now;
             await productRepository.UpdateProductAsync(product);
         }
