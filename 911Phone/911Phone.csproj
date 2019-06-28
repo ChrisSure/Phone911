@@ -30,6 +30,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\app-routing.module.ts" />
+    <None Remove="ClientApp\src\app\site\error\error.component.ts" />
+    <None Remove="ClientApp\src\app\site\login\login.component.ts" />
     <None Remove="Data\StoredProcedures\Category\Create.sql" />
     <None Remove="Data\StoredProcedures\Category\Delete.sql" />
     <None Remove="Data\StoredProcedures\Category\ListShop.sql" />
@@ -45,6 +48,12 @@
     <EmbeddedResource Include="Data\StoredProcedures\Category\SortDown.sql" />
     <EmbeddedResource Include="Data\StoredProcedures\Category\SortUp.sql" />
     <EmbeddedResource Include="Data\StoredProcedures\Category\Update.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\app-routing.module.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\site\error\error.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\site\login\login.component.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

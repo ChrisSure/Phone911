@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sign In</title>
+  <link href="https://fonts.googleapis.com/css?family=Noto+Sans+HK:300,400,500,700|Roboto&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <script src="https://kit.fontawesome.com/4e65928726.js"></script>
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-12">
+        <header>
+          <h1 class="logo">Phone<span>911</span></h1>
+        </header>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="login_block">
+          <h2>Sign In</h2>
+          <form>
+            <div class="alert alert-danger" role="alert">
+              <ul>
+                <li>The field name doesn't empty</li>
+                <li>The field age doesn't empty</li>
+              </ul>
+            </div>
+
+            <div class="form-group">
+              <label for="exampleInputEmail1">Email address</label>
+              <input type="email" class="form-control form-control-lg" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputPassword1">Password</label>
+              <input type="password" class="form-control form-control-lg" id="exampleInputPassword1" placeholder="Password">
+            </div>
+            <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+            <p class="mt-1"><a href="/swagger">Swagger</a></p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
