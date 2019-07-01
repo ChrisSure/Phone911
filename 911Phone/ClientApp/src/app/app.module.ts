@@ -1,27 +1,32 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { LoginComponent } from './site/login/login.component';
-import { ErrorComponent } from './site/error/error.component';
+import { SiteModule } from './site/site.module';
+import { AuthService } from './services/auth.service';
+import { TokenService } from './services/token.service';
+import { UserInfoService } from './services/user-info.service';
+import { SellerModule } from './seller/seller.module';
 
 
 @NgModule({
   declarations: [
-    AppComponent,
-    LoginComponent,
-    ErrorComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
-    RouterModule,
-    AppRoutingModule,
+    SiteModule,
+    SellerModule,
+    AppRoutingModule
   ],
-  providers: [],
+  providers: [
+    AuthService,
+    TokenService,
+    UserInfoService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -31,8 +31,16 @@
 
   <ItemGroup>
     <None Remove="ClientApp\src\app\app-routing.module.ts" />
+    <None Remove="ClientApp\src\app\globals.ts" />
+    <None Remove="ClientApp\src\app\seller\home\seller-home.component.ts" />
+    <None Remove="ClientApp\src\app\seller\seller.module.ts" />
     <None Remove="ClientApp\src\app\site\error\error.component.ts" />
     <None Remove="ClientApp\src\app\site\login\login.component.ts" />
+    <None Remove="ClientApp\src\app\models\jwt-token.ts" />
+    <None Remove="ClientApp\src\app\services\auth.service.ts" />
+    <None Remove="ClientApp\src\app\services\token.service.ts" />
+    <None Remove="ClientApp\src\app\services\user-info.service.ts" />
+    <None Remove="ClientApp\src\app\site\site.module.ts" />
     <None Remove="Data\StoredProcedures\Category\Create.sql" />
     <None Remove="Data\StoredProcedures\Category\Delete.sql" />
     <None Remove="Data\StoredProcedures\Category\ListShop.sql" />
@@ -52,8 +60,16 @@
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\app\app-routing.module.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\globals.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\seller\home\seller-home.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\seller\seller.module.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\site\error\error.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\site\login\login.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\jwt-token.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\auth.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\token.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\user-info.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\site\site.module.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
