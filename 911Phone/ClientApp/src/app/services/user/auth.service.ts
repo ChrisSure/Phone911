@@ -1,7 +1,7 @@
 import { Injectable, Output, EventEmitter } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { BASE_API_URL } from '../globals';
-import { JwtToken } from '../models/jwt-token';
+import { BASE_API_URL } from '../../globals';
+import { JwtToken } from '../../models/user/jwt-token';
 import { map, finalize } from 'rxjs/operators';
 import { TokenService } from './token.service';
 import { UserInfoService } from './user-info.service';

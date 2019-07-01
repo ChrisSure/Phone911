@@ -5,9 +5,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { SiteModule } from './site/site.module';
-import { AuthService } from './services/auth.service';
-import { TokenService } from './services/token.service';
-import { UserInfoService } from './services/user-info.service';
+import { AuthService } from './services/user/auth.service';
+import { TokenService } from './services/user/token.service';
+import { UserInfoService } from './services/user/user-info.service';
 import { SellerModule } from './seller/seller.module';
 
 
@@ -19,7 +19,6 @@ import { SellerModule } from './seller/seller.module';
     BrowserModule,
     HttpClientModule,
     SiteModule,
-    SellerModule,
     AppRoutingModule
   ],
   providers: [

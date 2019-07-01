@@ -52,7 +52,7 @@ namespace Phone.Controllers.User
                 userNotFound = true;
             }
 
-            if (userNotFound || !await userService.CheckPasswordAsync(user, dto.Password))
+            if (userNotFound || !await userService.CheckPasswordAsync(user, dto.Password) || await userService.IsCustomer(user))
             {
                 ModelState.AddModelError("loginFailure", "Invalid email or password");
                 return BadRequest(ModelState);
@@ -67,6 +67,15 @@ namespace Phone.Controllers.User
             var refreshToken = jwtService.GenerateJwtRefreshToken();
             await jwtService.LoginByRefreshTokenAsync(user.Id, refreshToken);
             return Ok(await GetBuildToken(accessToken, refreshToken));
+        }
+
+        [AllowAnonymous]
+        [HttpPost("logout")]
+        public async Task<IActionResult> Logout([FromBody]AuthTokensDto dto)
+        {
+            var principal = jwtService.GetPrincipalFromExpiredAccessToken(dto.AccessToken);
+            await jwtService.DeleteRefreshTokenAsync(principal);
+            return Ok();
         }
 
         /// <summary>

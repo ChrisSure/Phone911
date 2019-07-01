@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../services/user/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
 
   login() {
       this.authService.login(this.loginForm.value.email, this.loginForm.value.password)
-        .subscribe(data => this.router.navigate(['/seller-panel']),
+        .subscribe(data => this.router.navigate(['/seller']),
           err => {
             if (err.error['loginFailure']) {
               this.apiError = err.error['loginFailure'];

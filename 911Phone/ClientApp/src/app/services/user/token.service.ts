@@ -1,4 +1,4 @@
-import { JwtToken } from '../models/jwt-token';
+import { JwtToken } from '../../models/user/jwt-token';
 import * as jwt_decode from 'jwt-decode';
 import { Injectable, EventEmitter, Output } from '@angular/core';
 import { UserInfoService } from './user-info.service';

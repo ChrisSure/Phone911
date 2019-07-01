@@ -9,5 +9,6 @@ namespace Phone.Repositories.User.Interfaces
         Task<IList<string>> GetUserRolesAsync(ApplicationUser user);
         Task<ApplicationUser> FindUserByEmailAsync(string email);
         Task<bool> CheckPasswordAsync(ApplicationUser user, string password);
+        Task<bool> IsCustomerAsync(ApplicationUser user);
     }
 }

@@ -46,5 +46,15 @@ namespace Phone.Services.User
         {
             return await userRepository.CheckPasswordAsync(user, password);
         }
+
+        /// <summary>
+        /// Method delegate to repository check if user is customer
+        /// <summary>
+        /// <param name="user">ApplicationUser</param>
+        /// <returns>bool</returns>
+        public async Task<bool> IsCustomer(ApplicationUser user)
+        {
+            return await userRepository.IsCustomerAsync(user);
+        }
     }
 }

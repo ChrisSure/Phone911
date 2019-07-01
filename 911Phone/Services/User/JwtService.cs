@@ -20,6 +20,7 @@ namespace Phone.Services.User
         private readonly IUserRefreshTokenRepository refreshRepository;
         private IUserAuthService userService;
         private readonly IConfiguration configuration;
+        private const string UserID = "uid";
 
         public JwtService(IUserRefreshTokenRepository refreshRepository, IUserAuthService userService, IConfiguration configuration)
         {
@@ -109,6 +110,54 @@ namespace Phone.Services.User
                 };
                 await refreshRepository.CreateAsync(userRefreshToken);
             }
+        }
+
+        /// <summary>
+        /// Method return claim principal
+        /// <summary>
+        /// <param name="accessToken">string</param>
+        /// <returns>ClaimsPrincipal</returns>
+        public ClaimsPrincipal GetPrincipalFromExpiredAccessToken(string accessToken)
+        {
+            var tokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateAudience = false,
+                ValidateIssuer = false,
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(
+                    Encoding.UTF8.GetBytes(configuration["Jwt:Key"])),
+                ValidateLifetime = false
+            };
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var principal = tokenHandler.ValidateToken(accessToken, tokenValidationParameters, out SecurityToken securityToken);
+
+            if (!(securityToken is JwtSecurityToken jwtSecurityToken))
+                throw new SecurityTokenException("Retrieving principal from access token failed: access token validation failed.");
+
+            if (!jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
+                throw new SecurityTokenException("Retrieving principal from access token failed: access token's algorithm is not correct.");
+
+            return principal;
+        }
+
+        /// <summary>
+        /// Method delete refresh token
+        /// <summary>
+        /// <param name="userPrincipal">ClaimsPrincipal</param>
+        /// <returns>void</returns>
+        public async Task DeleteRefreshTokenAsync(ClaimsPrincipal userPrincipal)
+        {
+            if (!userPrincipal.HasClaim(claim => claim.Type == UserID))
+                throw new SecurityTokenException("Refresh token deletion failed: access token has no user id.");
+
+            var userID = userPrincipal.FindFirst(claim => claim.Type == UserID).Value;
+            var refreshToken = await refreshRepository.GetByUserIdAsync(userID);
+
+            if (refreshToken == null)
+                throw new SecurityTokenException("Refresh token deletion failed: cannot retrieve refresh token.");
+
+            await refreshRepository.DeleteAsync(refreshToken.Id);
         }
 
     }

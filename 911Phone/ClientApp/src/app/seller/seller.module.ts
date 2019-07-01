@@ -3,17 +3,21 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from "@angular/router";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { SellerHomeComponent } from "./home/seller-home.component";
+import { SellerRoutingModule } from "./seller-routing.module";
+import { SellerPanelComponent } from "./seller-panel/seller-panel.component";
 
 
 @NgModule({
   declarations: [
-    SellerHomeComponent
+    SellerHomeComponent,
+    SellerPanelComponent
   ],
   imports: [
     CommonModule,
     RouterModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SellerRoutingModule
   ],
   providers: [],
   bootstrap: []
