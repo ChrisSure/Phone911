@@ -8,18 +8,21 @@ export class UserInfoService {
 
   uID = 'uID';
   uEmail = 'uEmail';
+  uName = 'uName';
   uRole = 'uRole';
   private roleKey = 'http://schemas.microsoft.com/ws/2008/06/identity/claims/role';
 
   public SaveUserInfo(decodedAT: any) {
     localStorage.setItem(this.uID, decodedAT.uid);
     localStorage.setItem(this.uEmail, decodedAT.email);
+    localStorage.setItem(this.uName, decodedAT.sub);
     localStorage.setItem(this.uRole, decodedAT[this.roleKey]);
   }
 
   public DeleteUserInfo() {
     localStorage.removeItem(this.uID);
     localStorage.removeItem(this.uEmail);
+    localStorage.removeItem(this.uName);
     localStorage.removeItem(this.uRole);
   }
 
@@ -29,6 +32,10 @@ export class UserInfoService {
 
   public get email(): string {
     return localStorage.getItem(this.uEmail);
+  }
+
+  public get name(): string {
+    return localStorage.getItem(this.uName);
   }
 
   public get role(): string {

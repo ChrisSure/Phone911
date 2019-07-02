@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Phone.Data.Entities.User;
 using Phone.Repositories.User.Interfaces;
@@ -18,13 +17,15 @@ namespace Phone.Services.User
     public class JwtService : IJwtService
     {
         private readonly IUserRefreshTokenRepository refreshRepository;
-        private IUserAuthService userService;
+        private readonly IProfileService profileService;
+        private readonly IUserAuthService userService;
         private readonly IConfiguration configuration;
         private const string UserID = "uid";
 
-        public JwtService(IUserRefreshTokenRepository refreshRepository, IUserAuthService userService, IConfiguration configuration)
+        public JwtService(IUserRefreshTokenRepository refreshRepository, IProfileService profileService, IUserAuthService userService, IConfiguration configuration)
         {
             this.refreshRepository = refreshRepository;
+            this.profileService = profileService;
             this.userService = userService;
             this.configuration = configuration;
         }
@@ -39,9 +40,10 @@ namespace Phone.Services.User
         public async Task<Claim[]> GetClaimsAsync(ApplicationUser userInfo)
         {
             var roles = await userService.GetUserRolesAsync(userInfo);
+            var profileName = (await profileService.GetProfileByUserId(userInfo.Id)).Name;
 
             var claims = new List<Claim> {
-                new Claim(JwtRegisteredClaimNames.Sub, userInfo.UserName),
+                new Claim(JwtRegisteredClaimNames.Sub, profileName),
                 new Claim(JwtRegisteredClaimNames.Email, userInfo.Email),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim("uid", userInfo.Id)

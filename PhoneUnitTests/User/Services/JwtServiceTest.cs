@@ -15,6 +15,7 @@ namespace PhoneUnitTests.User.Services
     public class JwtServiceTest
     {
         private readonly Mock<IUserRefreshTokenRepository> mockRefreshRepository;
+        private readonly Mock<IProfileService> mockProfileService;
         private readonly Mock<IUserAuthService> mockUserService;
         private readonly Mock<IConfiguration> mockConfiguration;
         private readonly Mock<ClaimsPrincipal> mockClaimsPrincipal;
@@ -24,6 +25,7 @@ namespace PhoneUnitTests.User.Services
         public JwtServiceTest()
         {
             mockRefreshRepository = new Mock<IUserRefreshTokenRepository>();
+            mockProfileService = new Mock<IProfileService>();
             mockUserService = new Mock<IUserAuthService>();
             mockConfiguration = new Mock<IConfiguration>();
             mockClaimsPrincipal = new Mock<ClaimsPrincipal>();
@@ -37,7 +39,7 @@ namespace PhoneUnitTests.User.Services
         [Fact]
         public void GenerateJwtRefreshTokenReturnsStringLength44()
         {
-            JwtService jwtService = new JwtService(mockRefreshRepository.Object, mockUserService.Object, mockConfiguration.Object);
+            JwtService jwtService = new JwtService(mockRefreshRepository.Object, mockProfileService.Object, mockUserService.Object, mockConfiguration.Object);
             var refreshToken = jwtService.GenerateJwtRefreshToken();
 
             Assert.Equal(44, refreshToken.Length);
@@ -51,7 +53,7 @@ namespace PhoneUnitTests.User.Services
         {
             mockRefreshRepository.Setup(refreshRepository => refreshRepository.GetByUserIdAsync(It.IsAny<string>())).ReturnsAsync(mockUserRefreshToken.Object);
 
-            JwtService jwtService = new JwtService(mockRefreshRepository.Object, mockUserService.Object, mockConfiguration.Object);
+            JwtService jwtService = new JwtService(mockRefreshRepository.Object, mockProfileService.Object, mockUserService.Object, mockConfiguration.Object);
             await jwtService.LoginByRefreshTokenAsync("id", "token");
 
             mockRefreshRepository.Verify(refreshRepository => refreshRepository.UpdateAsync(mockUserRefreshToken.Object), Times.Once);
@@ -66,7 +68,7 @@ namespace PhoneUnitTests.User.Services
         {
             mockRefreshRepository.Setup(refreshRepository => refreshRepository.GetByUserIdAsync(It.IsAny<string>())).ReturnsAsync((UserRefreshToken)null);
 
-            JwtService jwtService = new JwtService(mockRefreshRepository.Object, mockUserService.Object, mockConfiguration.Object);
+            JwtService jwtService = new JwtService(mockRefreshRepository.Object, mockProfileService.Object, mockUserService.Object, mockConfiguration.Object);
             await jwtService.LoginByRefreshTokenAsync("id", "token");
 
             mockRefreshRepository.Verify(refreshRepository => refreshRepository.UpdateAsync(It.IsAny<UserRefreshToken>()), Times.Never);
@@ -81,14 +83,15 @@ namespace PhoneUnitTests.User.Services
         {
             var roles = new List<string> { "somerole" };
             mockUserService.Setup(userService => userService.GetUserRolesAsync(mockUser.Object)).ReturnsAsync(roles);
+            mockProfileService.Setup(profileService => profileService.GetProfileByUserId(It.IsAny<string>())).ReturnsAsync(new Profile { Name = "UserName"});
             mockUser.SetupGet(user => user.UserName).Returns("userName");
             mockUser.SetupGet(user => user.Email).Returns("email");
             mockUser.SetupGet(user => user.Id).Returns("id");
 
-            JwtService jwtService = new JwtService(mockRefreshRepository.Object, mockUserService.Object, mockConfiguration.Object);
+            JwtService jwtService = new JwtService(mockRefreshRepository.Object, mockProfileService.Object, mockUserService.Object, mockConfiguration.Object);
             var actualClaims = await jwtService.GetClaimsAsync(mockUser.Object);
             var existsUserName = new List<Claim>(actualClaims)
-                .Exists(claim => claim.Type == JwtRegisteredClaimNames.Sub && claim.Value == "userName");
+                .Exists(claim => claim.Type == JwtRegisteredClaimNames.Sub && claim.Value == "UserName");
 
             mockUserService.Verify();
             mockUser.Verify();
@@ -103,11 +106,12 @@ namespace PhoneUnitTests.User.Services
         {
             var roles = new List<string> { "somerole" };
             mockUserService.Setup(userService => userService.GetUserRolesAsync(mockUser.Object)).ReturnsAsync(roles);
+            mockProfileService.Setup(profileService => profileService.GetProfileByUserId(It.IsAny<string>())).ReturnsAsync(new Profile { Name = "UserName" });
             mockUser.SetupGet(user => user.UserName).Returns("userName");
             mockUser.SetupGet(user => user.Email).Returns("email");
             mockUser.SetupGet(user => user.Id).Returns("id");
 
-            JwtService jwtService = new JwtService(mockRefreshRepository.Object, mockUserService.Object, mockConfiguration.Object);
+            JwtService jwtService = new JwtService(mockRefreshRepository.Object, mockProfileService.Object, mockUserService.Object, mockConfiguration.Object);
             var actualClaims = await jwtService.GetClaimsAsync(mockUser.Object);
             var expectedClaim = new Claim(JwtRegisteredClaimNames.Email, "email");
             var existsEmail = new List<Claim>(actualClaims)
@@ -126,11 +130,12 @@ namespace PhoneUnitTests.User.Services
         {
             var roles = new List<string> { "somerole" };
             mockUserService.Setup(userService => userService.GetUserRolesAsync(mockUser.Object)).ReturnsAsync(roles);
+            mockProfileService.Setup(profileService => profileService.GetProfileByUserId(It.IsAny<string>())).ReturnsAsync(new Profile { Name = "UserName" });
             mockUser.SetupGet(user => user.UserName).Returns("userName");
             mockUser.SetupGet(user => user.Email).Returns("email");
             mockUser.SetupGet(user => user.Id).Returns("id");
 
-            JwtService jwtService = new JwtService(mockRefreshRepository.Object, mockUserService.Object, mockConfiguration.Object);
+            JwtService jwtService = new JwtService(mockRefreshRepository.Object, mockProfileService.Object, mockUserService.Object, mockConfiguration.Object);
             var actualClaims = await jwtService.GetClaimsAsync(mockUser.Object);
             var expectedClaim = new Claim("uid", "id");
             var existsId = new List<Claim>(actualClaims)
@@ -149,11 +154,12 @@ namespace PhoneUnitTests.User.Services
         {
             var roles = new List<string> { "somerole" };
             mockUserService.Setup(userService => userService.GetUserRolesAsync(mockUser.Object)).ReturnsAsync(roles);
+            mockProfileService.Setup(profileService => profileService.GetProfileByUserId(It.IsAny<string>())).ReturnsAsync(new Profile { Name = "UserName" });
             mockUser.SetupGet(user => user.UserName).Returns("userName");
             mockUser.SetupGet(user => user.Email).Returns("email");
             mockUser.SetupGet(user => user.Id).Returns("id");
 
-            JwtService jwtService = new JwtService(mockRefreshRepository.Object, mockUserService.Object, mockConfiguration.Object);
+            JwtService jwtService = new JwtService(mockRefreshRepository.Object, mockProfileService.Object, mockUserService.Object, mockConfiguration.Object);
             var actualClaims = await jwtService.GetClaimsAsync(mockUser.Object);
             var existsRole = new List<Claim>(actualClaims)
                 .Exists(claim => claim.Type == ClaimTypes.Role && claim.Value == "somerole");
@@ -171,11 +177,12 @@ namespace PhoneUnitTests.User.Services
         {
             var roles = new List<string> { "somerole" };
             mockUserService.Setup(userService => userService.GetUserRolesAsync(mockUser.Object)).ReturnsAsync(roles);
+            mockProfileService.Setup(profileService => profileService.GetProfileByUserId(It.IsAny<string>())).ReturnsAsync(new Profile { Name = "UserName" });
             mockUser.SetupGet(user => user.UserName).Returns("userName");
             mockUser.SetupGet(user => user.Email).Returns("email");
             mockUser.SetupGet(user => user.Id).Returns("id");
 
-            JwtService jwtService = new JwtService(mockRefreshRepository.Object, mockUserService.Object, mockConfiguration.Object);
+            JwtService jwtService = new JwtService(mockRefreshRepository.Object, mockProfileService.Object, mockUserService.Object, mockConfiguration.Object);
             var actualClaims = await jwtService.GetClaimsAsync(mockUser.Object);
             var existsJti = new List<Claim>(actualClaims)
                 .Exists(claim => claim.Type == JwtRegisteredClaimNames.Jti);

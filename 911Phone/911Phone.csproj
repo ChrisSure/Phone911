@@ -32,11 +32,13 @@
   <ItemGroup>
     <None Remove="ClientApp\src\app\app-routing.module.ts" />
     <None Remove="ClientApp\src\app\globals.ts" />
+    <None Remove="ClientApp\src\app\models\shop\shop.ts" />
     <None Remove="ClientApp\src\app\seller\home\seller-home.component.ts" />
     <None Remove="ClientApp\src\app\seller\seller-panel.component.ts" />
     <None Remove="ClientApp\src\app\seller\seller-routing.module.ts" />
     <None Remove="ClientApp\src\app\seller\seller.guard.ts" />
     <None Remove="ClientApp\src\app\seller\seller.module.ts" />
+    <None Remove="ClientApp\src\app\services\shop\shop.service.ts" />
     <None Remove="ClientApp\src\app\site\error\error.component.ts" />
     <None Remove="ClientApp\src\app\site\login\login.component.ts" />
     <None Remove="ClientApp\src\app\models\jwt-token.ts" />
@@ -64,11 +66,13 @@
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\app\app-routing.module.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\globals.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\shop\shop.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\seller\home\seller-home.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\seller\seller-panel\seller-panel.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\seller\seller-routing.module.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\seller\seller.guard.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\seller\seller.module.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\shop\shop.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\site\error\error.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\site\login\login.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\user\jwt-token.ts" />

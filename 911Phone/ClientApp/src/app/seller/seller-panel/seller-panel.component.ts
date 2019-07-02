@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/user/auth.service';
 import { Router } from '@angular/router';
+import { UserInfoService } from '../../services/user/user-info.service';
 
 
 @Component({
@@ -10,7 +11,7 @@ import { Router } from '@angular/router';
 })
 export class SellerPanelComponent implements OnInit {
 
-  constructor(private authService: AuthService, private router: Router) {
+  constructor(private authService: AuthService, private userInfo: UserInfoService, private router: Router) {
 
   }
 

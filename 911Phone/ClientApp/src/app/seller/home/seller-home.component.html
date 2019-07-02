@@ -1,14 +1,13 @@
-<div class="card">
-  <h5 class="card-header">Shop 1</h5>
-  <div class="card-body">
-    <p class="card-text">Central shop.</p>
-    <a href="#" class="btn btn-primary">Go into the shop</a>
+<div *ngIf="isShops; else noShop">
+  <div class="card mb-4" *ngFor="let shop of shops">
+    <h5 class="card-header">{{ shop.title }}</h5>
+    <div class="card-body">
+      <p class="card-text">{{ shop.description }}</p>
+      <a href="#" class="btn btn-primary">Go into the shop</a>
+    </div>
   </div>
 </div>
-<div class="card">
-  <h5 class="card-header">Shop 3</h5>
-  <div class="card-body">
-    <p class="card-text">West shop.</p>
-    <a href="#" class="btn btn-primary">Go into the shop</a>
-  </div>
-</div>
+
+<ng-template #noShop>
+  <h1>You haven't any shops</h1>
+</ng-template>

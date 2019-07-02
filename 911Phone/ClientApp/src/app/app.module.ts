@@ -8,7 +8,7 @@ import { SiteModule } from './site/site.module';
 import { AuthService } from './services/user/auth.service';
 import { TokenService } from './services/user/token.service';
 import { UserInfoService } from './services/user/user-info.service';
-import { SellerModule } from './seller/seller.module';
+import { ShopService } from './services/shop/shop.service';
 
 
 @NgModule({
@@ -24,7 +24,8 @@ import { SellerModule } from './seller/seller.module';
   providers: [
     AuthService,
     TokenService,
-    UserInfoService
+    UserInfoService,
+    ShopService
   ],
   bootstrap: [AppComponent]
 })

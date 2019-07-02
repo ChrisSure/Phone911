@@ -46,8 +46,8 @@ namespace Phone.Controllers.Shop
         [ProducesResponseType(500)]
         public async Task<IActionResult> List()
         {
-            var orders = dtoMapper.Map<IList<ShopEntity>, IList<ShopListDto>>(await shopService.ListShops());
-            return Ok(orders);
+            var shops = dtoMapper.Map<IList<ShopEntity>, IList<ShopListDto>>(await shopService.ListShops());
+            return Ok(shops);
         }
 
         [HttpGet]
@@ -57,8 +57,8 @@ namespace Phone.Controllers.Shop
         [ProducesResponseType(500)]
         public async Task<IActionResult> ListBySellerId([FromRoute] string sellerId)
         {
-            var orders = dtoMapper.Map<IList<ShopEntity>, IList<ShopListDto>>(await shopService.ListShopsBySellerId(sellerId));
-            return Ok(orders);
+            var shops = dtoMapper.Map<IList<ShopEntity>, IList<ShopListDto>>(await shopService.ListShopsBySellerId(sellerId));
+            return Ok(shops);
         }
 
         [HttpPost]
