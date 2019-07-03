@@ -34,7 +34,7 @@ export class UserInfoService {
     return localStorage.getItem(this.uEmail);
   }
 
-  public get name(): string {
+  public get mname(): string {
     return localStorage.getItem(this.uName);
   }
 

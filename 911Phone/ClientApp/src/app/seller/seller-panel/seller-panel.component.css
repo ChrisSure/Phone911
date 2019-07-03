@@ -44,6 +44,14 @@
   }
 
 .seller_info {
-  padding-left: 20px;
+  padding-left: 0px;
+}
+
+  .seller_info li {
+    list-style-type: none;
+  }
+
+.seller_info span {
+  font-weight: bold;
 }
 /* Seller Panel */

@@ -9,6 +9,7 @@ import { AuthService } from './services/user/auth.service';
 import { TokenService } from './services/user/token.service';
 import { UserInfoService } from './services/user/user-info.service';
 import { ShopService } from './services/shop/shop.service';
+import { ProfileService } from './services/user/profile.service';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { ShopService } from './services/shop/shop.service';
     AuthService,
     TokenService,
     UserInfoService,
-    ShopService
+    ShopService,
+    ProfileService
   ],
   bootstrap: [AppComponent]
 })

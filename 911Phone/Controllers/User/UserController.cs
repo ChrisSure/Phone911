@@ -114,6 +114,18 @@ namespace Phone.Controllers.User
             return Ok("Role changed");
         }
 
+
+        [HttpGet]
+        [Route("api/profile/{userId}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> SingleProfile([FromRoute] string userId)
+        {
+            var profile = dtoMapper.Map<ProfileInfoDto>(await profileService.GetProfileByUserId(userId));
+            return Ok(profile);
+        }
+
         [HttpPost]
         [Route("api/profile")]
         [ProducesResponseType(201)]

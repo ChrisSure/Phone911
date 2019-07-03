@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/user/auth.service';
@@ -20,7 +20,11 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    if (this.authService.isSeller) {
+      this.router.navigate(['/seller']);
+    }
+  }
 
   login() {
       this.authService.login(this.loginForm.value.email, this.loginForm.value.password)
