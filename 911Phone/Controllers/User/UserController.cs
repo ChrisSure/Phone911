@@ -51,6 +51,17 @@ namespace Phone.Controllers.User
             return Ok(new UserSingleDto { UserInfo = dtoMapper.Map<UserViewDto>(admin), ProfileInfo = profile, RoleInfo = role });
         }
 
+        [HttpGet]
+        [Route("api/user/{userId}/simple")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> SingleSimple([FromRoute] string userId)
+        {
+            var admin = await userService.GetUserByIdAsync(userId);
+            return Ok(admin);
+        }
+
         [HttpPost]
         [Route("api/user")]
         [ProducesResponseType(201)]

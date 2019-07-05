@@ -33,7 +33,10 @@
     <None Remove="ClientApp\src\app\app-routing.module.ts" />
     <None Remove="ClientApp\src\app\globals.ts" />
     <None Remove="ClientApp\src\app\models\shop\shop.ts" />
+    <None Remove="ClientApp\src\app\models\user\dto\user-email.ts" />
+    <None Remove="ClientApp\src\app\models\user\dto\User.ts" />
     <None Remove="ClientApp\src\app\models\user\profile.ts" />
+    <None Remove="ClientApp\src\app\seller\change-email\change-email.component.ts" />
     <None Remove="ClientApp\src\app\seller\home\seller-home.component.ts" />
     <None Remove="ClientApp\src\app\seller\seller-panel.component.ts" />
     <None Remove="ClientApp\src\app\seller\seller-routing.module.ts" />
@@ -41,6 +44,7 @@
     <None Remove="ClientApp\src\app\seller\seller.module.ts" />
     <None Remove="ClientApp\src\app\services\shop\shop.service.ts" />
     <None Remove="ClientApp\src\app\services\user\profile.service.ts" />
+    <None Remove="ClientApp\src\app\services\user\user.service.ts" />
     <None Remove="ClientApp\src\app\site\error\error.component.ts" />
     <None Remove="ClientApp\src\app\site\login\login.component.ts" />
     <None Remove="ClientApp\src\app\models\jwt-token.ts" />
@@ -69,7 +73,10 @@
     <TypeScriptCompile Include="ClientApp\src\app\app-routing.module.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\globals.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\shop\shop.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\user\dto\user-email.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\user\dto\user.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\user\profile.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\seller\change-email\change-email.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\seller\home\seller-home.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\seller\seller-panel\seller-panel.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\seller\seller-routing.module.ts" />
@@ -77,6 +84,7 @@
     <TypeScriptCompile Include="ClientApp\src\app\seller\seller.module.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\shop\shop.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\user\profile.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\user\user.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\site\error\error.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\site\login\login.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\user\jwt-token.ts" />
