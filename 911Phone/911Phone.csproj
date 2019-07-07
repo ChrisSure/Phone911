@@ -34,9 +34,11 @@
     <None Remove="ClientApp\src\app\globals.ts" />
     <None Remove="ClientApp\src\app\models\shop\shop.ts" />
     <None Remove="ClientApp\src\app\models\user\dto\user-email.ts" />
+    <None Remove="ClientApp\src\app\models\user\dto\user-new-password.ts" />
     <None Remove="ClientApp\src\app\models\user\dto\User.ts" />
     <None Remove="ClientApp\src\app\models\user\profile.ts" />
     <None Remove="ClientApp\src\app\seller\change-email\change-email.component.ts" />
+    <None Remove="ClientApp\src\app\seller\change-password\change-password.component.ts" />
     <None Remove="ClientApp\src\app\seller\home\seller-home.component.ts" />
     <None Remove="ClientApp\src\app\seller\seller-panel.component.ts" />
     <None Remove="ClientApp\src\app\seller\seller-routing.module.ts" />
@@ -74,9 +76,11 @@
     <TypeScriptCompile Include="ClientApp\src\app\globals.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\shop\shop.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\user\dto\user-email.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\user\dto\user-new-password.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\user\dto\user.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\user\profile.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\seller\change-email\change-email.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\seller\change-password\change-password.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\seller\home\seller-home.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\seller\seller-panel\seller-panel.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\seller\seller-routing.module.ts" />

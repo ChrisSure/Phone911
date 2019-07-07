@@ -6,6 +6,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { UserEmail } from '../../models/user/dto/user-email';
 import { User } from '../../models/user/dto/User';
+import { UserNewPassword } from '../../models/user/dto/user-new-password';
 
 
 @Injectable()
@@ -21,6 +22,10 @@ export class UserService {
 
   changeEmail(userId: string, userEmail: UserEmail): Observable<Object> {
     return this.http.put(this.baseUrlUser + '/' + userId + '/change-email', userEmail, { headers: this.headers });
+  }
+
+  changePassword(userId: string, userPassword: UserNewPassword): Observable<Object> {
+    return this.http.put(this.baseUrlUser + '/' + userId + '/change-password', userPassword, { headers: this.headers });
   }
 
   public getUserSimple(id: string): Observable<User> {

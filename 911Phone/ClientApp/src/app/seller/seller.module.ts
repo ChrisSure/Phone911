@@ -6,13 +6,15 @@ import { SellerHomeComponent } from "./home/seller-home.component";
 import { SellerRoutingModule } from "./seller-routing.module";
 import { SellerPanelComponent } from "./seller-panel/seller-panel.component";
 import { ChangeEmailComponent } from "./change-email/change-email.component";
+import { ChangePasswordComponent } from "./change-password/change-password.component";
 
 
 @NgModule({
   declarations: [
     SellerHomeComponent,
     SellerPanelComponent,
-    ChangeEmailComponent
+    ChangeEmailComponent,
+    ChangePasswordComponent
   ],
   imports: [
     CommonModule,

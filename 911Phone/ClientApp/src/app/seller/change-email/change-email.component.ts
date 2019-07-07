@@ -9,7 +9,8 @@ import { User } from '../../models/user/dto/User';
 
 @Component({
   selector: 'app-seller-change-email',
-  templateUrl: './change-email.component.html'
+  templateUrl: './change-email.component.html',
+  styleUrls: ['../seller-panel/form.css']
 })
 export class ChangeEmailComponent implements OnInit {
 
