@@ -7,6 +7,7 @@ import { SellerRoutingModule } from "./seller-routing.module";
 import { SellerPanelComponent } from "./seller-panel/seller-panel.component";
 import { ChangeEmailComponent } from "./change-email/change-email.component";
 import { ChangePasswordComponent } from "./change-password/change-password.component";
+import { ChangeProfileComponent } from "./change-profile/change-profile.component";
 
 
 @NgModule({
@@ -14,7 +15,8 @@ import { ChangePasswordComponent } from "./change-password/change-password.compo
     SellerHomeComponent,
     SellerPanelComponent,
     ChangeEmailComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    ChangeProfileComponent
   ],
   imports: [
     CommonModule,

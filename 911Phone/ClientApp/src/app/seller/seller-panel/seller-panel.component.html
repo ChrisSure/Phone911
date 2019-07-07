@@ -12,7 +12,7 @@
         <header class="seller_panel">
           <div class="row">
             <div class="col-sm-3">
-              <h1 class="logo-seller-panel">Phone<span>911</span></h1>
+              <h1 class="logo-seller-panel"><a routerLink="/seller">Phone<span>911</span></a></h1>
             </div>
             <div class="col-sm-7">
               <h3>Hello {{ userInfo?.mname }}</h3>
@@ -35,7 +35,7 @@
               <li><span>Phone: </span>{{ profile?.phone }}</li>
               <li><span>Position: </span>{{ profile?.position }}</li>
               <li><span>Salary: </span>{{ profile?.salary }} $</li>
-              <li class="mt-4"><a href="#">Change profile</a></li>
+              <li class="mt-4"><a routerLink="/seller/change-profile">Change profile</a></li>
               <li><a routerLink="/seller/change-email">Change email</a></li>
               <li><a routerLink="/seller/change-password">Change password</a></li>
             </ul>

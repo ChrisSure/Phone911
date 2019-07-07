@@ -7,6 +7,7 @@ import { SellerPanelComponent } from './seller-panel/seller-panel.component';
 import { SellerHomeComponent } from './home/seller-home.component';
 import { ChangeEmailComponent } from './change-email/change-email.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { ChangeProfileComponent } from './change-profile/change-profile.component';
 
 
 const routesSeller: Routes = [
@@ -14,7 +15,8 @@ const routesSeller: Routes = [
     path: '', component: SellerPanelComponent, canActivate: [SellerGuard], children: [
       { path: '', component: SellerHomeComponent },
       { path: 'change-email', component: ChangeEmailComponent },
-      { path: 'change-password', component: ChangePasswordComponent }
+      { path: 'change-password', component: ChangePasswordComponent },
+      { path: 'change-profile', component: ChangeProfileComponent },
     ]
   }
 ];

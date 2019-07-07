@@ -33,6 +33,7 @@ namespace Phone.Controllers.User
                         .ForMember(user => user.PasswordHash, opt => opt.MapFrom(src => src.Password));
                     mapper.CreateMap<ProfileNamespace.Profile, ProfileInfoDto>();
                     mapper.CreateMap<ProfileNamespace.Profile, ProfileCreatedDto>().ReverseMap();
+                    mapper.CreateMap<ProfileNamespace.Profile, ProfileSellerUpdateDto>().ReverseMap();
                     mapper.CreateMap<ApplicationUser, UserViewDto>();
                 }
             ));
@@ -172,6 +173,23 @@ namespace Phone.Controllers.User
 
             await profileService.UpdateProfileAsync(itemModel, profileId);
             return Ok("User Profile updated");
+        }
+
+        [HttpPut]
+        [Route("api/profile/{userId}/seller")]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> UpdateSellerProfile([FromBody] ProfileSellerUpdateDto profileDto, [FromRoute] string userId)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var itemModel = dtoMapper.Map<ProfileSellerUpdateDto, ProfileNamespace.Profile>(profileDto);
+
+            await profileService.UpdateSellerProfileAsync(itemModel, userId);
+            return Ok("Seller Profile updated");
         }
 
     }

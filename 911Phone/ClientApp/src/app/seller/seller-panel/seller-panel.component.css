@@ -22,10 +22,13 @@
     font-weight: bold;
     color: #09c;
   }
+.logo-seller-panel a:hover {
+  text-decoration: underline;
+}
 
-    .seller_panel .logo-seller-panel span {
-      color: #444;
-    }
+.seller_panel .logo-seller-panel span {
+  color: #444;
+}
 
   .seller_panel .btn {
     float: right;
