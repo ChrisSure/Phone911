@@ -4,6 +4,7 @@ import { UserInfoService } from '../../services/user/user-info.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ProfileService } from '../../services/user/profile.service';
 import { Profile } from '../../models/user/profile';
+import { ProfileSellerChange } from '../../models/user/dto/profile-seller-change';
 
 
 @Component({
@@ -17,6 +18,7 @@ export class ChangeProfileComponent implements OnInit {
   private messageSuccess: string = "";
   private changeProfileForm: FormGroup;
   profile: Profile = new Profile();
+  profileChange: ProfileSellerChange = new ProfileSellerChange();
 
   constructor(private profileService: ProfileService, private userInfo: UserInfoService, private router: Router) {
 
@@ -27,7 +29,6 @@ export class ChangeProfileComponent implements OnInit {
     this.profileService.getProfile(this.userInfo.userId).subscribe((res: Profile) => {
       this.profile = res;
       this.setAge(this.profile.birthday);
-      //console.log(this.profile);
       this.initializeForm();
     }, error => this.handleError(error));
   }
@@ -44,17 +45,24 @@ export class ChangeProfileComponent implements OnInit {
   }
 
   setAge(birthday: string) {
-    var birthdayYear = (new Date(birthday)).getFullYear();
-    var birtdayMonth = (new Date(birthday)).getMonth();
-    var birtdayDay = (new Date(birthday)).getDay();
-    console.log(birthdayYear);
-    console.log(birtdayMonth);
-    console.log(birtdayDay);
-    this.profile.birthday = birtdayDay + '.' + birtdayMonth + '.' + birthdayYear;
+    let dateArr = birthday.split('-');
+    this.profile.birthday = dateArr[0] + '-' + dateArr[1] + '-' + dateArr[2].substr(0, 2);
   }
 
   changeProfile() {
-    console.log(this.changeProfileForm);
+    this.profileChange.Name = this.changeProfileForm.value.name;
+    this.profileChange.LastName = this.changeProfileForm.value.lastname;
+    this.profileChange.SurName = this.changeProfileForm.value.surname;
+    this.profileChange.Sex = this.changeProfileForm.value.sex;
+    this.profileChange.Birthday = this.changeProfileForm.value.birthday;
+    this.profileChange.Phone = this.changeProfileForm.value.phone;
+    this.profileService.changeProfile(this.userInfo.userId, this.profileChange).subscribe(() => {
+      this.messageSuccess = "You change successfull your profile!";
+      this.apiError = "";
+    }, err => {
+      this.apiError = err.message;
+      this.messageSuccess = "";
+    });
   }
 
   private handleError(error: any) {

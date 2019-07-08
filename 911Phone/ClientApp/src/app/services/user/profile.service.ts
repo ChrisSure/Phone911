@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { Profile } from '../../models/user/profile';
+import { ProfileSellerChange } from '../../models/user/dto/profile-seller-change';
 
 
 @Injectable()
@@ -24,6 +25,10 @@ export class ProfileService {
     }).map((response: Profile) => { return response; })
       .catch((error: any) =>
         Observable.throw(error.error || 'Server error'));
+  }
+
+  changeProfile(userId: string, userProfile: ProfileSellerChange): Observable<Object> {
+    return this.http.put(this.baseUrlProfile + '/' + userId + '/seller', userProfile, { headers: this.headers });
   }
 
 }

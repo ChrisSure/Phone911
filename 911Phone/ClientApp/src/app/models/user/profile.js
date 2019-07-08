@@ -1,11 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var Profile = /** @class */ (function () {
-    function Profile(id, name, lastName, birthday, age, phone, position, salary) {
+    function Profile(id, name, lastName, surName, birthday, sex, age, phone, position, salary) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;
+        this.surName = surName;
         this.birthday = birthday;
+        this.sex = sex;
         this.age = age;
         this.phone = phone;
         this.position = position;

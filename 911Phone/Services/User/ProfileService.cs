@@ -72,6 +72,11 @@ namespace Phone.Services.User
             profile.UpdatedAt = DateTime.Now;
             profile.CreatedAt = currentProfile.CreatedAt;
             profile.Id = currentProfile.Id;
+            profile.UserId = userId;
+            profile.Description = currentProfile.Description;
+            profile.Experience = currentProfile.Experience;
+            profile.Position = currentProfile.Position;
+            profile.Salary = currentProfile.Salary;
             await profileRepository.UpdateProfileAsync(profile);
         }
     }

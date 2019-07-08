@@ -33,6 +33,7 @@
     <None Remove="ClientApp\src\app\app-routing.module.ts" />
     <None Remove="ClientApp\src\app\globals.ts" />
     <None Remove="ClientApp\src\app\models\shop\shop.ts" />
+    <None Remove="ClientApp\src\app\models\user\dto\profile-seller-change.ts" />
     <None Remove="ClientApp\src\app\models\user\dto\user-email.ts" />
     <None Remove="ClientApp\src\app\models\user\dto\user-new-password.ts" />
     <None Remove="ClientApp\src\app\models\user\dto\User.ts" />
@@ -76,6 +77,7 @@
     <TypeScriptCompile Include="ClientApp\src\app\app-routing.module.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\globals.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\shop\shop.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\user\dto\profile-seller-change.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\user\dto\user-email.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\user\dto\user-new-password.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\user\dto\user.ts" />
