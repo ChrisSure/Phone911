@@ -17,7 +17,6 @@ export class SellerPanelComponent implements OnInit {
   profile: Profile;
 
   constructor(private authService: AuthService, private profileService: ProfileService, private userInfo: UserInfoService, private router: Router) {
-
   }
 
   ngOnInit() {

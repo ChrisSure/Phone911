@@ -12,7 +12,6 @@ import { ShopService } from './services/shop/shop.service';
 import { ProfileService } from './services/user/profile.service';
 import { UserService } from './services/user/user.service';
 
-
 @NgModule({
   declarations: [
     AppComponent

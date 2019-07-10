@@ -12,11 +12,12 @@ import { ChangeProfileComponent } from './change-profile/change-profile.componen
 
 const routesSeller: Routes = [
   {
-    path: '', component: SellerPanelComponent, canActivate: [SellerGuard], children: [
-      { path: '', component: SellerHomeComponent },
-      { path: 'change-email', component: ChangeEmailComponent },
-      { path: 'change-password', component: ChangePasswordComponent },
-      { path: 'change-profile', component: ChangeProfileComponent },
+    path: '', component: SellerPanelComponent, data: { breadcrumbs: true, text: 'Seller' }, canActivate: [SellerGuard], children: [
+      {
+        path: '', component: SellerHomeComponent, data: { breadcrumbIgnore: true }  },
+      { path: 'change-email', component: ChangeEmailComponent, data: { breadcrumbs: true, text: 'Change Email' } },
+      { path: 'change-password', component: ChangePasswordComponent, data: { breadcrumbs: true, text: 'Change Password' } },
+      { path: 'change-profile', component: ChangeProfileComponent, data: { breadcrumbs: true, text: 'Change Profile' } },
     ]
   }
 ];

@@ -20,7 +20,6 @@ export class ChangeEmailComponent implements OnInit {
   private user: User = new User();
 
   constructor(private userService: UserService, private userInfo: UserInfoService, private router: Router) {
-
   }
 
   ngOnInit() {

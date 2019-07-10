@@ -8,6 +8,7 @@ import { SellerPanelComponent } from "./seller-panel/seller-panel.component";
 import { ChangeEmailComponent } from "./change-email/change-email.component";
 import { ChangePasswordComponent } from "./change-password/change-password.component";
 import { ChangeProfileComponent } from "./change-profile/change-profile.component";
+import { McBreadcrumbsModule } from 'ngx-breadcrumbs';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { ChangeProfileComponent } from "./change-profile/change-profile.componen
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
-    SellerRoutingModule
+    SellerRoutingModule,
+    McBreadcrumbsModule.forRoot()
   ],
   providers: [],
   bootstrap: []
