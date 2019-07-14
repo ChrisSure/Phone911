@@ -9,6 +9,7 @@ import { ChangeEmailComponent } from "./change-email/change-email.component";
 import { ChangePasswordComponent } from "./change-password/change-password.component";
 import { ChangeProfileComponent } from "./change-profile/change-profile.component";
 import { McBreadcrumbsModule } from 'ngx-breadcrumbs';
+import { StatisticComponent } from "./statistic/statistic.component";
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { McBreadcrumbsModule } from 'ngx-breadcrumbs';
     SellerPanelComponent,
     ChangeEmailComponent,
     ChangePasswordComponent,
-    ChangeProfileComponent
+    ChangeProfileComponent,
+    StatisticComponent
   ],
   imports: [
     CommonModule,

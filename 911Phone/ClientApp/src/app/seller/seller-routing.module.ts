@@ -8,16 +8,17 @@ import { SellerHomeComponent } from './home/seller-home.component';
 import { ChangeEmailComponent } from './change-email/change-email.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { ChangeProfileComponent } from './change-profile/change-profile.component';
+import { StatisticComponent } from './statistic/statistic.component';
 
 
 const routesSeller: Routes = [
   {
     path: '', component: SellerPanelComponent, data: { breadcrumbs: true, text: 'Seller' }, canActivate: [SellerGuard], children: [
-      {
-        path: '', component: SellerHomeComponent, data: { breadcrumbIgnore: true }  },
+      { path: '', component: SellerHomeComponent, data: { breadcrumbIgnore: true }  },
       { path: 'change-email', component: ChangeEmailComponent, data: { breadcrumbs: true, text: 'Change Email' } },
       { path: 'change-password', component: ChangePasswordComponent, data: { breadcrumbs: true, text: 'Change Password' } },
       { path: 'change-profile', component: ChangeProfileComponent, data: { breadcrumbs: true, text: 'Change Profile' } },
+      { path: 'statistic', component: StatisticComponent, data: { breadcrumbs: true, text: 'Seller Statistic' } }
     ]
   }
 ];

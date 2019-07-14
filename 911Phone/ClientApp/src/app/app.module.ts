@@ -11,6 +11,7 @@ import { UserInfoService } from './services/user/user-info.service';
 import { ShopService } from './services/shop/shop.service';
 import { ProfileService } from './services/user/profile.service';
 import { UserService } from './services/user/user.service';
+import { OrderService } from './services/catalog/order.service';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { UserService } from './services/user/user.service';
     UserInfoService,
     ShopService,
     ProfileService,
-    UserService
+    UserService,
+    OrderService
   ],
   bootstrap: [AppComponent]
 })

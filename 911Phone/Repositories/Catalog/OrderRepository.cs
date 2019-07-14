@@ -7,6 +7,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Phone.Exceptions;
+using Microsoft.EntityFrameworkCore;
 
 namespace Phone.Repositories.Catalog
 {
@@ -61,6 +62,18 @@ namespace Phone.Repositories.Catalog
         public async Task<IList<Order>> ListOrdersBySellerIdAsync(string sellerId)
         {
             return await Task.Run(() => dbContext.Orders.Where(o => o.SellerId == sellerId).ToList());
+        }
+
+        /// <summary>
+        /// Method delegate to service get list of orders by seller id detail
+        /// <summary>
+        /// <param name="sellerId">string</param>
+        /// <param name="start">DateTime</param>
+        /// <param name="finish">DateTime</param>
+        /// <returns>IList<Order></returns>
+        public async Task<IList<Order>> ListOrdersBySellerIdDetailAsync(string sellerId, DateTime start, DateTime finish)
+        {
+            return await Task.Run(() => dbContext.Orders.Where(o => o.SellerId == sellerId).Where(o => o.CreatedAt >= start).Where(o => o.CreatedAt <= finish).ToList());
         }
 
         /// <summary>

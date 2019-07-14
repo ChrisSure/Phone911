@@ -44,7 +44,7 @@ export class ChangeProfileComponent implements OnInit {
     });
   }
 
-  setAge(birthday: string) {
+  private setAge(birthday: string) {
     let dateArr = birthday.split('-');
     this.profile.birthday = dateArr[0] + '-' + dateArr[1] + '-' + dateArr[2].substr(0, 2);
   }
