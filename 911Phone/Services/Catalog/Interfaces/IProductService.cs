@@ -7,6 +7,7 @@ namespace Phone.Services.Catalog.Interfaces
     public interface IProductService
     {
         Task<IList<Product>> ListProductsByCategoryIdAll(int categoryId);
+        Task<IList<Product>> ListProductsByOrderIdAll(int orderId);
         Task<Product> SingleProduct(int productId);
         Task CreateProduct(Product product);
         Task UpdateProduct(int productId, Product product);

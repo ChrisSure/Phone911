@@ -26,13 +26,24 @@ namespace Phone.Controllers.Catalog
         }
 
         [HttpGet]
-        [Route("api/products-by-category/{categoryId}")]
+        [Route("api/products/{categoryId}/category")]
         [ProducesResponseType(200)]
         [ProducesResponseType(401)]
         [ProducesResponseType(500)]
         public async Task<IActionResult> ListByCategoryId([FromRoute] int categoryId)
         {
             var products = dtoMapper.Map<IList<Product>, IList<ProductListDto>>(await productService.ListProductsByCategoryIdAll(categoryId));
+            return Ok(products);
+        }
+
+        [HttpGet]
+        [Route("api/products/{orderId}/order")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> ListByOrderId([FromRoute] int orderId)
+        {
+            var products = dtoMapper.Map<IList<Product>, IList<ProductListDto>>(await productService.ListProductsByOrderIdAll(orderId));
             return Ok(products);
         }
 

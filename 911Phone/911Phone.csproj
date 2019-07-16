@@ -50,6 +50,7 @@
     <None Remove="ClientApp\src\app\seller\seller.module.ts" />
     <None Remove="ClientApp\src\app\seller\statistic\statistic.component.ts" />
     <None Remove="ClientApp\src\app\services\catalog\order.service.ts" />
+    <None Remove="ClientApp\src\app\services\catalog\product.service.ts" />
     <None Remove="ClientApp\src\app\services\shop\shop.service.ts" />
     <None Remove="ClientApp\src\app\services\user\profile.service.ts" />
     <None Remove="ClientApp\src\app\services\user\user.service.ts" />
@@ -98,6 +99,7 @@
     <TypeScriptCompile Include="ClientApp\src\app\seller\seller.module.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\seller\statistic\statistic.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\catalog\order.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\catalog\product.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\shop\shop.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\user\profile.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\user\user.service.ts" />

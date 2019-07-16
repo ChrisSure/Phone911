@@ -27,6 +27,16 @@ namespace Phone.Services.Catalog
         }
 
         /// <summary>
+        /// Method delegate to service return list products by orderId
+        /// <summary>
+        /// <param name="orderId">int</param>
+        /// <returns>IList<Product></returns>
+        public async Task<IList<Product>> ListProductsByOrderIdAll(int orderId)
+        {
+            return await productRepository.ListProductsByOrderIdAllAsync(orderId);
+        }
+
+        /// <summary>
         /// Method delegate to service return one product
         /// <summary>
         /// <param name="productId">int</param>

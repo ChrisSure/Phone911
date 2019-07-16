@@ -4,22 +4,22 @@ import { BASE_API_URL } from '../../globals';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import { OrderSeller } from '../../models/catalog/dto/order-seller';
+import { Product } from '../../models/catalog/dto/product';
 
 
 @Injectable()
-export class OrderService {
-  private baseUrlOrder: string;
+export class ProductService {
+  private baseUrlProduct: string;
   private headers = new HttpHeaders({
     'Content-Type': 'application/json', 'Accept': 'application/json'
   });
 
   constructor(private http: HttpClient) {
-    this.baseUrlOrder = BASE_API_URL + '/orders';
+    this.baseUrlProduct = BASE_API_URL + '/products';
   }
 
-  public getOrdersForSeller(id: string, start: Date, finish: Date): Observable<OrderSeller[]> {
-    return this.http.get(this.baseUrlOrder + '/' + id + '/' + start + '/' + finish + '/seller-detail', {
+  public getProductsByOrderId(id: number): Observable<Product[]> {
+    return this.http.get(this.baseUrlProduct + '/' + id + '/order', {
       headers: this.headers
     }).map((response: Response) => response)
       .catch((error: any) =>

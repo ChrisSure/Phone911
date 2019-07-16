@@ -7,6 +7,7 @@ namespace Phone.Repositories.Catalog.Interfaces
     public interface IProductRepository
     {
         Task<IList<Product>> ListProductsByCategoryIdAllAsync(int categoryId);
+        Task<IList<Product>> ListProductsByOrderIdAllAsync(int orderId);
         Task<Product> SingleProductAsync(int productId);
         Task<Product> SingleLiteProductAsync(int productId);
         Task CreateProductAsync(Product product);

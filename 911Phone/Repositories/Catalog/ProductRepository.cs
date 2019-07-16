@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
 using Phone.Exceptions;
+using Microsoft.EntityFrameworkCore;
 
 namespace Phone.Repositories.Catalog
 {
@@ -34,6 +35,16 @@ namespace Phone.Repositories.Catalog
                 Category = p.Category,
                 Storages = p.Storages
             }).ToList());
+        }
+
+        /// <summary>
+        /// Method return list products by orderId
+        /// <summary>
+        /// <param name="orderId">int</param>
+        /// <returns>IList<Product></returns>
+        public async Task<IList<Product>> ListProductsByOrderIdAllAsync(int orderId)
+        {
+            return await Task.Run(() => dbContext.Products.FromSql("Select p.Id, p.Title, p.Image, p.Price From Orders as o Join ProductOrder as po On o.Id = po.OrderId Join Products as p On po.ProductId = p.Id Where o.Id = {0}", orderId).ToList());
         }
 
         /// <summary>
