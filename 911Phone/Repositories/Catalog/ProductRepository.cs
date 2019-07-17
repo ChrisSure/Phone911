@@ -44,7 +44,7 @@ namespace Phone.Repositories.Catalog
         /// <returns>IList<Product></returns>
         public async Task<IList<Product>> ListProductsByOrderIdAllAsync(int orderId)
         {
-            return await Task.Run(() => dbContext.Products.FromSql("Select p.Id, p.Title, p.Image, p.Price From Orders as o Join ProductOrder as po On o.Id = po.OrderId Join Products as p On po.ProductId = p.Id Where o.Id = {0}", orderId).ToList());
+            return await Task.Run(() => dbContext.Products.FromSql("Select p.Id, p.Title, p.Image, p.Price, p.CategoryId, p.IsAproval, p.Text, p.CreatedAt, p.UpdatedAt From Orders as o Join ProductOrder as po On o.Id = po.OrderId Join Products as p On po.ProductId = p.Id Where o.Id = {0}", orderId).ToList());
         }
 
         /// <summary>
