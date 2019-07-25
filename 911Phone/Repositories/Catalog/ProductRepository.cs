@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Linq;
 using Phone.Exceptions;
 using Microsoft.EntityFrameworkCore;
+using Phone.Data.DTOs.Catalog;
 
 namespace Phone.Repositories.Catalog
 {
@@ -42,9 +43,17 @@ namespace Phone.Repositories.Catalog
         /// <summary>
         /// <param name="orderId">int</param>
         /// <returns>IList<Product></returns>
-        public async Task<IList<Product>> ListProductsByOrderIdAllAsync(int orderId)
+        public async Task<IList<ProductListDto>> ListProductsByOrderIdAllAsync(int orderId)
         {
-            return await Task.Run(() => dbContext.Products.FromSql("Select p.Id, p.Title, p.Image, p.Price, p.CategoryId, p.IsAproval, p.Text, p.CreatedAt, p.UpdatedAt From Orders as o Join ProductOrder as po On o.Id = po.OrderId Join Products as p On po.ProductId = p.Id Where o.Id = {0}", orderId).ToList());
+            return await dbContext.Products.
+                Include(p => p.ProductOrder).ThenInclude(po => po.Order).Where(i => i.ProductOrder.Order.Id == orderId)
+                .Select(p => new ProductListDto
+                {
+                    Title = p.Title,
+                    Price = p.Price,
+                    Image = p.Image,
+                    Count = (short)p.ProductOrder.Count
+                }).ToListAsync();
         }
 
         /// <summary>

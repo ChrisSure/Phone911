@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Phone.Exceptions;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace Phone.Repositories.Catalog
 {
     public class OrderRepository : MainRepository, IOrderRepository
@@ -26,7 +27,7 @@ namespace Phone.Repositories.Catalog
         /// <returns>IList<Order></returns>
         public async Task<Order> SingleOrderAsync(int orderId)
         {
-            var order = await Task.Run(() => dbContext.Orders.Where(o => o.Id == orderId).Select(o => new Order
+            var order = await Task.Run(() => dbContext.Orders.Include(o => o.ProductOrder).Where(o => o.Id == orderId).Select(o => new Order
             {
                 Id = o.Id,
                 TotalSum = o.TotalSum,

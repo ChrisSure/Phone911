@@ -19,7 +19,7 @@ namespace Phone.Controllers.Catalog
             dtoMapper = new Mapper(new MapperConfiguration(mapper =>
             {
                 mapper.CreateMap<Product, ProductViewDto>().ReverseMap();
-                mapper.CreateMap<Product, ProductListDto>();
+                mapper.CreateMap<Product, ProductListDto>().ReverseMap();
                 mapper.CreateMap<Product, ProductCreateDto>().ReverseMap();
             }
             ));
@@ -43,7 +43,7 @@ namespace Phone.Controllers.Catalog
         [ProducesResponseType(500)]
         public async Task<IActionResult> ListByOrderId([FromRoute] int orderId)
         {
-            var products = dtoMapper.Map<IList<Product>, IList<ProductListDto>>(await productService.ListProductsByOrderIdAll(orderId));
+            var products = await productService.ListProductsByOrderIdAll(orderId);
             return Ok(products);
         }
 

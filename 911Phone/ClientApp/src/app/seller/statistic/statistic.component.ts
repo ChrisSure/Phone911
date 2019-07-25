@@ -4,8 +4,8 @@ import { UserInfoService } from '../../services/user/user-info.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { OrderService } from '../../services/catalog/order.service';
 import { OrderSeller } from '../../models/catalog/dto/order-seller';
-import { Product } from '../../models/catalog/dto/product';
 import { ProductService } from '../../services/catalog/product.service';
+import { ProductsOrder } from '../../models/catalog/dto/products-order';
 
 
 @Component({
@@ -17,11 +17,12 @@ export class StatisticComponent implements OnInit {
 
   private apiError: string = "";
   private messageSuccess: string = "";
-  private showStat = false;
-  private showResult = false;
+  private showStat: boolean = false;
+  private showResult: boolean = false;
   private statisticDateForm: FormGroup;
   private orderSeller: OrderSeller[];
-  private products: Product[];
+  private products: ProductsOrder[];
+  private isProduct: boolean = false;
   private totalOrderSum: number;
   private totalOrderCount: number;
 
@@ -64,9 +65,9 @@ export class StatisticComponent implements OnInit {
   }
 
   getOrderProduct(id: number) {
-    this.productService.getProductsByOrderId(id).subscribe((res: Product[]) => {
+    this.productService.getProductsByOrderId(id).subscribe((res: ProductsOrder[]) => {
       this.products = res;
-      console.log(this.products);
+      this.isProduct = (this.products.length > 0) ? true : false;
     }, error => this.handleError(error));
   }
 

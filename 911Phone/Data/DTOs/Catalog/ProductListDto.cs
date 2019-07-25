@@ -25,6 +25,11 @@ namespace Phone.Data.DTOs.Catalog
         public string Image { get; set; }
 
         /// <summary>
+        /// Count product
+        /// </summary>
+        public short Count { get; set; }
+
+        /// <summary>
         /// List of storage by product id.
         /// </summary>
         public IList<Storage> Storages { get; set; } = new List<Storage>();

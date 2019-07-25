@@ -4,7 +4,7 @@ import { BASE_API_URL } from '../../globals';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import { Product } from '../../models/catalog/dto/product';
+import { ProductsOrder } from '../../models/catalog/dto/products-order';
 
 
 @Injectable()
@@ -18,7 +18,7 @@ export class ProductService {
     this.baseUrlProduct = BASE_API_URL + '/products';
   }
 
-  public getProductsByOrderId(id: number): Observable<Product[]> {
+  public getProductsByOrderId(id: number): Observable<ProductsOrder[]> {
     return this.http.get(this.baseUrlProduct + '/' + id + '/order', {
       headers: this.headers
     }).map((response: Response) => response)

@@ -34,6 +34,7 @@
     <None Remove="ClientApp\src\app\globals.ts" />
     <None Remove="ClientApp\src\app\models\catalog\dto\order-seller.ts" />
     <None Remove="ClientApp\src\app\models\catalog\dto\product.ts" />
+    <None Remove="ClientApp\src\app\models\catalog\dto\products-order.ts" />
     <None Remove="ClientApp\src\app\models\shop\shop.ts" />
     <None Remove="ClientApp\src\app\models\user\dto\profile-seller-change.ts" />
     <None Remove="ClientApp\src\app\models\user\dto\user-email.ts" />
@@ -83,6 +84,7 @@
     <TypeScriptCompile Include="ClientApp\src\app\globals.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\catalog\dto\order-seller.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\catalog\dto\product.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\catalog\dto\products-order.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\shop\shop.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\user\dto\profile-seller-change.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\user\dto\user-email.ts" />
