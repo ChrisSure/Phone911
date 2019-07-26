@@ -13,5 +13,8 @@ namespace Phone.Services.User.Interfaces
         Task<Claim[]> GetClaimsAsync(ApplicationUser userInfo);
         string GenerateJwtRefreshToken();
         Task LoginByRefreshTokenAsync(string userId, string refreshToken);
+        ClaimsPrincipal GetPrincipalFromExpiredAccessToken(string accessToken);
+        Task DeleteRefreshTokenAsync(ClaimsPrincipal userPrincipal);
+        Task<string> UpdateRefreshTokenAsync(string oldRefreshTokenPlain, ClaimsPrincipal userPrincipal);
     }
 }

@@ -4,6 +4,7 @@ using Phone.Data.DTOs.User;
 using Phone.Data.Entities.User;
 using Phone.Exceptions;
 using Phone.Services.User.Interfaces;
+using System.Linq;
 using System.Threading.Tasks;
 
 
@@ -52,7 +53,7 @@ namespace Phone.Controllers.User
                 userNotFound = true;
             }
 
-            if (userNotFound || !await userService.CheckPasswordAsync(user, dto.Password))
+            if (userNotFound || !await userService.CheckPasswordAsync(user, dto.Password) || await userService.IsCustomer(user))
             {
                 ModelState.AddModelError("loginFailure", "Invalid email or password");
                 return BadRequest(ModelState);
@@ -67,6 +68,50 @@ namespace Phone.Controllers.User
             var refreshToken = jwtService.GenerateJwtRefreshToken();
             await jwtService.LoginByRefreshTokenAsync(user.Id, refreshToken);
             return Ok(await GetBuildToken(accessToken, refreshToken));
+        }
+
+        [HttpPost]
+        [Route("api/auth/refresh")]
+        [AllowAnonymous]
+        public async Task<IActionResult> Refresh([FromBody]AuthTokensDto dto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var principal = jwtService.GetPrincipalFromExpiredAccessToken(dto.AccessToken);
+            if (principal == null)
+            {
+                ModelState.AddModelError("loginFailure", "Failure tokrn");
+                return BadRequest(ModelState);
+            }
+
+            var user = await userService.GetUserByIdAsync(principal.Claims.Single(claim => claim.Type == "uid").Value);
+
+            if (user.IsBlocked == true)
+            {
+                ModelState.AddModelError("loginFailure", "Account has been blocked");
+                return BadRequest(ModelState);
+            }
+
+            var userClaims = await jwtService.GetClaimsAsync(user);
+
+            dto.AccessToken = jwtService.GenerateJwtAccessToken(userClaims);
+            dto.RefreshToken = await jwtService.UpdateRefreshTokenAsync(dto.RefreshToken, principal);
+            dto.ExpireOn = jwtService.ExpirationTime;
+
+            return Ok(dto);
+        }
+
+        [HttpPost]
+        [Route("api/auth/logout")]
+        [AllowAnonymous]
+        public async Task<IActionResult> Logout([FromBody]AuthTokensDto dto)
+        {
+            var principal = jwtService.GetPrincipalFromExpiredAccessToken(dto.AccessToken);
+            await jwtService.DeleteRefreshTokenAsync(principal);
+            return Ok();
         }
 
         /// <summary>

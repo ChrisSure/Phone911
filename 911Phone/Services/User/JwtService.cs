@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Phone.Data.Entities.User;
 using Phone.Repositories.User.Interfaces;
@@ -18,12 +17,15 @@ namespace Phone.Services.User
     public class JwtService : IJwtService
     {
         private readonly IUserRefreshTokenRepository refreshRepository;
-        private IUserAuthService userService;
+        private readonly IProfileService profileService;
+        private readonly IUserAuthService userService;
         private readonly IConfiguration configuration;
+        private const string UserID = "uid";
 
-        public JwtService(IUserRefreshTokenRepository refreshRepository, IUserAuthService userService, IConfiguration configuration)
+        public JwtService(IUserRefreshTokenRepository refreshRepository, IProfileService profileService, IUserAuthService userService, IConfiguration configuration)
         {
             this.refreshRepository = refreshRepository;
+            this.profileService = profileService;
             this.userService = userService;
             this.configuration = configuration;
         }
@@ -38,9 +40,10 @@ namespace Phone.Services.User
         public async Task<Claim[]> GetClaimsAsync(ApplicationUser userInfo)
         {
             var roles = await userService.GetUserRolesAsync(userInfo);
+            var profileName = (await profileService.GetProfileByUserId(userInfo.Id)).Name;
 
             var claims = new List<Claim> {
-                new Claim(JwtRegisteredClaimNames.Sub, userInfo.UserName),
+                new Claim(JwtRegisteredClaimNames.Sub, profileName),
                 new Claim(JwtRegisteredClaimNames.Email, userInfo.Email),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim("uid", userInfo.Id)
@@ -109,6 +112,79 @@ namespace Phone.Services.User
                 };
                 await refreshRepository.CreateAsync(userRefreshToken);
             }
+        }
+
+        /// <summary>
+        /// Method return claim principal
+        /// <summary>
+        /// <param name="accessToken">string</param>
+        /// <returns>ClaimsPrincipal</returns>
+        public ClaimsPrincipal GetPrincipalFromExpiredAccessToken(string accessToken)
+        {
+            var tokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateAudience = false,
+                ValidateIssuer = false,
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(
+                    Encoding.UTF8.GetBytes(configuration["Jwt:Key"])),
+                ValidateLifetime = false
+            };
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var principal = tokenHandler.ValidateToken(accessToken, tokenValidationParameters, out SecurityToken securityToken);
+
+            if (!(securityToken is JwtSecurityToken jwtSecurityToken))
+                throw new SecurityTokenException("Retrieving principal from access token failed: access token validation failed.");
+
+            if (!jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
+                throw new SecurityTokenException("Retrieving principal from access token failed: access token's algorithm is not correct.");
+
+            return principal;
+        }
+
+        /// <summary>
+        /// Method delete refresh token
+        /// <summary>
+        /// <param name="userPrincipal">ClaimsPrincipal</param>
+        /// <returns>void</returns>
+        public async Task DeleteRefreshTokenAsync(ClaimsPrincipal userPrincipal)
+        {
+            if (!userPrincipal.HasClaim(claim => claim.Type == UserID))
+                throw new SecurityTokenException("Refresh token deletion failed: access token has no user id.");
+
+            var userID = userPrincipal.FindFirst(claim => claim.Type == UserID).Value;
+            var refreshToken = await refreshRepository.GetByUserIdAsync(userID);
+
+            if (refreshToken == null)
+                throw new SecurityTokenException("Refresh token deletion failed: cannot retrieve refresh token.");
+
+            await refreshRepository.DeleteAsync(refreshToken.Id);
+        }
+
+        /// <summary>
+        /// Method refresh token
+        /// <summary>
+        /// <param name="oldRefreshTokenPlain">string</param>
+        /// <param name="userPrincipal">ClaimsPrincipal</param>
+        /// <returns>void</returns>
+        public async Task<string> UpdateRefreshTokenAsync(string oldRefreshTokenPlain, ClaimsPrincipal userPrincipal)
+        {
+            if (!userPrincipal.HasClaim(claim => claim.Type == "uid"))
+                throw new SecurityTokenException("Refresh token update failed: access token has no user id.");
+
+            string userId = userPrincipal.FindFirst(claim => claim.Type == "uid").Value;
+            UserRefreshToken savedRefreshToken = await refreshRepository.GetByUserIdAsync(userId);
+
+            if (oldRefreshTokenPlain != savedRefreshToken?.RefreshToken)
+                throw new SecurityTokenException("Refresh token update failed: plain refresh tokens don't match.");
+
+            var newRefreshToken = GenerateJwtRefreshToken();
+
+            savedRefreshToken.RefreshToken = newRefreshToken;
+            savedRefreshToken.ExpireOn = DateTime.Now.AddMonths(3);
+            await refreshRepository.UpdateAsync(savedRefreshToken);
+            return newRefreshToken;
         }
 
     }

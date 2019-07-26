@@ -72,5 +72,10 @@ namespace Phone.Data.Entities.Catalog
         /// List of storage by product id.
         /// </summary>
         public IList<Storage> Storages { get; set; } = new List<Storage>();
+
+        /// <summary>
+        /// List of products.
+        /// </summary>
+        public ProductOrder ProductOrder { get; set; }
     }
 }

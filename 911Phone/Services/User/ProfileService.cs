@@ -59,5 +59,25 @@ namespace Phone.Services.User
             profile.Id = profileId;
             await profileRepository.UpdateProfileAsync(profile);
         }
+
+        /// <summary>
+        /// Method update profile
+        /// <summary>
+        /// <param name="profile">Profile</param>
+        /// <param name="userId">string</param>
+        /// <returns>void</returns>
+        public async Task UpdateSellerProfileAsync(Profile profile, string userId)
+        {
+            var currentProfile = await profileRepository.GetProfileByUserId(userId);
+            profile.UpdatedAt = DateTime.Now;
+            profile.CreatedAt = currentProfile.CreatedAt;
+            profile.Id = currentProfile.Id;
+            profile.UserId = userId;
+            profile.Description = currentProfile.Description;
+            profile.Experience = currentProfile.Experience;
+            profile.Position = currentProfile.Position;
+            profile.Salary = currentProfile.Salary;
+            await profileRepository.UpdateProfileAsync(profile);
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Phone.Data.DTOs.Catalog;
 using Phone.Data.Entities.Catalog;
@@ -19,20 +20,32 @@ namespace Phone.Controllers.Catalog
             dtoMapper = new Mapper(new MapperConfiguration(mapper =>
             {
                 mapper.CreateMap<Product, ProductViewDto>().ReverseMap();
-                mapper.CreateMap<Product, ProductListDto>();
+                mapper.CreateMap<Product, ProductListDto>().ReverseMap();
                 mapper.CreateMap<Product, ProductCreateDto>().ReverseMap();
             }
             ));
         }
 
         [HttpGet]
-        [Route("api/products-by-category/{categoryId}")]
+        [Route("api/products/{categoryId}/category")]
         [ProducesResponseType(200)]
         [ProducesResponseType(401)]
         [ProducesResponseType(500)]
         public async Task<IActionResult> ListByCategoryId([FromRoute] int categoryId)
         {
             var products = dtoMapper.Map<IList<Product>, IList<ProductListDto>>(await productService.ListProductsByCategoryIdAll(categoryId));
+            return Ok(products);
+        }
+
+        [HttpGet]
+        [Route("api/products/{orderId}/order")]
+        [Authorize(Policy = "AllAuth")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> ListByOrderId([FromRoute] int orderId)
+        {
+            var products = await productService.ListProductsByOrderIdAll(orderId);
             return Ok(products);
         }
 

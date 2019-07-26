@@ -194,11 +194,11 @@ namespace Phone.Data
             var order2 = new Order() { TotalSum = 12000, TotalCount = 1, CustomerId = userCustomer.Id, SellerId = userSeller.Id, ShopId = shop3.Id, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
             context.Orders.Add(order2);
             //Items
-            var item1 = new ProductOrder() { OrderId = order1.Id, ProductId = product1.Id };
+            var item1 = new ProductOrder() { OrderId = order1.Id, ProductId = product1.Id, Count = 2 };
             order1.ProductOrder.Add(item1);
-            var item2 = new ProductOrder() { OrderId = order1.Id, ProductId = product2.Id };
+            var item2 = new ProductOrder() { OrderId = order1.Id, ProductId = product2.Id, Count = 1 };
             order1.ProductOrder.Add(item2);
-            var item3 = new ProductOrder() { OrderId = order2.Id, ProductId = product7.Id };
+            var item3 = new ProductOrder() { OrderId = order2.Id, ProductId = product7.Id, Count = 1 };
             order2.ProductOrder.Add(item3);
 
 

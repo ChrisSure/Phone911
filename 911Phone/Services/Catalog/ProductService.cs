@@ -1,4 +1,5 @@
-﻿using Phone.Data.Entities.Catalog;
+﻿using Phone.Data.DTOs.Catalog;
+using Phone.Data.Entities.Catalog;
 using Phone.Repositories.Catalog.Interfaces;
 using Phone.Services.Catalog.Interfaces;
 using System;
@@ -24,6 +25,16 @@ namespace Phone.Services.Catalog
         public async Task<IList<Product>> ListProductsByCategoryIdAll(int categoryId)
         {
             return await productRepository.ListProductsByCategoryIdAllAsync(categoryId);
+        }
+
+        /// <summary>
+        /// Method delegate to service return list products by orderId
+        /// <summary>
+        /// <param name="orderId">int</param>
+        /// <returns>IList<Product></returns>
+        public async Task<IList<ProductListDto>> ListProductsByOrderIdAll(int orderId)
+        {
+            return await productRepository.ListProductsByOrderIdAllAsync(orderId);
         }
 
         /// <summary>

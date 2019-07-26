@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Phone.Data.DTOs.Shop;
 using Phone.Data.Entities.Shop;
@@ -46,19 +47,20 @@ namespace Phone.Controllers.Shop
         [ProducesResponseType(500)]
         public async Task<IActionResult> List()
         {
-            var orders = dtoMapper.Map<IList<ShopEntity>, IList<ShopListDto>>(await shopService.ListShops());
-            return Ok(orders);
+            var shops = dtoMapper.Map<IList<ShopEntity>, IList<ShopListDto>>(await shopService.ListShops());
+            return Ok(shops);
         }
 
         [HttpGet]
         [Route("api/shops-seller/{sellerId}")]
+        [Authorize(Policy = "AllAuth")]
         [ProducesResponseType(200)]
         [ProducesResponseType(401)]
         [ProducesResponseType(500)]
         public async Task<IActionResult> ListBySellerId([FromRoute] string sellerId)
         {
-            var orders = dtoMapper.Map<IList<ShopEntity>, IList<ShopListDto>>(await shopService.ListShopsBySellerId(sellerId));
-            return Ok(orders);
+            var shops = dtoMapper.Map<IList<ShopEntity>, IList<ShopListDto>>(await shopService.ListShopsBySellerId(sellerId));
+            return Ok(shops);
         }
 
         [HttpPost]

@@ -9,5 +9,6 @@ namespace Phone.Services.User.Interfaces
         Task<Profile> GetProfileByUserId(string userId);
         Task CreateProfileAsync(Profile profile);
         Task UpdateProfileAsync(Profile profile, int profileId);
+        Task UpdateSellerProfileAsync(Profile profile, string userId);
     }
 }

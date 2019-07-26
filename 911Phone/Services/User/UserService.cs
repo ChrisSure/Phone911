@@ -107,5 +107,6 @@ namespace Phone.Services.User
             var userObj = await userRepository.GetUserByEmailAsync(user.Email);
             await userRepository.AddUsersRoleAsync(userObj, role);
         }
+
     }
 }

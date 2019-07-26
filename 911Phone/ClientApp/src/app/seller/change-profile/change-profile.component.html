@@ -1,0 +1,54 @@
+<form [formGroup]="changeProfileForm" (ngSubmit)="changeProfile()">
+
+  <div *ngIf="apiError != ''" class="alert alert-danger" role="alert">
+    {{ apiError }}
+  </div>
+
+  <div *ngIf="messageSuccess != ''" class="alert alert-success" role="alert">
+    {{ messageSuccess }}
+  </div>
+
+  <div class="form-group">
+    <label for="name">Name</label>
+    <input type="text" class="form-control" name="name" formControlName="name" id="name" placeholder="Enter name">
+    <span class="form-help-text" *ngIf="changeProfileForm.get('name').invalid && changeProfileForm.get('name').dirty">
+      <span *ngIf="changeProfileForm.get('name')['errors']['required']">Field can`t be empty.<br /></span>
+    </span>
+  </div>
+  <div class="form-group">
+    <label for="lastname">LastName</label>
+    <input type="text" class="form-control" name="lastname" formControlName="lastname" id="lastname" placeholder="Enter lastname">
+    <span class="form-help-text" *ngIf="changeProfileForm.get('lastname').invalid && changeProfileForm.get('lastname').dirty">
+      <span *ngIf="changeProfileForm.get('lastname')['errors']['required']">Field can`t be empty.<br /></span>
+    </span>
+  </div>
+  <div class="form-group">
+    <label for="surname">SurName</label>
+    <input type="text" class="form-control" name="surname" formControlName="surname" id="surname" placeholder="Enter surname">
+  </div>
+  <div class="custom-control custom-radio">
+    <input type="radio" id="customRadio1" name="sex" class="custom-control-input" formControlName="sex" [value]="1" [checked]="profile?.sex == '1'">
+    <label class="custom-control-label" for="customRadio1">Man</label>
+  </div>
+  <div class="custom-control custom-radio mb-3">
+    <input type="radio" id="customRadio2" name="sex" class="custom-control-input" formControlName="sex" [value]="0" [checked]="profile?.sex == '0'">
+    <label class="custom-control-label" for="customRadio2">Wooman</label>
+  </div>
+
+  <div class="form-group">
+    <label for="birthday">Birthday</label>
+    <div class="col-sm-3 pl-0">
+      <input type="date" class="form-control" formControlName="birthday" data-date-format="DD.MM.YYYY" name="birthday" />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="lastname">Phone</label>
+    <input type="text" class="form-control" name="phone" formControlName="phone" id="phone" placeholder="Enter phone">
+    <span class="form-help-text" *ngIf="changeProfileForm.get('phone').invalid && changeProfileForm.get('phone').dirty">
+      <span *ngIf="changeProfileForm.get('phone')['errors']['pattern']">Field doesn't match pattern (xxxxxxxxxx).<br /></span>
+    </span>
+  </div>
+
+  <button type="submit" class="btn btn-primary" [disabled]="changeProfileForm.invalid">Submit</button>
+</form>

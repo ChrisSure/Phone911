@@ -45,3 +45,13 @@
     border-color: #09c;
   }
 /* Login */
+
+/* Validation */
+.form-help-text {
+  font-size: 12px;
+}
+
+.form-help-text {
+  color: #ff6c6c;
+}
+/* Validation */

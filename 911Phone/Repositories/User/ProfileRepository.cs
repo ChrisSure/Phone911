@@ -37,7 +37,7 @@ namespace Phone.Repositories.User
         /// <returns>IList<ApplicationUser></returns>
         public async Task<Profile> GetProfileByUserId(string userId)
         {
-            var profile = await Task.Run(() => dbContext.Profiles.Where(p => p.UserId == userId).FirstOrDefault());
+            var profile = await Task.Run(() => dbContext.Profiles.AsNoTracking().Where(p => p.UserId == userId).FirstOrDefault());
             if (profile == null)
             {
                 throw new CurrentEntryNotFoundException("Current Profile doesn't isset.");

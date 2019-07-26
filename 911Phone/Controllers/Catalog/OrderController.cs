@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Phone.Data.DTOs.Catalog;
 using Phone.Data.Entities.Catalog;
 using Phone.Services.Catalog.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -47,7 +49,7 @@ namespace Phone.Controllers.Catalog
         }
 
         [HttpGet]
-        [Route("api/orders-seller/{sellerId}")]
+        [Route("api/orders/{sellerId}/seller")]
         [ProducesResponseType(200)]
         [ProducesResponseType(401)]
         [ProducesResponseType(500)]
@@ -58,7 +60,19 @@ namespace Phone.Controllers.Catalog
         }
 
         [HttpGet]
-        [Route("api/orders-customer/{customerId}")]
+        [Route("api/orders/{sellerId}/{start}/{finish}/seller-detail")]
+        [Authorize(Policy = "AllAuth")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> ListBySellerIdDetail([FromRoute] string sellerId, [FromRoute] DateTime start, [FromRoute] DateTime finish)
+        {
+            var orders = dtoMapper.Map<IList<Order>, IList<OrderListDto>>(await orderService.ListOrdersBySellerIdDetail(sellerId, start, finish));
+            return Ok(orders);
+        }
+
+        [HttpGet]
+        [Route("api/orders/{customerId}/customer")]
         [ProducesResponseType(200)]
         [ProducesResponseType(401)]
         [ProducesResponseType(500)]
@@ -69,7 +83,7 @@ namespace Phone.Controllers.Catalog
         }
 
         [HttpGet]
-        [Route("api/orders-shop/{shopId}")]
+        [Route("api/orders/{shopId}/shop")]
         [ProducesResponseType(200)]
         [ProducesResponseType(401)]
         [ProducesResponseType(500)]

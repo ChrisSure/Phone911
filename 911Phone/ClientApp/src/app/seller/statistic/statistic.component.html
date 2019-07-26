@@ -1,0 +1,113 @@
+<div class="row mb-3">
+  <div class="col-sm-12">
+    <form [formGroup]="statisticDateForm" (ngSubmit)="getStatistic()">
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="form-group">
+            <label for="start">Start</label>
+            <input type="date" class="form-control" formControlName="start" data-date-format="DD.MM.YYYY" name="start" />
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="form-group">
+            <label for="finish">Finish</label>
+            <input type="date" class="form-control" formControlName="finish" data-date-format="DD.MM.YYYY" name="finish" />
+          </div>
+        </div>
+        <div class="col-sm-3" style="margin-top:30px">
+          <button type="submit" class="btn btn-primary"  [disabled]="statisticDateForm.invalid">Submit</button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <hr>
+</div>
+
+<div class="row mt-2" *ngIf="showStat; else noStat">
+  <div class="col-sm-12">
+    <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">TOTAL</th>
+          <th scope="col">{{ totalOrderCount }} orders</th>
+          <th scope="col">{{ totalOrderSum }} $</th>
+          <th scope="col"></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Order name</th>
+          <th scope="col">Order sum</th>
+          <th scope="col">Order count</th>
+          <th scope="col">Order date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let order of orderSeller; let idx = index">
+          <th scope="row">{{idx+1}}</th>
+          <td>
+            <a href="#" data-toggle="modal" data-target="#exampleModal"
+               (click)="getOrderProduct(order.id)">Order{{ order.id }}</a>
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">List products</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <div *ngIf="isProduct; else noProd">
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Image</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Count</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let product of products; let idx = index">
+                            <th scope="row">{{idx+1}}</th>
+                            <td>{{ product.title }}</td>
+                            <td>{{ product.image }}</td>
+                            <td>{{ product.price }}</td>
+                            <td>{{ product.count }}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+
+                    <ng-template #noProd>
+                      <h3>It doesn't products inside current order!</h3>
+                    </ng-template>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Modal -->
+
+          </td>
+          <td>{{ order.totalSum }} $</td>
+          <td>{{ order.totalCount }} </td>
+          <td>{{ setCoorectDate(order.createdAt) }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<ng-template #noStat>
+  <h2 *ngIf="showResult" style="color: orangered;">It hasn't find!</h2>
+  <h1>Choose period</h1>
+</ng-template>

@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
 using Phone.Exceptions;
+using Microsoft.EntityFrameworkCore;
+using Phone.Data.DTOs.Catalog;
 
 namespace Phone.Repositories.Catalog
 {
@@ -34,6 +36,24 @@ namespace Phone.Repositories.Catalog
                 Category = p.Category,
                 Storages = p.Storages
             }).ToList());
+        }
+
+        /// <summary>
+        /// Method return list products by orderId
+        /// <summary>
+        /// <param name="orderId">int</param>
+        /// <returns>IList<Product></returns>
+        public async Task<IList<ProductListDto>> ListProductsByOrderIdAllAsync(int orderId)
+        {
+            return await dbContext.Products.
+                Include(p => p.ProductOrder).ThenInclude(po => po.Order).Where(i => i.ProductOrder.Order.Id == orderId)
+                .Select(p => new ProductListDto
+                {
+                    Title = p.Title,
+                    Price = p.Price,
+                    Image = p.Image,
+                    Count = (short)p.ProductOrder.Count
+                }).ToListAsync();
         }
 
         /// <summary>

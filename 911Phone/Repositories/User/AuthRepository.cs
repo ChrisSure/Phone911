@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Phone.Data.Entities.User;
 using Phone.Exceptions;
-using Phone.Helpers.User;
 using Phone.Repositories.User.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -18,6 +16,20 @@ namespace Phone.Repositories.User
         public AuthRepository(UserManager<ApplicationUser> user)
         {
             this.userManager = user;
+        }
+
+        /// <summary>
+        /// Method return single user with role admin
+        /// <summary>
+        /// <returns>IList<ApplicationUser></returns>
+        public async Task<ApplicationUser> GetUserAsync(string userId)
+        {
+            var user = await userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                throw new CurrentEntryNotFoundException("Current User doesn't isset.");
+            }
+            return user;
         }
 
         /// <summary>
@@ -54,6 +66,17 @@ namespace Phone.Repositories.User
         public async Task<bool> CheckPasswordAsync(ApplicationUser user, string password)
         {
             return await userManager.CheckPasswordAsync(user, password);
+        }
+
+        /// <summary>
+        /// Method check if user is customer
+        /// <summary>
+        /// <param name="user">ApplicationUser</param>
+        /// <returns>bool</returns>
+        public async Task<bool> IsCustomerAsync(ApplicationUser user)
+        {
+            var roles = await GetUserRolesAsync(user);
+            return (roles[0] == "Customer") ? true : false;
         }
 
     }

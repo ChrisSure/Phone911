@@ -1,0 +1,22 @@
+/* Seller Statistic */
+.page-item.active .page-link {
+  background-color: #09c;
+  border-color: #09c;
+}
+
+.stat_img {
+  height: 50px;
+}
+
+.stat_drop {
+  color: #09c;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.dropdown-menu.show {
+  width: 600px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+/* Seller Statistic */

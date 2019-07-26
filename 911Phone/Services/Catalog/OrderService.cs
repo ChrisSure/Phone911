@@ -2,6 +2,7 @@
 using Phone.Data.Entities.Catalog;
 using Phone.Repositories.Catalog.Interfaces;
 using Phone.Services.Catalog.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -43,6 +44,18 @@ namespace Phone.Services.Catalog
         public async Task<IList<Order>> ListOrdersBySellerId(string sellerId)
         {
             return await orderRepository.ListOrdersBySellerIdAsync(sellerId);
+        }
+
+        /// <summary>
+        /// Method delegate to service get list of orders by seller id detail
+        /// <summary>
+        /// <param name="sellerId">string</param>
+        /// <param name="start">DateTime</param>
+        /// <param name="finish">DateTime</param>
+        /// <returns>IList<Order></returns>
+        public async Task<IList<Order>> ListOrdersBySellerIdDetail(string sellerId, DateTime start, DateTime finish)
+        {
+            return await orderRepository.ListOrdersBySellerIdDetailAsync(sellerId, start, finish);
         }
 
         /// <summary>
