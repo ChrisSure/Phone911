@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -13,6 +13,7 @@ import { ProfileService } from './services/user/profile.service';
 import { UserService } from './services/user/user.service';
 import { OrderService } from './services/catalog/order.service';
 import { ProductService } from './services/catalog/product.service';
+import { TokenInterceptor } from './services/user/token.interceptor';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,12 @@ import { ProductService } from './services/catalog/product.service';
     ProfileService,
     UserService,
     OrderService,
-    ProductService
+    ProductService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })

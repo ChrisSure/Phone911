@@ -10,6 +10,7 @@ import { UserInfoService } from './user-info.service';
 export class AuthService {
   private baseUrlLogin: string;
   private baseUrlLogout: string;
+  private baseUrlRefresh: string;
   private headers = new HttpHeaders({
     'Content-Type': 'application/json', 'Accept': 'application/json'
   });
@@ -18,6 +19,7 @@ export class AuthService {
   constructor(private http: HttpClient, private tokenService: TokenService, private userInfoService: UserInfoService) {
     this.baseUrlLogin = BASE_API_URL + '/auth/login';
     this.baseUrlLogout = BASE_API_URL + '/auth/logout';
+    this.baseUrlRefresh = BASE_API_URL + '/auth/refresh';
   }
 
   public login(email: string, password: string) {
@@ -44,6 +46,21 @@ export class AuthService {
     ).subscribe(data => { }, err => console.log(err));
     this.tokenService.deleteToken();
     this.AuthChanged.emit('Logged out');
+  }
+
+  public refresh() {
+    const jwtToken: JwtToken = this.tokenService.readJwtToken();
+    return this.http.post(
+      this.baseUrlRefresh,
+      JSON.stringify({
+        accessToken: jwtToken.accessToken,
+        refreshToken: jwtToken.refreshToken,
+        expireOn: jwtToken.expireOn
+      }),
+      { headers: this.headers }
+    ).pipe(map(data => {
+      this.writeTokenFromResponse(data);
+    }));
   }
 
   public get isSeller(): boolean {

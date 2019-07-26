@@ -17,6 +17,16 @@ namespace Phone.Services.User
         }
 
         /// <summary>
+        /// Method return single user with role admin
+        /// <summary>
+        /// <param name="userId">string</param>
+        /// <returns>ApplicationUser</returns>
+        public async Task<ApplicationUser> GetUserByIdAsync(string userId)
+        {
+            return await userRepository.GetUserAsync(userId);
+        }
+
+        /// <summary>
         /// Method delegate to repository get user roles
         /// <summary>
         /// <param name="user">ApplicationUser</param>

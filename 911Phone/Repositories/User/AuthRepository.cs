@@ -19,6 +19,20 @@ namespace Phone.Repositories.User
         }
 
         /// <summary>
+        /// Method return single user with role admin
+        /// <summary>
+        /// <returns>IList<ApplicationUser></returns>
+        public async Task<ApplicationUser> GetUserAsync(string userId)
+        {
+            var user = await userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                throw new CurrentEntryNotFoundException("Current User doesn't isset.");
+            }
+            return user;
+        }
+
+        /// <summary>
         /// Method get user roles
         /// <summary>
         /// <param name="user">ApplicationUser</param>

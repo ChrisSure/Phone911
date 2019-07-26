@@ -15,11 +15,17 @@ export class SellerPanelComponent implements OnInit {
 
   private apiError: string = "";
   profile: Profile;
+  authChangedSubscription: any;
 
   constructor(private authService: AuthService, private profileService: ProfileService, private userInfo: UserInfoService, private router: Router) {
   }
 
   ngOnInit() {
+    this.authChangedSubscription = this.authService.AuthChanged.subscribe(() => {
+      if (!this.userInfo.isSeller) {
+        this.router.navigate(['/']);
+      }
+    });
     this.profileService.getProfile(this.userInfo.userId).subscribe((res: Profile) => {
       this.profile = res;
       this.profile.age = this.setAge(this.profile.birthday);
@@ -40,5 +46,9 @@ export class SellerPanelComponent implements OnInit {
   private handleError(error: any) {
     this.apiError = error.error.Message;
   }
+
+  ngOnDestroy() {
+    this.authChangedSubscription.unsubscribe();
+  };
 
 }

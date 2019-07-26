@@ -162,5 +162,30 @@ namespace Phone.Services.User
             await refreshRepository.DeleteAsync(refreshToken.Id);
         }
 
+        /// <summary>
+        /// Method refresh token
+        /// <summary>
+        /// <param name="oldRefreshTokenPlain">string</param>
+        /// <param name="userPrincipal">ClaimsPrincipal</param>
+        /// <returns>void</returns>
+        public async Task<string> UpdateRefreshTokenAsync(string oldRefreshTokenPlain, ClaimsPrincipal userPrincipal)
+        {
+            if (!userPrincipal.HasClaim(claim => claim.Type == "uid"))
+                throw new SecurityTokenException("Refresh token update failed: access token has no user id.");
+
+            string userId = userPrincipal.FindFirst(claim => claim.Type == "uid").Value;
+            UserRefreshToken savedRefreshToken = await refreshRepository.GetByUserIdAsync(userId);
+
+            if (oldRefreshTokenPlain != savedRefreshToken?.RefreshToken)
+                throw new SecurityTokenException("Refresh token update failed: plain refresh tokens don't match.");
+
+            var newRefreshToken = GenerateJwtRefreshToken();
+
+            savedRefreshToken.RefreshToken = newRefreshToken;
+            savedRefreshToken.ExpireOn = DateTime.Now.AddMonths(3);
+            await refreshRepository.UpdateAsync(savedRefreshToken);
+            return newRefreshToken;
+        }
+
     }
 }

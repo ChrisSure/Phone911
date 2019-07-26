@@ -54,6 +54,7 @@ namespace Phone.Controllers.User
 
         [HttpGet]
         [Route("api/user/{userId}/simple")]
+        [Authorize(Policy = "AllAuth")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         [ProducesResponseType(500)]
@@ -92,6 +93,7 @@ namespace Phone.Controllers.User
 
         [HttpPut]
         [Route("api/user/{userId}/change-password")]
+        [Authorize(Policy = "AllAuth")]
         public async Task<IActionResult> ChangePassword([FromBody]UserPasswordChangeDto passwordDto, [FromRoute]string userId)
         {
             if (!ModelState.IsValid)
@@ -108,6 +110,7 @@ namespace Phone.Controllers.User
 
         [HttpPut]
         [Route("api/user/{userId}/change-email")]
+        [Authorize(Policy = "AllAuth")]
         public async Task<IActionResult> ChangeEmail([FromBody]UserBaseDto emailDto, [FromRoute]string userId)
         {
             if (!ModelState.IsValid)
@@ -129,6 +132,7 @@ namespace Phone.Controllers.User
 
         [HttpGet]
         [Route("api/profile/{userId}")]
+        [Authorize(Policy = "AllAuth")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         [ProducesResponseType(500)]
@@ -160,6 +164,7 @@ namespace Phone.Controllers.User
 
         [HttpPut]
         [Route("api/profile/{profileId}")]
+        [Authorize(Policy = "AllAuth")]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
@@ -177,6 +182,7 @@ namespace Phone.Controllers.User
 
         [HttpPut]
         [Route("api/profile/{userId}/seller")]
+        [Authorize(Policy = "AllAuth")]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]

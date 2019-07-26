@@ -15,5 +15,6 @@ namespace Phone.Services.User.Interfaces
         Task LoginByRefreshTokenAsync(string userId, string refreshToken);
         ClaimsPrincipal GetPrincipalFromExpiredAccessToken(string accessToken);
         Task DeleteRefreshTokenAsync(ClaimsPrincipal userPrincipal);
+        Task<string> UpdateRefreshTokenAsync(string oldRefreshTokenPlain, ClaimsPrincipal userPrincipal);
     }
 }

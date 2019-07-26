@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Phone.Data.DTOs.Shop;
 using Phone.Data.Entities.Shop;
@@ -52,6 +53,7 @@ namespace Phone.Controllers.Shop
 
         [HttpGet]
         [Route("api/shops-seller/{sellerId}")]
+        [Authorize(Policy = "AllAuth")]
         [ProducesResponseType(200)]
         [ProducesResponseType(401)]
         [ProducesResponseType(500)]

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Phone.Data.DTOs.Catalog;
 using Phone.Data.Entities.Catalog;
@@ -60,6 +61,7 @@ namespace Phone.Controllers.Catalog
 
         [HttpGet]
         [Route("api/orders/{sellerId}/{start}/{finish}/seller-detail")]
+        [Authorize(Policy = "AllAuth")]
         [ProducesResponseType(200)]
         [ProducesResponseType(401)]
         [ProducesResponseType(500)]

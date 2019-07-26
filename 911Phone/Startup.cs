@@ -64,6 +64,8 @@ namespace Phone
                     policy => policy.RequireRole(RoleTypes.Seller, RoleTypes.SuperSeller));
                 options.AddPolicy("AdminPanel",
                     policy => policy.RequireRole(RoleTypes.Admin, RoleTypes.SuperAdmin));
+                options.AddPolicy("AllAuth",
+                    policy => policy.RequireRole(RoleTypes.Seller, RoleTypes.SuperSeller, RoleTypes.Admin, RoleTypes.SuperAdmin));
             });
 
             // Setting Token
