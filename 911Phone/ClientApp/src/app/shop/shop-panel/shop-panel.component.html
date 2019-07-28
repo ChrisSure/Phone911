@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Shop Panel</title>
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-12 p-0">
+        <header class="seller_panel">
+          <div class="row">
+            <div class="col-sm-3">
+              <h1 class="logo-seller-panel">Phone<span>911</span></h1>
+            </div>
+            <div class="col-sm-4">
+              <h3><a href="#" class="logo_shop">Shop 1</a></h3>
+            </div>
+            <div class="col-sm-5">
+              <button type="button" class="btn btn-danger ml-2" (click) ="logout()">Log out</button>
+              <button type="button" class="btn btn-primary">Cart (1 item, sum 200 $)</button>
+            </div>
+          </div>
+        </header>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="list-group ml-4">
+          <a routerLink="/seller" class="list-group-item list-group-item-action">Cabinet</a>
+          <a href="#" class="list-group-item list-group-item-action">Register New Customer</a>
+          <a href="#" class="list-group-item list-group-item-action">Sellers (Super)</a>
+          <a href="#" class="list-group-item list-group-item-action">Statistic (Super)</a>
+        </div>
+
+        <div class="list-group ml-4 mt-4">
+          <ul class="list-unstyled">
+            <li *ngFor="let category of categories">
+              <a href="#" [class.cat_child]="category.level == 2">{{ category.title }}</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-sm-9">
+        <div class="shop_panel_main mr-4">
+          <mc-breadcrumbs></mc-breadcrumbs>
+          <router-outlet></router-outlet>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

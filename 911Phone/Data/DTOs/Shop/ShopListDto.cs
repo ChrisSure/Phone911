@@ -5,6 +5,12 @@ namespace Phone.Data.DTOs.Shop
     public class ShopListDto
     {
         /// <summary>
+        /// Identificator.
+        /// </summary>
+        [Required]
+        public int Id { get; set; }
+
+        /// <summary>
         /// Name for shop.
         /// </summary>
         [Required]
