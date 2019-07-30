@@ -37,6 +37,7 @@
     <None Remove="ClientApp\src\app\models\catalog\dto\product.ts" />
     <None Remove="ClientApp\src\app\models\catalog\dto\products-order.ts" />
     <None Remove="ClientApp\src\app\models\shop\shop.ts" />
+    <None Remove="ClientApp\src\app\models\user\dto\add-customer.ts" />
     <None Remove="ClientApp\src\app\models\user\dto\profile-seller-change.ts" />
     <None Remove="ClientApp\src\app\models\user\dto\user-email.ts" />
     <None Remove="ClientApp\src\app\models\user\dto\user-new-password.ts" />
@@ -55,9 +56,11 @@
     <None Remove="ClientApp\src\app\services\catalog\order.service.ts" />
     <None Remove="ClientApp\src\app\services\catalog\product.service.ts" />
     <None Remove="ClientApp\src\app\services\shop\shop.service.ts" />
+    <None Remove="ClientApp\src\app\services\user\customer.service.ts" />
     <None Remove="ClientApp\src\app\services\user\profile.service.ts" />
     <None Remove="ClientApp\src\app\services\user\token.interceptor.ts" />
     <None Remove="ClientApp\src\app\services\user\user.service.ts" />
+    <None Remove="ClientApp\src\app\shop\shop-add-customer\shop-add-customer.component.ts" />
     <None Remove="ClientApp\src\app\shop\home\shop-home.component.ts" />
     <None Remove="ClientApp\src\app\shop\shop-panel\shop-panel.component.ts" />
     <None Remove="ClientApp\src\app\shop\shop-routing.module.ts" />
@@ -95,6 +98,7 @@
     <TypeScriptCompile Include="ClientApp\src\app\models\catalog\dto\product.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\catalog\dto\products-order.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\shop\shop.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\user\dto\add-customer.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\user\dto\profile-seller-change.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\user\dto\user-email.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\user\dto\user-new-password.ts" />
@@ -113,9 +117,11 @@
     <TypeScriptCompile Include="ClientApp\src\app\services\catalog\order.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\catalog\product.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\shop\shop.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\user\customer.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\user\profile.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\user\token.interceptor.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\user\user.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shop\shop-add-customer\shop-add-customer.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shop\home\shop-home.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shop\shop-panel\shop-panel.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shop\shop-routing.module.ts" />

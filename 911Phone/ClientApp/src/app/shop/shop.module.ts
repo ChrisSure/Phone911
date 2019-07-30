@@ -6,12 +6,14 @@ import { McBreadcrumbsModule } from 'ngx-breadcrumbs';
 import { ShopRoutingModule } from "./shop-routing.module";
 import { ShopPanelComponent } from "./shop-panel/shop-panel.component";
 import { ShopHomeComponent } from "./home/shop-home.component";
+import { ShopAddCustomerComponent } from "./shop-add-customer/shop-add-customer.component";
 
 
 @NgModule({
   declarations: [
     ShopPanelComponent,
-    ShopHomeComponent
+    ShopHomeComponent,
+    ShopAddCustomerComponent
   ],
   imports: [
     CommonModule,

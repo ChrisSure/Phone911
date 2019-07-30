@@ -16,6 +16,7 @@ export class ShopPanelComponent implements OnInit {
   private apiError: string = "";
   authChangedSubscription: any;
   categories: CategoryShop[];
+  shopId: number;
 
 
   constructor(private authService: AuthService, private userInfo: UserInfoService, private categoryService: CategoryService, private router: Router, private actRoute: ActivatedRoute) {
@@ -27,8 +28,8 @@ export class ShopPanelComponent implements OnInit {
         this.router.navigate(['/']);
       }
     });
-    let shopId = this.actRoute.snapshot.params['id'];
-    this.categoryService.getCategoriesByShopId(shopId).subscribe((res: CategoryShop[]) => {
+    this.shopId = this.actRoute.snapshot.params['id'];
+    this.categoryService.getCategoriesByShopId(this.shopId).subscribe((res: CategoryShop[]) => {
       this.categories = res;
     });
   }
