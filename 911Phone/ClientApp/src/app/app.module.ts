@@ -16,6 +16,7 @@ import { ProductService } from './services/catalog/product.service';
 import { TokenInterceptor } from './services/user/token.interceptor';
 import { CategoryService } from './services/catalog/category.service';
 import { CustomerService } from './services/user/customer.service';
+import { SellerService } from './services/user/seller.service';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { CustomerService } from './services/user/customer.service';
     ProductService,
     CategoryService,
     CustomerService,
+    SellerService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,

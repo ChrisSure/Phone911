@@ -4,6 +4,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { UserInfoService } from '../../services/user/user-info.service';
 import { CategoryService } from '../../services/catalog/category.service';
 import { CategoryShop } from '../../models/catalog/dto/category-shop';
+import { Shop } from '../../models/shop/shop';
+import { ShopService } from '../../services/shop/shop.service';
 
 
 @Component({
@@ -16,10 +18,11 @@ export class ShopPanelComponent implements OnInit {
   private apiError: string = "";
   authChangedSubscription: any;
   categories: CategoryShop[];
+  shop: Shop;
   shopId: number;
 
 
-  constructor(private authService: AuthService, private userInfo: UserInfoService, private categoryService: CategoryService, private router: Router, private actRoute: ActivatedRoute) {
+  constructor(private authService: AuthService, private userInfo: UserInfoService, private shopService: ShopService, private categoryService: CategoryService, private router: Router, private actRoute: ActivatedRoute) {
   }
 
   ngOnInit() {
@@ -29,6 +32,9 @@ export class ShopPanelComponent implements OnInit {
       }
     });
     this.shopId = this.actRoute.snapshot.params['id'];
+    this.shopService.getShop(this.shopId).subscribe((res: Shop) => {
+      this.shop = res;
+    });
     this.categoryService.getCategoriesByShopId(this.shopId).subscribe((res: CategoryShop[]) => {
       this.categories = res;
     });

@@ -7,13 +7,15 @@ import { ShopRoutingModule } from "./shop-routing.module";
 import { ShopPanelComponent } from "./shop-panel/shop-panel.component";
 import { ShopHomeComponent } from "./home/shop-home.component";
 import { ShopAddCustomerComponent } from "./shop-add-customer/shop-add-customer.component";
+import { ShopSellersComponent } from "./shop-sellers/shop-sellers.component";
 
 
 @NgModule({
   declarations: [
     ShopPanelComponent,
     ShopHomeComponent,
-    ShopAddCustomerComponent
+    ShopAddCustomerComponent,
+    ShopSellersComponent
   ],
   imports: [
     CommonModule,

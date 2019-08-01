@@ -67,6 +67,10 @@ export class AuthService {
     return this.userInfoService.isSeller;
   }
 
+  public get isSuperSeller(): boolean {
+    return this.userInfoService.isSuperSeller;
+  }
+
   writeTokenFromResponse(response: any) {
     const token: JwtToken = new JwtToken(
       response['accessToken'],
