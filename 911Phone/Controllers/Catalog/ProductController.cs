@@ -50,6 +50,18 @@ namespace Phone.Controllers.Catalog
         }
 
         [HttpGet]
+        [Route("api/products/{titleMatch}/title-match")]
+        [Authorize(Policy = "AllAuth")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> ListByTitleMatch([FromRoute] string titleMatch)
+        {
+            var products = await productService.ListByTitleMatch(titleMatch);
+            return Ok(products);
+        }
+
+        [HttpGet]
         [Route("api/products/{productId}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]

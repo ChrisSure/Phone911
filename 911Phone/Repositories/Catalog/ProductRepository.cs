@@ -57,6 +57,24 @@ namespace Phone.Repositories.Catalog
         }
 
         /// <summary>
+        /// Method return list products by title match
+        /// <summary>
+        /// <param name="titleMatch">string</param>
+        /// <returns>IList<Product></returns>
+        public async Task<IList<Product>> ListByTitleMatchAsync(string titleMatch)
+        {
+            return await Task.Run(() => dbContext.Products.Where(x => x.Title.Contains(titleMatch)).Select(p => new Product
+            {
+                Id = p.Id,
+                Title = p.Title,
+                Image = p.Image,
+                Price = p.Price,
+                Storages = p.Storages
+            }).ToList());
+        }
+
+
+        /// <summary>
         /// Method return one product
         /// <summary>
         /// <param name="productId">int</param>

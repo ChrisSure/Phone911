@@ -1,51 +1,20 @@
 <div class="row">
   <div class="col-sm-12">
-    <form>
       <div class="form-row">
         <div class="col-sm-12">
-          <input class="form-control form-control-lg" type="text" placeholder="Search">
+          <input class="form-control form-control-lg" type="text" [(ngModel)]="productName" (ngModelChange)="onProductTitleChange()" name="productName"
+                 placeholder="Enter name of product" />
         </div>
       </div>
-    </form>
   </div>
 </div>
 <div class="row mt-4">
-  <div class="col-sm-3">
+  <div class="col-sm-3" *ngFor="let product of products">
     <a href="#" class="card_link">
       <div class="card">
-        <img src="img/product.png" class="card-img-top" alt="...">
+        <img src="/assets/img/phone.png" class="card-img-top" alt="...">
         <div class="card-body">
-          <h5 class="card-title">Iphone 5s</h5>
-        </div>
-      </div>
-    </a>
-  </div>
-  <div class="col-sm-3">
-    <a href="#" class="card_link">
-      <div class="card">
-        <img src="img/product.png" class="card-img-top" alt="...">
-        <div class="card-body">
-          <h5 class="card-title">Iphone 5</h5>
-        </div>
-      </div>
-    </a>
-  </div>
-  <div class="col-sm-3">
-    <a href="#" class="card_link">
-      <div class="card">
-        <img src="img/product.png" class="card-img-top" alt="...">
-        <div class="card-body">
-          <h5 class="card-title">Iphone 7</h5>
-        </div>
-      </div>
-    </a>
-  </div>
-  <div class="col-sm-3">
-    <a href="#" class="card_link">
-      <div class="card">
-        <img src="img/product.png" class="card-img-top" alt="...">
-        <div class="card-body">
-          <h5 class="card-title">Iphone X</h5>
+          <h5 class="card-title">{{ product.title }}</h5>
         </div>
       </div>
     </a>

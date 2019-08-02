@@ -38,6 +38,16 @@ namespace Phone.Services.Catalog
         }
 
         /// <summary>
+        /// Method delegate to service return list products by title match
+        /// <summary>
+        /// <param name="titleMatch">string</param>
+        /// <returns>IList<Product></returns>
+        public async Task<IList<Product>> ListByTitleMatch(string titleMatch)
+        {
+            return await productRepository.ListByTitleMatchAsync(titleMatch);
+        }
+
+        /// <summary>
         /// Method delegate to service return one product
         /// <summary>
         /// <param name="productId">int</param>

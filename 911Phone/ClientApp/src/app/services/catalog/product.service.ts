@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { ProductsOrder } from '../../models/catalog/dto/products-order';
+import { Product } from '../../models/catalog/dto/product';
 
 
 @Injectable()
@@ -25,5 +26,13 @@ export class ProductService {
       .catch((error: any) =>
         Observable.throw(error.error || 'Server error'));
   }
+
+  public getProductsByTitleMatch(title: string): Observable<Product[]> {
+    return this.http.get(this.baseUrlProduct + '/' + title + '/title-match', {
+      headers: this.headers
+    }).map((response: Response) => response)
+      .catch((error: any) =>
+        Observable.throw(error.error || 'Server error'));
+  } 
 
 }
