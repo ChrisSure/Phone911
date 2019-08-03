@@ -5,5 +5,5 @@ export class Product {
   public Title: string;
   public Image: string;
   public Price: number;
-  public Storages: number;
+  public storages: Storage[];
 }

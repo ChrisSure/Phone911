@@ -27,8 +27,8 @@ export class ProductService {
         Observable.throw(error.error || 'Server error'));
   }
 
-  public getProductsByTitleMatch(title: string): Observable<Product[]> {
-    return this.http.get(this.baseUrlProduct + '/' + title + '/title-match', {
+  public getProductsByTitleMatch(title: string, shopId: number): Observable<Product[]> {
+    return this.http.get(this.baseUrlProduct + '/' + title + '/' + shopId + '/title-match', {
       headers: this.headers
     }).map((response: Response) => response)
       .catch((error: any) =>

@@ -7,6 +7,7 @@ using System.Linq;
 using Phone.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using Phone.Data.DTOs.Catalog;
+using Phone.Data.Entities.Shop;
 
 namespace Phone.Repositories.Catalog
 {
@@ -60,8 +61,9 @@ namespace Phone.Repositories.Catalog
         /// Method return list products by title match
         /// <summary>
         /// <param name="titleMatch">string</param>
+        /// <param name="shopId">int</param>
         /// <returns>IList<Product></returns>
-        public async Task<IList<Product>> ListByTitleMatchAsync(string titleMatch)
+        public async Task<IList<Product>> ListByTitleMatchAsync(string titleMatch, int shopId)
         {
             return await Task.Run(() => dbContext.Products.Where(x => x.Title.Contains(titleMatch)).Select(p => new Product
             {
@@ -69,7 +71,7 @@ namespace Phone.Repositories.Catalog
                 Title = p.Title,
                 Image = p.Image,
                 Price = p.Price,
-                Storages = p.Storages
+                Storages = p.Storages.Where(s => s.ShopId == shopId).Select(s => new Storage { Count = s.Count}).ToList()
             }).ToList());
         }
 

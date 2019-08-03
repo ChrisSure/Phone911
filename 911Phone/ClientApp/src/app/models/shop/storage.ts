@@ -1,3 +1,3 @@
 export class Storage {
-  public Count: number;
+  public count: number;
 }

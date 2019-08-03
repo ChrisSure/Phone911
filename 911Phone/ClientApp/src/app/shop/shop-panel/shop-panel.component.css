@@ -39,19 +39,19 @@
 
 
 /* Shop */
-.shop_panel_main .card {
+.card {
   width: 100%;
 }
 
-.shop_panel_main .card-img-top {
+.card-img-top {
   width: 100%;
 }
 
-.shop_panel_main .card .card-title {
+.card-title {
   color: #212529;
 }
 
-.shop_panel_main .card_link:hover {
+.card_link:hover {
   text-decoration: none;
 }
 

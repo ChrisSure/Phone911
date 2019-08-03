@@ -41,10 +41,11 @@ namespace Phone.Services.Catalog
         /// Method delegate to service return list products by title match
         /// <summary>
         /// <param name="titleMatch">string</param>
+        /// <param name="shopId">int</param>
         /// <returns>IList<Product></returns>
-        public async Task<IList<Product>> ListByTitleMatch(string titleMatch)
+        public async Task<IList<Product>> ListByTitleMatch(string titleMatch, int shopId)
         {
-            return await productRepository.ListByTitleMatchAsync(titleMatch);
+            return await productRepository.ListByTitleMatchAsync(titleMatch, shopId);
         }
 
         /// <summary>
