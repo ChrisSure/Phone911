@@ -65,6 +65,7 @@
     <None Remove="ClientApp\src\app\services\user\user.service.ts" />
     <None Remove="ClientApp\src\app\shop\shop-add-customer\shop-add-customer.component.ts" />
     <None Remove="ClientApp\src\app\shop\home\shop-home.component.ts" />
+    <None Remove="ClientApp\src\app\shop\shop-category\shop-category.component.ts" />
     <None Remove="ClientApp\src\app\shop\shop-panel\shop-panel.component.ts" />
     <None Remove="ClientApp\src\app\shop\shop-routing.module.ts" />
     <None Remove="ClientApp\src\app\shop\shop-sellers\shop-sellers.component.ts" />
@@ -130,6 +131,7 @@
     <TypeScriptCompile Include="ClientApp\src\app\services\user\user.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shop\shop-add-customer\shop-add-customer.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shop\home\shop-home.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shop\shop-category\shop-category.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shop\shop-panel\shop-panel.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shop\shop-routing.module.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shop\shop-sellers\shop-sellers.component.ts" />

@@ -10,6 +10,8 @@ namespace Phone.Services.Catalog.Interfaces
         Task<IList<Product>> ListProductsByCategoryIdAll(int categoryId);
         Task<IList<ProductListDto>> ListProductsByOrderIdAll(int orderId);
         Task<IList<Product>> ListByTitleMatch(string titleMatch, int shopId);
+        Task<IList<Product>> ListByCategoryShopId(int categoryId, int shopId);
+        Task<IList<Product>> ListByCategoryAndTitleMatchShopId(int categoryId, string titleMatch, int shopId);
         Task<Product> SingleProduct(int productId);
         Task CreateProduct(Product product);
         Task UpdateProduct(int productId, Product product);

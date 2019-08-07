@@ -75,6 +75,43 @@ namespace Phone.Repositories.Catalog
             }).ToList());
         }
 
+        /// <summary>
+        /// Method return list products by category id
+        /// <summary>
+        /// <param name="categoryId">int</param>
+        /// <param name="shopId">int</param>
+        /// <returns>IList<Product></returns>
+        public async Task<IList<Product>> ListByCategoryShopIdAsync(int categoryId, int shopId)
+        {
+            return await Task.Run(() => dbContext.Products.Where(x => x.CategoryId == categoryId).Select(p => new Product
+            {
+                Id = p.Id,
+                Title = p.Title,
+                Image = p.Image,
+                Price = p.Price,
+                Storages = p.Storages.Where(s => s.ShopId == shopId).Select(s => new Storage { Count = s.Count }).ToList()
+            }).ToList());
+        }
+
+        /// <summary>
+        /// Method return list products by category id and title match
+        /// <summary>
+        /// <param name="categoryId">int</param>
+        /// <param name="titleMatch">string</param>
+        /// <param name="shopId">int</param>
+        /// <returns>IList<Product></returns>
+        public async Task<IList<Product>> ListByCategoryAndTitleMatchShopIdAsync(int categoryId, string titleMatch, int shopId)
+        {
+            return await Task.Run(() => dbContext.Products.Where(x => x.CategoryId == categoryId).Where(x => x.Title.Contains(titleMatch)).Select(p => new Product
+            {
+                Id = p.Id,
+                Title = p.Title,
+                Image = p.Image,
+                Price = p.Price,
+                Storages = p.Storages.Where(s => s.ShopId == shopId).Select(s => new Storage { Count = s.Count }).ToList()
+            }).ToList());
+        }
+
 
         /// <summary>
         /// Method return one product

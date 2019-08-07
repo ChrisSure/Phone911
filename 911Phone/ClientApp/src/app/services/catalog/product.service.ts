@@ -33,6 +33,22 @@ export class ProductService {
     }).map((response: Response) => response)
       .catch((error: any) =>
         Observable.throw(error.error || 'Server error'));
+  }
+
+  public getProductsByCategoryId(categoryId: number, shopId: number): Observable<Product[]> {
+    return this.http.get(this.baseUrlProduct + '/' + categoryId + '/' + shopId + '/category', {
+      headers: this.headers
+    }).map((response: Response) => response)
+      .catch((error: any) =>
+        Observable.throw(error.error || 'Server error'));
+  }
+
+  public getProductsByCategoryAndTitleMatch(categoryId: number, title: string, shopId: number): Observable<Product[]> {
+    return this.http.get(this.baseUrlProduct + '/' + categoryId + '/' + title + '/' + shopId + '/category-title-match', {
+      headers: this.headers
+    }).map((response: Response) => response)
+      .catch((error: any) =>
+        Observable.throw(error.error || 'Server error'));
   } 
 
 }

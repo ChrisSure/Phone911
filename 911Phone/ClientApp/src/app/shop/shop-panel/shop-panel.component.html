@@ -37,7 +37,7 @@
         <div class="list-group ml-4 mt-4">
           <ul class="list-unstyled">
             <li *ngFor="let category of categories">
-              <a href="#" [class.cat_child]="category.level == 2">{{ category.title }}</a>
+              <a routerLink="/shop/{{shopId}}/category/{{category.id}}" [class.cat_child]="category.level == 2">{{ category.title }}</a>
             </li>
           </ul>
         </div>
