@@ -9,6 +9,7 @@ import { ShopHomeComponent } from "./home/shop-home.component";
 import { ShopAddCustomerComponent } from "./shop-add-customer/shop-add-customer.component";
 import { ShopSellersComponent } from "./shop-sellers/shop-sellers.component";
 import { ShopCategoryComponent } from "./shop-category/shop-category.component";
+import { ShopProductComponent } from "./shop-product/shop-product.component";
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { ShopCategoryComponent } from "./shop-category/shop-category.component";
     ShopHomeComponent,
     ShopAddCustomerComponent,
     ShopSellersComponent,
-    ShopCategoryComponent
+    ShopCategoryComponent,
+    ShopProductComponent
   ],
   imports: [
     CommonModule,

@@ -10,7 +10,7 @@
 </div>
 <div class="row mt-4">
   <div class="col-sm-3 mb-3" *ngFor="let product of products">
-    <a href="#" class="card_link">
+    <a routerLink="/shop/{{shopId}}/product/{{ product.id }}" class="card_link">
       <div class="card">
         <img src="/assets/img/phone.png" class="card-img-top" alt="...">
         <div class="card-body">

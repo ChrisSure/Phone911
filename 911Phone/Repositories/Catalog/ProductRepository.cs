@@ -13,9 +13,12 @@ namespace Phone.Repositories.Catalog
 {
     public class ProductRepository : MainRepository, IProductRepository
     {
-        public ProductRepository(ApplicationDbContext dbContext) : base(dbContext)
-        {
 
+        private ICategoryRepository categoryRepository;
+
+        public ProductRepository(ApplicationDbContext dbContext, ICategoryRepository categoryRepository) : base(dbContext)
+        {
+            this.categoryRepository = categoryRepository;
         }
 
         /// <summary>
@@ -65,7 +68,10 @@ namespace Phone.Repositories.Catalog
         /// <returns>IList<Product></returns>
         public async Task<IList<Product>> ListByTitleMatchAsync(string titleMatch, int shopId)
         {
-            return await Task.Run(() => dbContext.Products.Where(x => x.Title.Contains(titleMatch)).Select(p => new Product
+            var categoryList = await categoryRepository.ListCategoriesByShopIdAsync(shopId);
+            var categoryIdArray = await GetCategoryIdArray(categoryList);
+
+            return await Task.Run(() => dbContext.Products.Where(x => x.Title.Contains(titleMatch)).Where(x => categoryIdArray.Contains(x.CategoryId)).Select(p => new Product
             {
                 Id = p.Id,
                 Title = p.Title,
@@ -102,7 +108,11 @@ namespace Phone.Repositories.Catalog
         /// <returns>IList<Product></returns>
         public async Task<IList<Product>> ListByCategoryAndTitleMatchShopIdAsync(int categoryId, string titleMatch, int shopId)
         {
-            return await Task.Run(() => dbContext.Products.Where(x => x.CategoryId == categoryId).Where(x => x.Title.Contains(titleMatch)).Select(p => new Product
+            var categoryList = await categoryRepository.ListCategoriesByShopIdAsync(shopId);
+            var categoryIdArray = await GetCategoryIdArray(categoryList);
+
+            return await Task.Run(() => dbContext.Products.Where(x => x.CategoryId == categoryId).Where(x => x.Title.Contains(titleMatch))
+            .Where(x => categoryIdArray.Contains(x.CategoryId)).Select(p => new Product
             {
                 Id = p.Id,
                 Title = p.Title,
@@ -185,6 +195,19 @@ namespace Phone.Repositories.Catalog
         {
             await Task.Run(() => dbContext.Products.Remove(product));
             await SaveAsync();
+        }
+
+
+        private async Task<IList<int>> GetCategoryIdArray(IList<Category> listCategory)
+        {
+            List<int> listArrayId = new List<int>();
+            await Task.Run(() => {
+                foreach(var category in listCategory)
+                {
+                    listArrayId.Add(category.Id);
+                }
+            });
+            return listArrayId;
         }
 
     }

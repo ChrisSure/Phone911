@@ -10,11 +10,12 @@
 </div>
 <div class="row mt-4">
   <div class="col-sm-3 mb-3" *ngFor="let product of products">
-    <a href="#" class="card_link">
+    <a routerLink="/shop/{{shopId}}/product/{{ product.id }}" class="card_link">
       <div class="card">
         <img src="/assets/img/phone.png" class="card-img-top" alt="...">
         <div class="card-body">
-          <h5 class="card-title">{{ product.title }}</h5>
+          <h4 class="card-title">{{ product.title }}</h4>
+          <h6 class="card-title">{{ product.price }} $</h6>
           <span class="badge badge-danger" *ngIf="product.storages.length < 1">Product has overed</span>
         </div>
       </div>

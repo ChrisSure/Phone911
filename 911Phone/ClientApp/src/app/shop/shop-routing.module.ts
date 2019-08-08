@@ -7,6 +7,7 @@ import { ShopHomeComponent } from './home/shop-home.component';
 import { ShopAddCustomerComponent } from './shop-add-customer/shop-add-customer.component';
 import { ShopSellersComponent } from './shop-sellers/shop-sellers.component';
 import { ShopCategoryComponent } from './shop-category/shop-category.component';
+import { ShopProductComponent } from './shop-product/shop-product.component';
 
 
 
@@ -18,6 +19,7 @@ const routesSeller: Routes = [
       { path: 'add-customer', component: ShopAddCustomerComponent, data: { breadcrumbs: true, text: 'Add customer' } },
       { path: 'sellers', component: ShopSellersComponent, data: { breadcrumbs: true, text: 'Shop Sellers' } },
       { path: 'category/:id', component: ShopCategoryComponent, data: { breadcrumbs: true, text: 'Shop Category' } },
+      { path: 'product/:id', component: ShopProductComponent, data: { breadcrumbs: true, text: 'Shop Product' } }
     ]
   }
 ];

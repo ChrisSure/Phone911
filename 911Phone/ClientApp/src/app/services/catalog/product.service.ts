@@ -49,6 +49,14 @@ export class ProductService {
     }).map((response: Response) => response)
       .catch((error: any) =>
         Observable.throw(error.error || 'Server error'));
-  } 
+  }
+
+  public getProduct(id: string): Observable<Product> {
+    return this.http.get<Product>(this.baseUrlProduct + '/' + id, {
+      headers: this.headers
+    }).map((response: Product) => { return response; })
+      .catch((error: any) =>
+        Observable.throw(error.error || 'Server error'));
+  }
 
 }
