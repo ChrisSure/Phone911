@@ -36,7 +36,7 @@ namespace Phone.Controllers.Catalog
         }
 
         [HttpGet]
-        [Route("api/categories-shop/{shopId}")]
+        [Route("api/categories/shop/{shopId}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(401)]
         [ProducesResponseType(500)]

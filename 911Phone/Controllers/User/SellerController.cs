@@ -33,5 +33,17 @@ namespace Phone.Controllers.User
             IList<UserViewDto> sellers = dtoMapper.Map<IList<ApplicationUser>, IList<UserViewDto>>(await sellerService.ListSellersAsync());
             return Ok(sellers);
         }
+
+        [HttpGet]
+        [Route("api/sellers/{shopId}/shop")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> ListSellersByShopId([FromRoute] int shopId)
+        {
+            IList<SellerShopDto> sellers = await sellerService.ListSellersByShopId(shopId);
+            return Ok(sellers);
+        }
+
     }
 }

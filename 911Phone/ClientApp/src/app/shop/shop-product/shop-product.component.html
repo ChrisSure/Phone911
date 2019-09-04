@@ -1,0 +1,26 @@
+<div class="row">
+  <div class="col-sm-4">
+    <img src="/assets/img/phone.png" alt="..." class="img-thumbnail">
+  </div>
+  <div class="col-sm-8">
+    <ul class="list-unstyled">
+      <li><h1>{{ product?.title }}</h1></li>
+      <li><h4>{{ product?.price }} $</h4></li>
+      <li>
+        <span class="badge badge-success" *ngIf="product?.storages.length > 0; else noCount">{{ product?.storages[0].count }} items</span>
+        <ng-template #noCount>
+          <span class="badge badge-danger">Not in storage</span>
+        </ng-template>
+      </li>
+      <li class="mt-1">
+        <button type="button" class="btn btn-primary">Add to cart</button>
+        <button type="button" class="btn btn-outline-success" disabled>Added to cart!</button>
+      </li>
+    </ul>
+
+    <ul class="list-unstyled">
+      <li>DESCRIPTION:</li>
+      {{ product?.text }}
+    </ul>
+  </div>
+</div>

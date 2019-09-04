@@ -9,6 +9,9 @@ namespace Phone.Repositories.Catalog.Interfaces
     {
         Task<IList<Product>> ListProductsByCategoryIdAllAsync(int categoryId);
         Task<IList<ProductListDto>> ListProductsByOrderIdAllAsync(int orderId);
+        Task<IList<Product>> ListByTitleMatchAsync(string titleMatch, int shopId);
+        Task<IList<Product>> ListByCategoryShopIdAsync(int categoryId, int shopId);
+        Task<IList<Product>> ListByCategoryAndTitleMatchShopIdAsync(int categoryId, string titleMatch, int shopId);
         Task<Product> SingleProductAsync(int productId);
         Task<Product> SingleLiteProductAsync(int productId);
         Task CreateProductAsync(Product product);

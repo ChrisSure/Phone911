@@ -38,6 +38,40 @@ namespace Phone.Services.Catalog
         }
 
         /// <summary>
+        /// Method delegate to service return list products by title match
+        /// <summary>
+        /// <param name="titleMatch">string</param>
+        /// <param name="shopId">int</param>
+        /// <returns>IList<Product></returns>
+        public async Task<IList<Product>> ListByTitleMatch(string titleMatch, int shopId)
+        {
+            return await productRepository.ListByTitleMatchAsync(titleMatch, shopId);
+        }
+
+        /// <summary>
+        /// Method delegate to service return list products by category id
+        /// <summary>
+        /// <param name="categoryId">int</param>
+        /// <param name="shopId">int</param>
+        /// <returns>IList<Product></returns>
+        public async Task<IList<Product>> ListByCategoryShopId(int categoryId, int shopId)
+        {
+            return await productRepository.ListByCategoryShopIdAsync(categoryId, shopId);
+        }
+
+        /// <summary>
+        /// Method delegate to service return list products by category id and title match
+        /// <summary>
+        /// <param name="categoryId">int</param>
+        /// <param name="titleMatch">string</param>
+        /// <param name="shopId">int</param>
+        /// <returns>IList<Product></returns>
+        public async Task<IList<Product>> ListByCategoryAndTitleMatchShopId(int categoryId, string titleMatch, int shopId)
+        {
+            return await productRepository.ListByCategoryAndTitleMatchShopIdAsync(categoryId, titleMatch, shopId);
+        }
+
+        /// <summary>
         /// Method delegate to service return one product
         /// <summary>
         /// <param name="productId">int</param>

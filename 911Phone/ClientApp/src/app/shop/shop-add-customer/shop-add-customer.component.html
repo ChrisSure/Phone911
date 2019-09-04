@@ -1,0 +1,54 @@
+<form [formGroup]="addCustomerForm" (ngSubmit)="addCustomer()">
+
+  <div *ngIf="apiError != ''" class="alert alert-danger" role="alert">
+    {{ apiError }}
+  </div>
+
+  <div *ngIf="messageSuccess != ''" class="alert alert-success" role="alert">
+    {{ messageSuccess }}
+  </div>
+
+  <div class="form-group">
+    <label for="email">Email</label>
+    <input type="text" class="form-control" name="email" formControlName="email" id="email" placeholder="Enter email">
+    <span class="form-help-text" *ngIf="addCustomerForm.get('email').invalid && addCustomerForm.get('email').dirty">
+      <span *ngIf="addCustomerForm.get('email')['errors']['email']">Field must be correct email.<br /></span>
+      <span *ngIf="addCustomerForm.get('email')['errors']['required']">Field can`t be empty.<br /></span>
+    </span>
+  </div>
+  <div class="form-group">
+    <label for="name">Name</label>
+    <input type="text" class="form-control" name="name" formControlName="name" id="name" placeholder="Enter name">
+    <span class="form-help-text" *ngIf="addCustomerForm.get('name').invalid && addCustomerForm.get('name').dirty">
+      <span *ngIf="addCustomerForm.get('name')['errors']['required']">Field can`t be empty.<br /></span>
+    </span>
+  </div>
+  <div class="form-group">
+    <label for="lastname">LastName</label>
+    <input type="text" class="form-control" name="lastname" formControlName="lastname" id="lastname" placeholder="Enter lastname">
+    <span class="form-help-text" *ngIf="addCustomerForm.get('lastname').invalid && addCustomerForm.get('lastname').dirty">
+      <span *ngIf="addCustomerForm.get('lastname')['errors']['required']">Field can`t be empty.<br /></span>
+    </span>
+  </div>
+  <div class="form-group">
+    <label for="surname">SurName</label>
+    <input type="text" class="form-control" name="surname" formControlName="surname" id="surname" placeholder="Enter surname">
+  </div>
+  <div class="custom-control custom-radio">
+    <input type="radio" id="customRadio1" name="sex" class="custom-control-input" formControlName="sex" [value]="1" [checked]="profile?.sex == '1'">
+    <label class="custom-control-label" for="customRadio1">Man</label>
+  </div>
+  <div class="custom-control custom-radio mb-3">
+    <input type="radio" id="customRadio2" name="sex" class="custom-control-input" formControlName="sex" [value]="0" [checked]="profile?.sex == '0'">
+    <label class="custom-control-label" for="customRadio2">Wooman</label>
+  </div>
+  <div class="form-group">
+    <label for="lastname">Phone</label>
+    <input type="text" class="form-control" name="phone" formControlName="phone" id="phone" placeholder="Enter phone">
+    <span class="form-help-text" *ngIf="addCustomerForm.get('phone').invalid && addCustomerForm.get('phone').dirty">
+      <span *ngIf="addCustomerForm.get('phone')['errors']['pattern']">Field doesn't match pattern (xxxxxxxxxx).<br /></span>
+    </span>
+  </div>
+
+  <button type="submit" class="btn btn-primary" [disabled]="addCustomerForm.invalid">Submit</button>
+</form>

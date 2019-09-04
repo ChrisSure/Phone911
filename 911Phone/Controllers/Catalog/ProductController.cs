@@ -50,6 +50,40 @@ namespace Phone.Controllers.Catalog
         }
 
         [HttpGet]
+        [Route("api/products/{titleMatch}/{shopId}/title-match")]
+        [Authorize(Policy = "AllAuth")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> ListByTitleMatch([FromRoute] string titleMatch, [FromRoute] int shopId)
+        {
+            var products = await productService.ListByTitleMatch(titleMatch, shopId);
+            return Ok(products);
+        }
+
+        [HttpGet]
+        [Route("api/products/{categoryId}/{shopId}/category")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> ListByCategoryShopId([FromRoute] int categoryId, [FromRoute] int shopId)
+        {
+            var products = await productService.ListByCategoryShopId(categoryId, shopId);
+            return Ok(products);
+        }
+
+        [HttpGet]
+        [Route("api/products/{categoryId}/{titleMatch}/{shopId}/category-title-match")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> ListByCategoryAndTitleMatchShopId([FromRoute] int categoryId, [FromRoute] string titleMatch, [FromRoute] int shopId)
+        {
+            var products = await productService.ListByCategoryAndTitleMatchShopId(categoryId, titleMatch, shopId);
+            return Ok(products);
+        }
+
+        [HttpGet]
         [Route("api/products/{productId}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]

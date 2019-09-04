@@ -53,4 +53,15 @@ export class UserInfoService {
       return result;
   }
 
+  public get isSuperSeller(): boolean {
+    let role = localStorage.getItem(this.uRole);
+    let result: boolean;
+
+    if (role == 'SuperSeller')
+      result = true;
+    else
+      result = false;
+    return result;
+  }
+
 }

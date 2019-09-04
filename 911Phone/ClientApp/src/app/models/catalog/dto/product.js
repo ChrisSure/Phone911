@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var ProductOrder = /** @class */ (function () {
-    function ProductOrder() {
+var Product = /** @class */ (function () {
+    function Product() {
     }
-    return ProductOrder;
+    return Product;
 }());
-exports.ProductOrder = ProductOrder;
+exports.Product = Product;
 //# sourceMappingURL=product.js.map

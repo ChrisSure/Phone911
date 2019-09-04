@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { ProductsOrder } from '../../models/catalog/dto/products-order';
+import { Product } from '../../models/catalog/dto/product';
 
 
 @Injectable()
@@ -22,6 +23,38 @@ export class ProductService {
     return this.http.get(this.baseUrlProduct + '/' + id + '/order', {
       headers: this.headers
     }).map((response: Response) => response)
+      .catch((error: any) =>
+        Observable.throw(error.error || 'Server error'));
+  }
+
+  public getProductsByTitleMatch(title: string, shopId: number): Observable<Product[]> {
+    return this.http.get(this.baseUrlProduct + '/' + title + '/' + shopId + '/title-match', {
+      headers: this.headers
+    }).map((response: Response) => response)
+      .catch((error: any) =>
+        Observable.throw(error.error || 'Server error'));
+  }
+
+  public getProductsByCategoryId(categoryId: number, shopId: number): Observable<Product[]> {
+    return this.http.get(this.baseUrlProduct + '/' + categoryId + '/' + shopId + '/category', {
+      headers: this.headers
+    }).map((response: Response) => response)
+      .catch((error: any) =>
+        Observable.throw(error.error || 'Server error'));
+  }
+
+  public getProductsByCategoryAndTitleMatch(categoryId: number, title: string, shopId: number): Observable<Product[]> {
+    return this.http.get(this.baseUrlProduct + '/' + categoryId + '/' + title + '/' + shopId + '/category-title-match', {
+      headers: this.headers
+    }).map((response: Response) => response)
+      .catch((error: any) =>
+        Observable.throw(error.error || 'Server error'));
+  }
+
+  public getProduct(id: string): Observable<Product> {
+    return this.http.get<Product>(this.baseUrlProduct + '/' + id, {
+      headers: this.headers
+    }).map((response: Product) => { return response; })
       .catch((error: any) =>
         Observable.throw(error.error || 'Server error'));
   }
